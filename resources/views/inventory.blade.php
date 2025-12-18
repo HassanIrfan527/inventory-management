@@ -28,7 +28,7 @@
                 <div class="flex items-center justify-between">
                     <div class="flex flex-col gap-1">
                         <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Avg Retail Price</p>
-                        <p class="text-2xl font-bold text-neutral-900 dark:text-white">₹{{ number_format(\App\Models\Product::avg('retail_price') ?? 0, 2) }}</p>
+                        <p class="text-2xl font-bold text-neutral-900 dark:text-white">Rs. {{ number_format(\App\Models\Product::avg('retail_price') ?? 0, 0) }}</p>
                     </div>
                     <div class="rounded-lg bg-green-100 dark:bg-green-900/30 p-3">
                         <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -43,7 +43,7 @@
                 <div class="flex items-center justify-between">
                     <div class="flex flex-col gap-1">
                         <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Total Inventory Value</p>
-                        <p class="text-2xl font-bold text-neutral-900 dark:text-white">₹{{ number_format(\App\Models\Product::sum('retail_price') ?? 0, 2) }}</p>
+                        <p class="text-2xl font-bold text-neutral-900 dark:text-white">Rs. {{ \App\Models\Product::totalInventoryValue() }}</p>
                     </div>
                     <div class="rounded-lg bg-purple-100 dark:bg-purple-900/30 p-3">
                         <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

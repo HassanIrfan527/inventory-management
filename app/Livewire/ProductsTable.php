@@ -3,13 +3,15 @@
 namespace App\Livewire;
 
 use App\Models\Product;
-use Flux\Flux;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use App\Livewire\Forms\AddProductForm;
+use Flux\Flux;
 
 class ProductsTable extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     public $search = '';
 
@@ -19,6 +21,8 @@ class ProductsTable extends Component
 
     public $selectedProduct = null;
 
+    public AddProductForm $product;
+
     public function updatingSearch()
     {
         $this->resetPage();
@@ -27,6 +31,31 @@ class ProductsTable extends Component
     public function getProductDetails($productId)
     {
         $this->selectedProduct = Product::find($productId);
+    }
+
+    public function deleteProduct($productId)
+    {
+        $product = Product::find($productId);
+        if ($product) {
+            $product->delete();
+        }
+        $this->resetPage();
+    }
+    public function addProduct()
+    {
+        $this->product->validate();
+
+        Product::create([
+            'name' => $this->product->name,
+            'description' => $this->product->description,
+            'purchase_price' => $this->product->cost_price,
+            'retail_price' => $this->product->retail_price,
+            'delivery_charges' => $this->product->delivery_charges,
+        ]);
+        $this->resetPage();
+        $this->product->reset();
+
+        Flux::modal('add-product')->close();
     }
 
     public function render()

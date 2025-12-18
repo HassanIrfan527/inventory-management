@@ -27,13 +27,11 @@
                     </button>
 
                     <!-- Add New Product Button -->
-                    <a href="#"
-                        class="px-4 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors dark:bg-blue-500 dark:hover:bg-blue-600 flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                        </svg>
-                        Add Product
-                    </a>
+                    <flux:modal.trigger name="add-product">
+                    <flux:button variant="primary" color="blue" class="flex items-center gap-2" icon="plus">
+                        Add New Product
+                    </flux:button>
+                    </flux:modal.trigger>
                 </div>
 
                 <!-- Filter Options (Hidden by default) -->
@@ -96,7 +94,7 @@
                                     </button>
                                     <!-- Delete Icon -->
                                     <button
-                                        class="absolute top-3 left-3 p-1.5 rounded-lg bg-red-500/90 hover:bg-red-600 text-white transition-colors opacity-0 group-hover:opacity-100 cursor-pointer"
+                                        class="absolute top-3 left-3 p-1.5 rounded-lg bg-red-500/90 hover:bg-red-600 text-white transition-colors cursor-pointer"
                                         title="Delete product">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -116,7 +114,7 @@
 
                                 <!-- Description -->
                                 @if ($product->description)
-                                    <p class="text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2">
+                                    <p class="text-sm text-neutral-600 dark:text-neutral-400 line-clamp-6">
                                         {{ $product->description }}
                                     </p>
                                 @endif
@@ -203,86 +201,61 @@
     <!-- Modals -->
     <x-modals.view-products-modal :selectedProduct="$selectedProduct" />
     <x-modals.edit-products-modal :selectedProduct="$selectedProduct" />
+    <x-modals.add-product-modal>
+        <form class="space-y-6" wire:submit.prevent="addProduct">
+            @csrf
+        <!-- Product Image -->
+        <flux:field>
+            <flux:label>Product Image</flux:label>
+            <label for="file-upload" class="mt-2 flex cursor-pointer justify-center rounded-xl border border-dashed border-neutral-300 px-6 py-10 transition-colors hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800">
+                <div class="text-center">
+                    <flux:icon.photo class="mx-auto h-12 w-12 text-neutral-300 dark:text-neutral-600" />
+                    <div class="mt-4 flex text-sm leading-6 text-neutral-600 dark:text-neutral-400 justify-center">
+                        <span class="font-semibold text-blue-600 dark:text-blue-400">Upload a file</span>
+                        <p class="pl-1">or drag and drop</p>
+                    </div>
+                    <p class="text-xs leading-5 text-neutral-600 dark:text-neutral-400">PNG, JPG, GIF up to 10MB</p>
+                    <input id="file-upload" name="file-upload" type="file" class="sr-only" accept="image/*">
+                </div>
+            </label>
+        </flux:field>
+
+        <!-- Product Details -->
+        <flux:field>
+            <flux:label badge="Required">Product Name</flux:label>
+             <flux:input placeholder="e.g. Wireless Headphones" wire:model="product.name" />
+        </flux:field>
+
+        <flux:field>
+            <flux:label badge="Required">Description</flux:label>
+            <flux:textarea rows="3" resize="none" placeholder="Enter product description..." wire:model="product.description" />
+        </flux:field>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <flux:field>
+                <flux:label badge="Required">Cost Price</flux:label>
+                <flux:input type="number" step="0.01" icon="banknotes" placeholder="0.00" wire:model="product.cost_price" />
+            </flux:field>
+
+            <flux:field>
+                <flux:label badge="Required">Retail Price</flux:label>
+                <flux:input type="number" step="0.01" icon="tag" placeholder="0.00" wire:model="product.retail_price" />
+            </flux:field>
+             <flux:field>
+                <flux:label badge="Optional">Delivery Charges</flux:label>
+                <flux:input type="number" step="0.01" icon="truck" placeholder="0.00" wire:model="product.delivery_charges" />
+            </flux:field>
+
+        </div>
+
+        <flux:button type="submit" variant="primary" color="blue" class="w-full">
+            Add Product
+        </flux:button>
+    </form>
+    </x-modals.add-product-modal>
 
     {{-- <x-modals.delete-modal title="Delete Product"
         message="Are you sure you want to delete this product? This action cannot be undone."
         confirmText="Delete Product" /> --}}
 
-    <script>
-        function productTable() {
-            return {
-                showViewModal: false,
-                showEditModal: false,
-                showDeleteModal: false,
-                isDeleting: false,
-                isUpdating: false,
-                selectedProduct: null,
-                copyNotification: false,
-
-                openViewModal(productId) {
-                    this.fetchProduct(productId, () => {
-                        this.showViewModal = true;
-                    });
-                },
-
-                openEditModal(productId) {
-                    this.fetchProduct(productId, () => {
-                        this.showEditModal = true;
-                    });
-                },
-
-                openDeleteModal(productId) {
-                    this.fetchProduct(productId, () => {
-                        this.showDeleteModal = true;
-                    });
-                },
-
-                fetchProduct(productId, callback) {
-                    fetch(`/api/products/${productId}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            this.selectedProduct = data;
-                            callback();
-                        })
-                        .catch(error => console.error('Error:', error));
-                },
-
-                copyToClipboard(text) {
-                    navigator.clipboard.writeText(text).then(() => {
-                        this.copyNotification = true;
-                        setTimeout(() => {
-                            this.copyNotification = false;
-                        }, 2000);
-                    });
-                },
-
-                handleDelete() {
-                    if (this.selectedProduct && this.selectedProduct.id) {
-                        this.isDeleting = true;
-                        this.$wire.deleteProduct(this.selectedProduct.id)
-                            .then(() => {
-                                this.isDeleting = false;
-                                this.showDeleteModal = false;
-                                this.selectedProduct = null;
-                            })
-                            .catch(error => {
-                                this.isDeleting = false;
-                                console.error('Error:', error);
-                            });
-                    }
-                },
-
-                submitEdit() {
-                    this.isUpdating = true;
-                    // Handle update logic here
-                    this.isUpdating = false;
-                },
-
-                handleProductDeleted(message) {
-                    // Handle notification
-                    console.log(message);
-                }
-            }
-        }
-    </script>
 </div>

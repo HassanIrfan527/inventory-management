@@ -12,9 +12,9 @@
                     <flux:subheading>Update product information below.</flux:subheading>
                 </div>
                 <div class="flex items-center gap-2">
-                    <span class="text-sm text-neutral-500 dark:text-neutral-400">ID:</span>
+                    {{-- <span class="text-sm text-neutral-500 dark:text-neutral-400">ID:</span> --}}
                     <button @click="copy('{{ $selectedProduct->product_id }}', 'Product ID')"
-                        class="font-mono text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer flex items-center gap-1 transition-colors">
+                        class="font-mono text-sm font-medium dark:text-neutral-500 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer flex items-center gap-1 transition-colors">
                         {{ $selectedProduct->product_id }}
                         <flux:icon.copy class="size-3 cursor-pointer" />
                     </button>
