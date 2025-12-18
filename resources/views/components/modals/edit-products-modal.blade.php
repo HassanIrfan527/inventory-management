@@ -1,136 +1,117 @@
-<div
-    x-show="showEditModal"
-    x-transition
-    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/70 p-4"
-    @keydown.escape="showEditModal = false"
->
-    <div
-        x-show="showEditModal"
-        x-transition
-        @click.away="showEditModal = false"
-        class="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg bg-white dark:bg-neutral-900 shadow-lg"
-    >
-        <!-- Close Button -->
-        <button
-            @click="showEditModal = false"
-            class="sticky top-4 right-4 float-right text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors z-10"
-            aria-label="Close modal"
-        >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
-
-        <!-- Modal Content -->
-        <template x-if="selectedProduct">
-            <div class="p-6 sm:p-8">
-            <!-- Header -->
-            <h3 class="text-2xl font-bold text-neutral-900 dark:text-white mb-6">Edit Product</h3>
-
-            <!-- Form -->
-            <form @submit.prevent="submitEdit" class="space-y-6">
-                <!-- Product ID (Read-only) -->
+<flux:modal name="edit-product" class="min-w-[20rem] md:min-w-[40rem] space-y-6" :closable="false">
+    <div x-data="{
+        copy(text, label) {
+            navigator.clipboard.writeText(text);
+            window.dispatchEvent(new CustomEvent('toast', { detail: { message: label + ' copied to clipboard', type: 'success' } }));
+        }
+    }">
+        @if ($selectedProduct)
+            <div class="flex items-start justify-between gap-4">
                 <div>
-                    <label class="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2">Product ID</label>
-                    <input
-                        type="text"
-                        x-model="selectedProduct.product_id"
-                        disabled
-                        class="w-full px-4 py-2 rounded-lg border border-neutral-300 bg-neutral-50 text-neutral-900 dark:border-neutral-600 dark:bg-neutral-800 dark:text-white disabled:opacity-50"
-                    >
+                    <flux:heading size="lg">Edit Product</flux:heading>
+                    <flux:subheading>Update product information below.</flux:subheading>
                 </div>
-
-                <!-- Product Name -->
-                <div>
-                    <label class="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2">Product Name *</label>
-                    <input
-                        type="text"
-                        x-model="selectedProduct.name"
-                        required
-                        class="w-full px-4 py-2 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-colors dark:border-neutral-600 dark:bg-neutral-800 dark:text-white dark:focus:border-blue-400"
-                    >
-                </div>
-
-                <!-- Description -->
-                <div>
-                    <label class="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2">Description</label>
-                    <textarea
-                        x-model="selectedProduct.description"
-                        rows="3"
-                        class="w-full px-4 py-2 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-colors resize-none dark:border-neutral-600 dark:bg-neutral-800 dark:text-white dark:focus:border-blue-400"
-                    ></textarea>
-                </div>
-
-                <!-- Pricing Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Cost Price -->
-                    <div>
-                        <label class="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2">Cost Price *</label>
-                        <input
-                            type="number"
-                            step="0.01"
-                            x-model.number="selectedProduct.purchase_price"
-                            required
-                            class="w-full px-4 py-2 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-colors dark:border-neutral-600 dark:bg-neutral-800 dark:text-white dark:focus:border-blue-400"
-                        >
-                    </div>
-
-                    <!-- Delivery Charges -->
-                    <div>
-                        <label class="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2">Delivery Charges</label>
-                        <input
-                            type="number"
-                            step="0.01"
-                            x-model.number="selectedProduct.delivery_charges"
-                            class="w-full px-4 py-2 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-colors dark:border-neutral-600 dark:bg-neutral-800 dark:text-white dark:focus:border-blue-400"
-                        >
-                    </div>
-
-                    <!-- Retail Price -->
-                    <div>
-                        <label class="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2">Retail Price *</label>
-                        <input
-                            type="number"
-                            step="0.01"
-                            x-model.number="selectedProduct.retail_price"
-                            required
-                            class="w-full px-4 py-2 rounded-lg border border-neutral-300 bg-white text-neutral-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-colors dark:border-neutral-600 dark:bg-neutral-800 dark:text-white dark:focus:border-blue-400"
-                        >
-                    </div>
-                </div>
-
-                <!-- Margin Display -->
-                <div class="rounded-lg bg-blue-50 dark:bg-blue-900/20 p-4 border border-blue-200 dark:border-blue-800">
-                    <p class="text-sm text-blue-600 dark:text-blue-400 font-medium">Calculated Margin:
-                        <span class="font-bold" x-text="selectedProduct?.margin?.toFixed(1)"></span>%
-                    </p>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex gap-3 pt-4">
-                    <button
-                        type="button"
-                        @click="showEditModal = false"
-                        class="flex-1 px-4 py-2.5 rounded-lg border border-neutral-300 text-neutral-700 font-medium hover:bg-neutral-50 transition-colors dark:border-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-800"
-                    >
-                        Cancel
+                <div class="flex items-center gap-2">
+                    <span class="text-sm text-neutral-500 dark:text-neutral-400">ID:</span>
+                    <button @click="copy('{{ $selectedProduct->product_id }}', 'Product ID')"
+                        class="font-mono text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer flex items-center gap-1 transition-colors">
+                        {{ $selectedProduct->product_id }}
+                        <flux:icon.copy class="size-3 cursor-pointer" />
                     </button>
-                    <button
-                        type="submit"
-                        :disabled="isUpdating"
-                        class="flex-1 px-4 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed dark:bg-blue-500 dark:hover:bg-blue-600"
-                    >
-                        <span x-show="!isUpdating">Save Changes</span>
-                        <span x-show="isUpdating" class="flex items-center justify-center gap-2">
-                            <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                            </svg>
-                            Saving...
-                        </span>
-                    </button>
+                </div>
+            </div>
+
+            <flux:separator variant="subtle" class="my-6" />
+
+            <form wire:submit.prevent="save" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Product Image -->
+                <div class="md:col-span-1 space-y-4">
+                    <div
+                        class="aspect-square rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 relative group overflow-hidden">
+                        <flux:icon.photo class="size-16 text-neutral-300 dark:text-neutral-600" />
+                        <!-- Placeholder for image upload if needed later -->
+                        <div
+                            class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                            <span class="text-white text-xs font-medium">Change Image</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Form -->
+                <div class="md:col-span-2 space-y-6">
+                    <flux:field>
+                        <div class="flex justify-between items-center mb-1.5">
+                            <flux:label>Product Name</flux:label>
+
+                        </div>
+                        <flux:input value="{{ $selectedProduct->name }}" required />
+                        <flux:error name="selectedProduct.name" />
+                    </flux:field>
+
+                    <flux:field>
+                        <div class="flex justify-between items-center mb-1.5">
+                            <flux:label>Description</flux:label>
+                        </div>
+                        <flux:textarea rows="3" resize="none">{{ $selectedProduct->description }}</flux:textarea>
+                        <flux:error name="selectedProduct.description" />
+                    </flux:field>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <flux:field>
+                            <div class="flex justify-between items-center mb-1.5">
+                                <flux:label>Cost Price</flux:label>
+
+                            </div>
+                            <flux:input type="number" value="{{ number_format($selectedProduct->purchase_price, 0) }}"
+                                icon="banknotes" />
+                            <flux:error name="selectedProduct.purchase_price" />
+                        </flux:field>
+
+                        <flux:field>
+                            <div class="flex justify-between items-center mb-1.5">
+                                <flux:label>Retail Price</flux:label>
+
+                            </div>
+                            <div class="relative">
+                                <flux:input type="number"
+                                    value="{{ number_format($selectedProduct->retail_price, 0) }}" icon="tag"
+                                    class="font-bold text-lg text-blue-600 dark:text-blue-400" />
+                            </div>
+                            <flux:error name="selectedProduct.retail_price" />
+                        </flux:field>
+
+                        <flux:field>
+
+                            <div class="flex justify-between items-center mb-1.5">
+                                <flux:label>Delivery Charges</flux:label>
+
+                            </div>
+
+
+
+                            <flux:input type="number"
+                                value="{{ number_format($selectedProduct->delivery_charges, 0) }}" />
+                            <flux:error name="selectedProduct.delivery_charges" />
+
+
+                        </flux:field>
+                    </div>
                 </div>
             </form>
+
+            <div class="flex justify-end gap-2 pt-4">
+                <flux:modal.close>
+                    <flux:button variant="ghost">Cancel</flux:button>
+                </flux:modal.close>
+                <flux:button variant="primary" wire:click="save">Save Changes</flux:button>
             </div>
-        </template>
+        @else
+            <div class="py-12 flex flex-col items-center justify-center text-center space-y-4">
+                <div class="animate-spin text-neutral-400">
+                    <flux:icon.arrow-path class="size-8" />
+                </div>
+                <flux:heading>Loading...</flux:heading>
+            </div>
+        @endif
     </div>
-</div>
+</flux:modal>

@@ -157,15 +157,14 @@
                                 <div class="flex gap-2 pt-2">
 
                                     <flux:modal.trigger name="edit-product">
-
-                                    <flux:button variant="primary" color="gray" class="flex-1">
-                                        Edit
-                                    </flux:button>
+                                        <flux:button variant="primary" color="gray" class="flex-1" wire:click.prevent="getProductDetails({{ $product->id }})">
+                                            Edit
+                                        </flux:button>
                                     </flux:modal.trigger>
 
                                     <flux:modal.trigger name="view-product">
 
-                                    <flux:button variant="primary" color="blue" class="flex-1" wire:click.prevent="showViewProduct({{ $product->id }})">
+                                    <flux:button variant="primary" color="blue" class="flex-1" wire:click.prevent="getProductDetails({{ $product->id }})">
                                         View
                                     </flux:button>
                                     </flux:modal.trigger>
@@ -203,11 +202,9 @@
     </div>
     <!-- Modals -->
     <x-modals.view-products-modal :selectedProduct="$selectedProduct" />
+    <x-modals.edit-products-modal :selectedProduct="$selectedProduct" />
 
-
-
-    {{-- <x-modals.edit-products-modal />
-    <x-modals.delete-modal title="Delete Product"
+    {{-- <x-modals.delete-modal title="Delete Product"
         message="Are you sure you want to delete this product? This action cannot be undone."
         confirmText="Delete Product" /> --}}
 

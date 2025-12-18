@@ -37,7 +37,7 @@
         </flux:navlist>
 
         <flux:spacer />
-        {{-- <flux:line /> --}}
+        <flux:separator/>
 
 
         <flux:navlist variant="outline">
@@ -141,6 +141,7 @@
     {{ $slot }}
 
     @fluxScripts
+    <x-toast />
 </body>
 
 </html>

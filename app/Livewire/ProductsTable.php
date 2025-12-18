@@ -24,10 +24,9 @@ class ProductsTable extends Component
         $this->resetPage();
     }
 
-    public function showViewProduct($productId)
+    public function getProductDetails($productId)
     {
         $this->selectedProduct = Product::find($productId);
-        Flux::modal('view-product')->show();
     }
 
     public function render()
