@@ -13,6 +13,7 @@ class ContactsTable extends Component
     {
         $this->contacts = Contact::all();
     }
+
     public function render()
     {
         return view('livewire.contacts-table');

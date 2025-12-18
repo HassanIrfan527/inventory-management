@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Contact;
-
-
 use Illuminate\Database\Seeder;
 
 class ContactSeeder extends Seeder

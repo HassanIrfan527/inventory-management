@@ -12,8 +12,11 @@ class ProductsTable extends Component
     use WithPagination;
 
     public $search = '';
+
     public $sortBy = 'created_at';
+
     public $perPage = 12;
+
     public $selectedProduct = null;
 
     public function updatingSearch()
@@ -26,6 +29,7 @@ class ProductsTable extends Component
         $this->selectedProduct = Product::find($productId);
         Flux::modal('view-product')->show();
     }
+
     public function render()
     {
         $products = Product::query()

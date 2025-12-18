@@ -23,11 +23,11 @@ Route::view('inventory', 'inventory')
     ->middleware(['auth', 'verified'])
     ->name('inventory');
 
-    Route::view('invoices', 'invoices')
+Route::view('invoices', 'invoices')
     ->middleware(['auth', 'verified'])
     ->name('invoices');
 
-    Route::view('orders', 'orders')
+Route::view('orders', 'orders')
     ->middleware(['auth', 'verified'])
     ->name('orders');
 
@@ -48,4 +48,22 @@ Route::middleware(['auth'])->group(function () {
             ),
         )
         ->name('two-factor.show');
+});
+
+// API routes for products
+Route::middleware(['auth', 'verified'])->prefix('api')->group(function () {
+    Route::get('products/{product}', function (\App\Models\Product $product) {
+        return response()->json([
+            'id' => $product->id,
+            'product_id' => $product->product_id,
+            'name' => $product->name,
+            'description' => $product->description,
+            'purchase_price' => (float) $product->purchase_price,
+            'delivery_charges' => (float) $product->delivery_charges,
+            'retail_price' => (float) $product->retail_price,
+            'margin' => round((($product->retail_price - $product->purchase_price) / $product->retail_price) * 100, 2),
+            'created_at_formatted' => $product->created_at->format('M d, Y'),
+            'updated_at_formatted' => $product->updated_at->format('M d, Y'),
+        ]);
+    });
 });
