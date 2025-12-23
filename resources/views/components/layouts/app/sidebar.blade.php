@@ -19,7 +19,7 @@
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
                     wire:navigate>Dashboard
                 </flux:navlist.item>
-                <flux:navlist.item icon="user" :href="route('contacts')" :current="request()->routeIs('contacts')"
+                <flux:navlist.item icon="user" :href="route('contacts.all')" :current="request()->routeIs('contacts')"
                     wire:navigate>Contacts
                 </flux:navlist.item>
 

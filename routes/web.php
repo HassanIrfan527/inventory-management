@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\ContactPage;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -17,7 +18,11 @@ Route::view('dashboard', 'dashboard')
 
 Route::view('contacts', 'contacts')
     ->middleware(['auth', 'verified'])
-    ->name('contacts');
+    ->name('contacts.all');
+
+Route::get('/contact/{contact}', ContactPage::class)
+    ->middleware(['auth', 'verified'])
+    ->name('contact.show');
 
 Route::view('inventory', 'inventory')
     ->middleware(['auth', 'verified'])
