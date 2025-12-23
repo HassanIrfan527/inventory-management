@@ -30,18 +30,20 @@ class ContactPage extends Component
         $this->address = $contact->address;
         $this->landmark = $contact->landmark;
     }
-    public function updated($property, $value)
+    public function updated($property, $value): void
     {
         // Persist updates from primitive properties to the Contact model
         if (str_starts_with($property, 'contact.')) {
             $field = Str::after($property, 'contact.');
             $this->contact->update([$field => $value]);
+            $this->dispatch('toast', message: 'Contact updated successfully', type: 'success');
             return;
         }
 
         $fields = ['phone', 'whatsapp_no', 'address', 'landmark'];
         if (in_array($property, $fields, true)) {
             $this->contact->update([$property => $value]);
+            $this->dispatch('toast', message: 'Contact updated successfully', type: 'success');
         }
     }
     public function render()

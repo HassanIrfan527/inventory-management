@@ -11,12 +11,17 @@
                     <flux:text class="text-zinc-500 dark:text-zinc-400">{{ $contact->email }}</flux:text>
                 </div>
             </div>
-            @unless ($edit)
+            @if ($edit)
+            <div class="flex items-center gap-2">
+                    <flux:button variant="primary" color="gray" wire:click="$set('edit', false)">Cancel</flux:button>
+                    <flux:button variant="danger">Delete</flux:button>
+                </div>
+            @else
                 <div class="flex items-center gap-2">
                     <flux:button variant="primary" color="blue" wire:click="$set('edit', true)">Edit</flux:button>
                     <flux:button variant="danger">Delete</flux:button>
                 </div>
-            @endunless
+            @endif
         </div>
 
         {{-- Details --}}
@@ -29,11 +34,15 @@
                     </div>
                     <div class="space-y-6 p-6">
                         @if ($edit)
-                            <form wire:submit>
-                                <flux:input class="mt-4" icon="phone" label="Phone number" wire:model.blur="phone" />
-                                <flux:input class="mt-4" icon="whatsapp" label="WhatsApp Number" wire:model.blur="whatsapp_no" />
+                            <form class="space-y-6">
+                                <flux:input class="mt-4" icon="phone" label="Phone number"
+                                    wire:model.blur="phone" />
+                                <flux:input class="mt-4" icon="whatsapp" label="WhatsApp Number"
+                                    wire:model.blur="whatsapp_no" />
                                 <flux:input class="mt-4" icon="map-pin" label="Address" wire:model.blur="address" />
-                                <flux:input class="mt-4" icon="map-pin-house" label="Landmark" wire:model.blur="landmark" />
+                                <flux:input class="mt-4" icon="map-pin-house" label="Landmark"
+                                    wire:model.blur="landmark" />
+
                             </form>
                         @else
                             <div class="flex flex-col">
