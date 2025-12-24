@@ -20,6 +20,18 @@ class ContactPage extends Component
 
     protected $queryString = ['edit'];
 
+    protected $rules = [
+        // Validates the format with the dash as it comes from the input
+        'phone' => ['required', 'regex:/^\d{4}-\d{7}$/'],
+
+    ];
+
+    public function messages()
+    {
+        return [
+            'phone.regex' => 'Please enter a valid 11-digit number (03xx-xxxxxxx).',
+        ];
+    }
     public function mount(Contact $contact, $edit = null)
     {
         $this->contact = $contact;
@@ -32,6 +44,7 @@ class ContactPage extends Component
     }
     public function updated($property, $value): void
     {
+        $this->validateOnly($property);
         // Persist updates from primitive properties to the Contact model
         if (str_starts_with($property, 'contact.')) {
             $field = Str::after($property, 'contact.');
@@ -45,6 +58,14 @@ class ContactPage extends Component
             $this->contact->update([$property => $value]);
             $this->dispatch('toast', message: 'Contact updated successfully', type: 'success');
         }
+    }
+
+    public function deleteContact($id): void
+    {
+        $this->contact->delete($id);
+        // Optionally, you might want to redirect or reset some properties here
+        $this->dispatch('toast', message: 'Contact deleted successfully', type: 'success');
+        $this->redirect(route('contacts.all'), navigate: true);
     }
     public function render()
     {

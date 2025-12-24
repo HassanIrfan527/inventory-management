@@ -1,6 +1,6 @@
 <div class="h-full w-full">
 
-    <flux:button variant="ghost" href="javascript:history.back()" icon="arrow-left" />
+    <flux:button variant="ghost" wire:navigate href="{{ route('contacts.all') }}" icon="arrow-left" />
 
     <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {{-- Header --}}
@@ -12,14 +12,20 @@
                 </div>
             </div>
             @if ($edit)
-            <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2">
                     <flux:button variant="primary" color="gray" wire:click="$set('edit', false)">Cancel</flux:button>
-                    <flux:button variant="danger">Delete</flux:button>
+                    <flux:modal.trigger name="delete-modal">
+                        <flux:button variant="danger">Delete</flux:button>
+                    </flux:modal.trigger>
+
                 </div>
             @else
                 <div class="flex items-center gap-2">
                     <flux:button variant="primary" color="blue" wire:click="$set('edit', true)">Edit</flux:button>
-                    <flux:button variant="danger">Delete</flux:button>
+
+                    <flux:modal.trigger name="delete-modal">
+                        <flux:button variant="danger">Delete</flux:button>
+                    </flux:modal.trigger>
                 </div>
             @endif
         </div>
@@ -35,10 +41,11 @@
                     <div class="space-y-6 p-6">
                         @if ($edit)
                             <form class="space-y-6">
-                                <flux:input class="mt-4" icon="phone" label="Phone number"
-                                    wire:model.blur="phone" />
+                                <flux:input class="mt-4" icon="phone" label="Phone number" x-mask="9999-9999999"
+                                    maxlength="12" wire:model.blur="phone" />
+
                                 <flux:input class="mt-4" icon="whatsapp" label="WhatsApp Number"
-                                    wire:model.blur="whatsapp_no" />
+                                    wire:model.blur="whatsapp_no" maxlength="12" x-mask="9999-9999999" />
                                 <flux:input class="mt-4" icon="map-pin" label="Address" wire:model.blur="address" />
                                 <flux:input class="mt-4" icon="map-pin-house" label="Landmark"
                                     wire:model.blur="landmark" />
@@ -107,4 +114,9 @@
             </div>
         </div>
     </div>
+
+
+    {{-- Delete Modal --}}
+    <x-modals.delete-modal :itemId="$contact->id" :itemName="$contact->name" :title="'Delete Contact'"/>
+
 </div>
