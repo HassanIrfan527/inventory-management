@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->nullable()->unique();
-            $table->string('phone')->nullable();
-            $table->string('whatsapp_no')->nullable();
+            $table->string('phone', 11)->nullable();
+            $table->string('whatsapp_no', 11)->nullable();
             $table->string('address')->nullable();
             $table->string('landmark')->nullable();
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

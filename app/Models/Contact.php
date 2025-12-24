@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Contact extends Model
 {
     /** @use HasFactory<\Database\Factories\ContactFactory> */
     use HasFactory;
-
+    use SoftDeletes;
     protected $fillable = [
         'name',
         'email',
@@ -18,6 +20,34 @@ class Contact extends Model
         'address',
         'landmark',
     ];
+
+
+    // protected $casts = [
+    //     'phone' => ,
+    //     'whatsapp_no' => ,
+    // ];
+
+    protected function phone(): Attribute
+    {
+        return Attribute::make(
+            // SAVING TO DB: Remove the dash
+            set: fn ($value) => str_replace('-', '', $value),
+
+            // RETRIEVING FROM DB: Put the dash back for the UI
+            get: fn ($value) => substr($value, 0, 4) . '-' . substr($value, 4),
+        );
+    }
+
+    protected function whatsappNo(): Attribute
+    {
+        return Attribute::make(
+            // SAVING TO DB: Remove the dash
+            set: fn ($value) => str_replace('-', '', $value),
+
+            // RETRIEVING FROM DB: Put the dash back for the UI
+            get: fn ($value) => substr($value, 0, 4) . '-' . substr($value, 4),
+        );
+    }
 
     // The DB queries will work according to the 'contact_id' instead of 'id'
     public function getRouteKeyName()

@@ -19,8 +19,8 @@ class ContactFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'phone' => $this->faker->phoneNumber(),
-            'whatsapp_no' => $this->faker->phoneNumber(),
+            'phone' => '03001234567',
+            'whatsapp_no' => '03007654321',
             'address' => $this->faker->address(),
             'landmark' => $this->faker->word(),
         ];
