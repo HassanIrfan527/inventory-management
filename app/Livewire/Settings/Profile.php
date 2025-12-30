@@ -49,11 +49,16 @@ class Profile extends Component
             $user->email_verified_at = null;
         }
 
-        $user->save();
+        $result = $user->save();
 
-        $this->dispatch('profile-updated', name: $user->name);
+        $this->profileUpdatedToast('Profile updated successfully', 'success');
+
     }
 
+    private function profileUpdatedToast(string $text, string $type): void
+    {
+        $this->dispatch('toast', message: $text, type: $type);
+    }
     /**
      * Send an email verification notification to the current user.
      */
