@@ -36,9 +36,13 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Product Image -->
                 <div class="md:col-span-1">
-                    <div class="aspect-square rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center border border-neutral-200 dark:border-neutral-700">
-                        <flux:icon.photo class="size-16 text-neutral-300 dark:text-neutral-600" />
-                    </div>
+                    @if ($selectedProduct->product_image)
+                        <img src="{{ Storage::url($selectedProduct->product_image) }}" alt="{{ $selectedProduct->name }}" class="aspect-square rounded-xl object-cover border border-neutral-200 dark:border-neutral-700" />
+                    @else
+                        <div class="aspect-square rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center border border-neutral-200 dark:border-neutral-700">
+                            <flux:icon.photo class="size-16 text-neutral-300 dark:text-neutral-600" />
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Product Details -->
@@ -50,7 +54,7 @@
                                 <flux:icon.copy class="size-4 cursor-pointer" />
                             </button>
                         </div>
-                        <flux:textarea readonly resize="none" rows="3">{{ $selectedProduct->description ?? 'No description provided.' }}</flux:textarea>
+                        <flux:textarea readonly rows="3">{{ $selectedProduct->description ?? 'No description provided.' }}</flux:textarea>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

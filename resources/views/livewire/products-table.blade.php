@@ -28,9 +28,9 @@
 
                     <!-- Add New Product Button -->
                     <flux:modal.trigger name="add-product">
-                    <flux:button variant="primary" color="blue" class="flex items-center gap-2" icon="plus">
-                        Add New Product
-                    </flux:button>
+                        <flux:button variant="primary" color="blue" class="flex items-center gap-2" icon="plus">
+                            Add New Product
+                        </flux:button>
                     </flux:modal.trigger>
                 </div>
 
@@ -62,13 +62,19 @@
                             <!-- Product Image -->
                             <div
                                 class="relative aspect-square overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-neutral-800 dark:to-neutral-700">
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <svg class="w-16 h-16 text-neutral-300 dark:text-neutral-600" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                </div>
+                                @if ($product->product_image)
+                                    <img src="{{ Storage::url($product->product_image) }}"
+                                        alt="{{ $product->name }}"
+                                        class="w-full h-full object-cover">
+                                @else
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <svg class="w-20 h-20 text-neutral-300 dark:text-neutral-600" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                @endif
 
                                 <!-- Badge -->
                                 <div class="absolute top-3 right-3">
@@ -114,7 +120,7 @@
 
                                 <!-- Description -->
                                 @if ($product->description)
-                                    <p class="text-sm text-neutral-600 dark:text-neutral-400 line-clamp-6">
+                                    <p class="text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2">
                                         {{ $product->description }}
                                     </p>
                                 @endif
@@ -155,16 +161,18 @@
                                 <div class="flex gap-2 pt-2">
 
                                     <flux:modal.trigger name="edit-product">
-                                        <flux:button variant="primary" color="gray" class="flex-1" wire:click.prevent="getProductDetails({{ $product->id }})">
+                                        <flux:button variant="primary" color="gray" class="flex-1"
+                                            wire:click.prevent="getProductDetails({{ $product->id }})">
                                             Edit
                                         </flux:button>
                                     </flux:modal.trigger>
 
                                     <flux:modal.trigger name="view-product">
 
-                                    <flux:button variant="primary" color="blue" class="flex-1" wire:click.prevent="getProductDetails({{ $product->id }})">
-                                        View
-                                    </flux:button>
+                                        <flux:button variant="primary" color="blue" class="flex-1"
+                                            wire:click.prevent="getProductDetails({{ $product->id }})">
+                                            View
+                                        </flux:button>
                                     </flux:modal.trigger>
                                 </div>
                             </div>
@@ -204,54 +212,49 @@
     <x-modals.add-product-modal>
         <form class="space-y-6" wire:submit.prevent="addProduct">
             @csrf
-        <!-- Product Image -->
-        <flux:field>
-            <flux:label>Product Image</flux:label>
-            <label for="file-upload" class="mt-2 flex cursor-pointer justify-center rounded-xl border border-dashed border-neutral-300 px-6 py-10 transition-colors hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800">
-                <div class="text-center">
-                    <flux:icon.photo class="mx-auto h-12 w-12 text-neutral-300 dark:text-neutral-600" />
-                    <div class="mt-4 flex text-sm leading-6 text-neutral-600 dark:text-neutral-400 justify-center">
-                        <span class="font-semibold text-blue-600 dark:text-blue-400">Upload a file</span>
-                        <p class="pl-1">or drag and drop</p>
-                    </div>
-                    <p class="text-xs leading-5 text-neutral-600 dark:text-neutral-400">PNG, JPG, GIF up to 10MB</p>
-                    <input id="file-upload" name="file-upload" type="file" class="sr-only" accept="image/*">
-                </div>
-            </label>
-        </flux:field>
-
-        <!-- Product Details -->
-        <flux:field>
-            <flux:label badge="Required">Product Name</flux:label>
-             <flux:input placeholder="e.g. Wireless Headphones" wire:model="product.name" />
-        </flux:field>
-
-        <flux:field>
-            <flux:label badge="Required">Description</flux:label>
-            <flux:textarea rows="3" resize="none" placeholder="Enter product description..." wire:model="product.description" />
-        </flux:field>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Product Image -->
             <flux:field>
-                <flux:label badge="Required">Cost Price</flux:label>
-                <flux:input type="number" step="0.01" icon="banknotes" placeholder="0.00" wire:model="product.cost_price" />
+                <flux:label badge="Optional">Product Image</flux:label>
+                <flux:input type="file" wire:model="product.temporaryUploadedFile" />
+
+            </flux:field>
+
+            <!-- Product Details -->
+            <flux:field>
+                <flux:label badge="Required">Product Name</flux:label>
+                <flux:input placeholder="e.g. Wireless Headphones" wire:model="product.name" />
             </flux:field>
 
             <flux:field>
-                <flux:label badge="Required">Retail Price</flux:label>
-                <flux:input type="number" step="0.01" icon="tag" placeholder="0.00" wire:model="product.retail_price" />
-            </flux:field>
-             <flux:field>
-                <flux:label badge="Optional">Delivery Charges</flux:label>
-                <flux:input type="number" step="0.01" icon="truck" placeholder="0.00" wire:model="product.delivery_charges" />
+                <flux:label badge="Required">Description</flux:label>
+                <flux:textarea rows="3" resize="none" placeholder="Enter product description..."
+                    wire:model="product.description" />
             </flux:field>
 
-        </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <flux:field>
+                    <flux:label badge="Required">Cost Price</flux:label>
+                    <flux:input type="number" step="0.01" icon="banknotes" placeholder="0.00"
+                        wire:model="product.cost_price" />
+                </flux:field>
 
-        <flux:button type="submit" variant="primary" color="blue" class="w-full">
-            Add Product
-        </flux:button>
-    </form>
+                <flux:field>
+                    <flux:label badge="Required">Retail Price</flux:label>
+                    <flux:input type="number" step="0.01" icon="tag" placeholder="0.00"
+                        wire:model="product.retail_price" />
+                </flux:field>
+                <flux:field>
+                    <flux:label badge="Optional">Delivery Charges</flux:label>
+                    <flux:input type="number" step="0.01" icon="truck" placeholder="0.00"
+                        wire:model="product.delivery_charges" />
+                </flux:field>
+
+            </div>
+
+            <flux:button type="submit" variant="primary" color="blue" class="w-full">
+                Add Product
+            </flux:button>
+        </form>
     </x-modals.add-product-modal>
 
     {{-- <x-modals.delete-modal title="Delete Product"

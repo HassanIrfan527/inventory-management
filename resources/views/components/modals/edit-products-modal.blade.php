@@ -26,13 +26,16 @@
             <form wire:submit.prevent="save" class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Product Image -->
                 <div class="md:col-span-1 space-y-4">
-                    <div
-                        class="aspect-square rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 relative group overflow-hidden">
-                        <flux:icon.photo class="size-16 text-neutral-300 dark:text-neutral-600" />
-                        <!-- Placeholder for image upload if needed later -->
-                        <div
-                            class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
-                            <span class="text-white text-xs font-medium">Change Image</span>
+                    <div class="space-y-4">
+                        <div class="aspect-square rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 relative group overflow-hidden">
+                            @if ($selectedProduct->product_image)
+                                <img src="{{ Storage::url($selectedProduct->product_image) }}" alt="{{ $selectedProduct->name }}" class="w-full h-full object-cover" />
+                            @else
+                                <flux:icon.photo class="size-16 text-neutral-300 dark:text-neutral-600" />
+                            @endif
+                            <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                <span class="text-white text-xs font-medium">Change Image</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -52,7 +55,7 @@
                         <div class="flex justify-between items-center mb-1.5">
                             <flux:label>Description</flux:label>
                         </div>
-                        <flux:textarea rows="3" resize="none">{{ $selectedProduct->description }}</flux:textarea>
+                        <flux:textarea rows="3">{{ $selectedProduct->description }}</flux:textarea>
                         <flux:error name="selectedProduct.description" />
                     </flux:field>
 
