@@ -17,6 +17,7 @@ class Product extends Model
         'purchase_price',
         'retail_price',
         'delivery_charges',
+        'product_image',
     ];
 
     public static function totalInventoryValue()
