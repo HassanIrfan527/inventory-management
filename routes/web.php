@@ -2,6 +2,7 @@
 
 use App\Livewire\Settings\CompanyInfo;
 use App\Livewire\ContactPage;
+use App\Livewire\Orders;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -33,7 +34,7 @@ Route::view('invoices', 'invoices')
     ->middleware(['auth', 'verified'])
     ->name('invoices');
 
-Route::view('orders', 'orders')
+Route::get('/orders', Orders::class)
     ->middleware(['auth', 'verified'])
     ->name('orders');
 

@@ -8,6 +8,18 @@ class Order extends Model
 {
 
 
+    public function contact()
+    {
+        return $this->belongsTo(Contact::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)
+            ->using(OrderProduct::class) // Using pivot model
+            ->withPivot('quantity', 'sale_price') // List extra columns
+            ->withTimestamps();
+    }
     public static function boot()
     {
         parent::boot();
