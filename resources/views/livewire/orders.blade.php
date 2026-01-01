@@ -16,10 +16,7 @@
                     <p class="text-2xl font-bold text-neutral-900 dark:text-white">{{ $totalOrders }}</p>
                 </div>
                 <div class="rounded-lg bg-blue-50 p-3 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                    </svg>
+                    <flux:icon.handbag />
                 </div>
             </div>
         </div>
@@ -34,10 +31,7 @@
                         {{ number_format($totalRevenue) }}</p>
                 </div>
                 <div class="rounded-lg bg-green-50 p-3 text-green-600 dark:bg-green-900/20 dark:text-green-400">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                    <flux:icon.circle-dollar-sign />
                 </div>
             </div>
         </div>
@@ -51,10 +45,7 @@
                     <p class="text-2xl font-bold text-neutral-900 dark:text-white">{{ $pendingOrders }}</p>
                 </div>
                 <div class="rounded-lg bg-yellow-50 p-3 text-yellow-600 dark:bg-yellow-900/20 dark:text-yellow-400">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                    <flux:icon.clock />
                 </div>
             </div>
             <div class="absolute inset-x-0 bottom-0 h-1 bg-yellow-500/20"></div>
@@ -69,10 +60,7 @@
                     <p class="text-2xl font-bold text-neutral-900 dark:text-white">{{ $completedOrders }}</p>
                 </div>
                 <div class="rounded-lg bg-purple-50 p-3 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                    <flux:icon.circle-check />
                 </div>
             </div>
             <div class="absolute inset-x-0 bottom-0 h-1 bg-purple-500/20"></div>
@@ -99,15 +87,15 @@
                 </div>
                 <button
                     class="inline-flex items-center gap-2 rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700">
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                    </svg>
+                    <flux:icon.funnel />
                     Filter
                 </button>
-                <button
-                    class="rounded-lg bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100">Create
-                    Order</button>
+                <flux:modal.trigger name="create-order">
+                    <button
+                        class="rounded-lg bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100">
+                        Create Order
+                    </button>
+                </flux:modal.trigger>
             </div>
         </div>
 
@@ -148,8 +136,8 @@
                                     class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900 dark:text-white">
                                     <div class="flex items-center gap-2">
                                         <svg class="h-4 w-4 text-neutral-400 transition-transform duration-200"
-                                            :class="{ 'rotate-90': expandedRow === {{ $order->id }} }"
-                                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            :class="{ 'rotate-90': expandedRow === {{ $order->id }} }" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M9 5l7 7-7 7" />
                                         </svg>
@@ -164,7 +152,7 @@
                                         </div>
                                         <a href="{{ route('contact.show', $order->contact) }}"
                                             class="text-blue-600 underline hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
-                                             {{ $order->contact->name }}
+                                            {{ $order->contact->name }}
                                         </a>
                                     </div>
                                 </td>
@@ -278,6 +266,16 @@
                                                     @endforeach
                                                 </tbody>
                                                 <tfoot class="bg-neutral-50 dark:bg-neutral-800/50">
+                                                    @if ($order->delivery_charge > 0)
+                                                        <tr>
+                                                            <td colspan="3"
+                                                                class="px-4 py-2 text-right text-xs font-medium uppercase text-neutral-500 dark:text-neutral-400">
+                                                                Delivery Charge</td>
+                                                            <td
+                                                                class="px-4 py-2 text-right text-sm text-neutral-900 dark:text-white">
+                                                                Rs. {{ number_format($order->delivery_charge) }}</td>
+                                                        </tr>
+                                                    @endif
                                                     <tr>
                                                         <td colspan="3"
                                                             class="px-4 py-2 text-right text-xs font-medium uppercase text-neutral-500 dark:text-neutral-400">
@@ -365,4 +363,5 @@
             </div>
         </div>
     </div>
+    <livewire:modals.create-order />
 </div>
