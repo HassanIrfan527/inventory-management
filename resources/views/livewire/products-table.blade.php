@@ -160,20 +160,17 @@
                                 <!-- Actions -->
                                 <div class="flex gap-2 pt-2">
 
-                                    <flux:modal.trigger name="edit-product">
-                                        <flux:button variant="primary" color="gray" class="flex-1"
-                                            wire:click.prevent="getProductDetails({{ $product->id }})">
-                                            Edit
-                                        </flux:button>
-                                    </flux:modal.trigger>
+                                    <button
+                                        class="flex-1 rounded-lg border border-neutral-300 bg-white px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                                        wire:click="$dispatch('edit-product', { productId: {{ $product->id }} })">
+                                        Edit
+                                    </button>
 
-                                    <flux:modal.trigger name="view-product">
-
-                                        <flux:button variant="primary" color="blue" class="flex-1"
-                                            wire:click.prevent="getProductDetails({{ $product->id }})">
-                                            View
-                                        </flux:button>
-                                    </flux:modal.trigger>
+                                    <button
+                                        class="flex-1 rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                                        wire:click="$dispatch('view-product', { productId: {{ $product->id }} })">
+                                        View
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -207,55 +204,8 @@
         </div>
     </div>
     <!-- Modals -->
-    <x-modals.view-products-modal :selectedProduct="$selectedProduct" />
-    <x-modals.edit-products-modal :selectedProduct="$selectedProduct" />
-    <x-modals.add-product-modal>
-        <form class="space-y-6" wire:submit.prevent="addProduct">
-            @csrf
-            <!-- Product Image -->
-            <flux:field>
-                <flux:label badge="Optional">Product Image</flux:label>
-                <flux:input type="file" wire:model="product.temporaryUploadedFile" />
 
-            </flux:field>
 
-            <!-- Product Details -->
-            <flux:field>
-                <flux:label badge="Required">Product Name</flux:label>
-                <flux:input placeholder="e.g. Wireless Headphones" wire:model="product.name" />
-            </flux:field>
-
-            <flux:field>
-                <flux:label badge="Required">Description</flux:label>
-                <flux:textarea rows="3" resize="none" placeholder="Enter product description..."
-                    wire:model="product.description" />
-            </flux:field>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <flux:field>
-                    <flux:label badge="Required">Cost Price</flux:label>
-                    <flux:input type="number" step="0.01" icon="banknotes" placeholder="0.00"
-                        wire:model="product.cost_price" />
-                </flux:field>
-
-                <flux:field>
-                    <flux:label badge="Required">Retail Price</flux:label>
-                    <flux:input type="number" step="0.01" icon="tag" placeholder="0.00"
-                        wire:model="product.retail_price" />
-                </flux:field>
-                <flux:field>
-                    <flux:label badge="Optional">Delivery Charges</flux:label>
-                    <flux:input type="number" step="0.01" icon="truck" placeholder="0.00"
-                        wire:model="product.delivery_charges" />
-                </flux:field>
-
-            </div>
-
-            <flux:button type="submit" variant="primary" color="blue" class="w-full">
-                Add Product
-            </flux:button>
-        </form>
-    </x-modals.add-product-modal>
 
     {{-- <x-modals.delete-modal title="Delete Product"
         message="Are you sure you want to delete this product? This action cannot be undone."

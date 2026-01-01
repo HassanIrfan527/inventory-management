@@ -10,11 +10,15 @@ use App\Livewire\Settings\TwoFactor;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
+use App\Livewire\Inventory;
+
+use App\Livewire\Dashboard;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
+Route::get('dashboard', Dashboard::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
@@ -26,7 +30,7 @@ Route::get('/contact/{contact}', ContactPage::class)
     ->middleware(['auth', 'verified'])
     ->name('contact.show');
 
-Route::view('inventory', 'inventory')
+Route::get('inventory', Inventory::class)
     ->middleware(['auth', 'verified'])
     ->name('inventory');
 

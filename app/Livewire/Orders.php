@@ -5,6 +5,9 @@ namespace App\Livewire;
 use App\Models\Order;
 use Livewire\Component;
 
+use Livewire\Attributes\Title;
+
+#[Title('Orders Management')]
 class Orders extends Component
 {
     // Static Data for Mockup

@@ -31,10 +31,10 @@ class Contact extends Model
     {
         return Attribute::make(
             // SAVING TO DB: Remove the dash
-            set: fn ($value) => str_replace('-', '', $value),
+            set: fn($value) => str_replace('-', '', $value),
 
             // RETRIEVING FROM DB: Put the dash back for the UI
-            get: fn ($value) => substr($value, 0, 4) . '-' . substr($value, 4),
+            get: fn($value) => substr($value, 0, 4) . '-' . substr($value, 4),
         );
     }
 
@@ -42,10 +42,10 @@ class Contact extends Model
     {
         return Attribute::make(
             // SAVING TO DB: Remove the dash
-            set: fn ($value) => str_replace('-', '', $value),
+            set: fn($value) => str_replace('-', '', $value),
 
             // RETRIEVING FROM DB: Put the dash back for the UI
-            get: fn ($value) => substr($value, 0, 4) . '-' . substr($value, 4),
+            get: fn($value) => substr($value, 0, 4) . '-' . substr($value, 4),
         );
     }
 
@@ -72,5 +72,20 @@ class Contact extends Model
                 $contact->contact_id = $randomNumber;
             }
         });
+    }
+
+    public function logActivity($description, $subject = null, $properties = [])
+    {
+        return $this->activities()->create([
+            'description' => $description,
+            'subject_id' => $subject?->id,
+            'subject_type' => $subject ? get_class($subject) : null,
+            'properties' => $properties,
+        ]);
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class)->latest();
     }
 }
