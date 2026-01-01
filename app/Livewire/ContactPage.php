@@ -19,6 +19,7 @@ class ContactPage extends Component
     public ?string $address = null;
 
     public ?string $landmark = null;
+    public string $note = '';
 
     protected $queryString = ['edit'];
 
@@ -61,8 +62,25 @@ class ContactPage extends Component
         $fields = ['phone', 'whatsapp_no', 'address', 'landmark'];
         if (in_array($property, $fields, true)) {
             $this->contact->update([$property => $value]);
+            $this->contact->logActivity("Updated $property to $value");
             $this->dispatch('toast', message: 'Contact updated successfully', type: 'success');
         }
+    }
+
+    public function addNote(): void
+    {
+        $this->validate(['note' => 'required|string|min:3']);
+
+        $this->contact->logActivity('Note added', null, ['content' => $this->note]);
+
+        $this->note = '';
+        $this->dispatch('toast', message: 'Note added successfully', type: 'success');
+    }
+
+    #[\Livewire\Attributes\Computed]
+    public function activities()
+    {
+        return $this->contact->activities()->with('subject')->latest()->get();
     }
 
     public function deleteContact($id): void

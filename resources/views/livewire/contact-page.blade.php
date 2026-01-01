@@ -100,23 +100,94 @@
 
             {{-- Right column --}}
             <div class="space-y-8">
+                {{-- Add Note --}}
                 <div class="rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
                     <div class="border-b border-zinc-200 p-4 dark:border-zinc-700">
-                        <flux:heading level="3" label="Notes" />
+                        <flux:heading level="3">Add Note</flux:heading>
                     </div>
                     <div class="p-6">
-                        <flux:textarea placeholder="Add a note..." class="min-h-[10rem]" />
+                        <flux:textarea wire:model="note" placeholder="Add a note about this contact..." class="min-h-[8rem]" />
                         <div class="mt-4 flex justify-end">
-                            <flux:button variant="primary">Save Note</flux:button>
+                            <flux:button variant="primary" wire:click="addNote">Save Note</flux:button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        {{-- Activity Feed (Bottom Full Width) --}}
+        <div class="mt-8 rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
+            <div class="border-b border-zinc-200 p-4 dark:border-zinc-700">
+                <flux:heading level="3">Activity Feed</flux:heading>
+            </div>
+            <div class="p-6">
+                @if ($this->activities->isEmpty())
+                    <flux:text class="py-8 text-center">No activities recorded yet.</flux:text>
+                @else
+                    <div class="flow-root">
+                        <ul role="list" class="-mb-8">
+                            @foreach ($this->activities as $activity)
+                                <li wire:key="activity-{{ $activity->id }}">
+                                    <div class="relative pb-8">
+                                        @if (!$loop->last)
+                                            <span
+                                                class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-zinc-200 dark:bg-zinc-700"
+                                                aria-hidden="true"></span>
+                                        @endif
+                                        <div class="relative flex space-x-3">
+                                            <div>
+                                                <span
+                                                    class="flex h-8 w-8 items-center justify-center rounded-full ring-8 ring-white dark:ring-zinc-800 {{ str_contains($activity->description, 'Order') ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30' : (str_contains($activity->description, 'Note') ? 'bg-amber-100 text-amber-600 dark:bg-amber-900/30' : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-700') }}">
+                                                    @if (str_contains($activity->description, 'Order'))
+                                                        <flux:icon.shopping-bag variant="mini" />
+                                                    @elseif(str_contains($activity->description, 'Note'))
+                                                        <flux:icon.chat-bubble-left-ellipsis variant="mini" />
+                                                    @elseif(str_contains($activity->description, 'Updated'))
+                                                        <flux:icon.pencil-square variant="mini" />
+                                                    @else
+                                                        <flux:icon.clock variant="mini" />
+                                                    @endif
+                                                </span>
+                                            </div>
+                                            <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                                                <div>
+                                                    <flux:text size="sm" class="font-medium text-zinc-900 dark:text-zinc-100">
+                                                        {{ $activity->description }}
+                                                    </flux:text>
+
+                                                    @if ($activity->subject instanceof \App\Models\Order)
+                                                        <flux:text size="xs" class="mt-1">
+                                                            Order #{{ $activity->subject->order_number }} • Rs.
+                                                            {{ number_format($activity->subject->total_amount) }}
+                                                        </flux:text>
+                                                    @endif
+
+                                                    @php $props = is_string($activity->properties) ? json_decode($activity->properties, true) : $activity->properties; @endphp
+                                                    @if (isset($props['content']))
+                                                        <div
+                                                            class="mt-2 text-sm text-zinc-600 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-900/50 p-3 rounded-lg border border-zinc-200 dark:border-zinc-700">
+                                                            {{ $props['content'] }}
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                                <div class="whitespace-nowrap text-right text-xs text-zinc-500">
+                                                    <time datetime="{{ $activity->created_at->toIso8601String() }}">
+                                                        {{ $activity->created_at->diffForHumans() }}
+                                                    </time>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
+        </div>
     </div>
 
-
     {{-- Delete Modal --}}
-    <x-modals.delete-modal :itemId="$contact->id" :itemName="$contact->name" :title="'Delete Contact'"/>
+    <x-modals.delete-modal :itemId="$contact->id" :itemName="$contact->name" :title="'Delete Contact'" />
 
 </div>
