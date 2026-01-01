@@ -16,7 +16,7 @@ class Invoice extends Model
                 do {
                     // random 5 digit number
                     $randomNumber = random_int(10000, 99999);
-                    $newId = 'INV-' . $randomNumber;
+                    $newId = 'INV-'.$randomNumber;
                 } while (
                     self::where('invoice_number', $newId)->exists()
                 );

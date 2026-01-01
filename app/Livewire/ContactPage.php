@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Models\Contact;
 use Illuminate\Support\Str;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class ContactPage extends Component
@@ -14,8 +13,11 @@ class ContactPage extends Component
     public ?bool $edit = false;
 
     public ?string $phone = null;
+
     public ?string $whatsapp_no = null;
+
     public ?string $address = null;
+
     public ?string $landmark = null;
 
     protected $queryString = ['edit'];
@@ -32,6 +34,7 @@ class ContactPage extends Component
             'phone.regex' => 'Please enter a valid 11-digit number (03xx-xxxxxxx).',
         ];
     }
+
     public function mount(Contact $contact, $edit = null)
     {
         $this->contact = $contact;
@@ -42,6 +45,7 @@ class ContactPage extends Component
         $this->address = $contact->address;
         $this->landmark = $contact->landmark;
     }
+
     public function updated($property, $value): void
     {
         $this->validateOnly($property);
@@ -50,6 +54,7 @@ class ContactPage extends Component
             $field = Str::after($property, 'contact.');
             $this->contact->update([$field => $value]);
             $this->dispatch('toast', message: 'Contact updated successfully', type: 'success');
+
             return;
         }
 
@@ -67,6 +72,7 @@ class ContactPage extends Component
         $this->dispatch('toast', message: 'Contact deleted successfully', type: 'success');
         $this->redirect(route('contacts.all'), navigate: true);
     }
+
     public function render()
     {
         return view('livewire.contact-page');

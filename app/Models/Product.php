@@ -10,7 +10,6 @@ class Product extends Model
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
 
-
     protected $fillable = [
         'name',
         'description',
@@ -23,9 +22,11 @@ class Product extends Model
     public static function totalInventoryValue()
     {
         $total = number_format(static::sum('retail_price') ?? 0, 0);
+
         return $total;
 
     }
+
     public static function boot()
     {
         parent::boot();
@@ -36,7 +37,7 @@ class Product extends Model
                 do {
                     // random 5 digit number
                     $randomNumber = random_int(10000, 99999);
-                    $newId = 'PROD-' . $randomNumber;
+                    $newId = 'PROD-'.$randomNumber;
                 } while (
                     self::where('product_id', $newId)->exists()
                 );

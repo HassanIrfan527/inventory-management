@@ -2,9 +2,8 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
-
 use Livewire\Attributes\Title;
+use Livewire\Component;
 
 #[Title('Dashboard')]
 class Dashboard extends Component

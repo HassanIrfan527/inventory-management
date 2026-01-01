@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table("contacts", function (Blueprint $table) {
-            $table->string("contact_id")->unique()->after("id");
+        Schema::table('contacts', function (Blueprint $table) {
+            $table->string('contact_id')->unique()->after('id');
         });
     }
 

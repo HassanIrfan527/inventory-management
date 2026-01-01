@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Modals;
 
-use Livewire\Component;
 use App\Livewire\Forms\AddProductForm;
-use Livewire\WithFileUploads;
 use App\Models\Product;
 use Flux\Flux;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class AddProduct extends Component
 {

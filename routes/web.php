@@ -1,18 +1,16 @@
 <?php
 
-use App\Livewire\Settings\CompanyInfo;
 use App\Livewire\ContactPage;
+use App\Livewire\Dashboard;
+use App\Livewire\Inventory;
 use App\Livewire\Orders;
 use App\Livewire\Settings\Appearance;
+use App\Livewire\Settings\CompanyInfo;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\TwoFactor;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
-
-use App\Livewire\Inventory;
-
-use App\Livewire\Dashboard;
 
 Route::get('/', function () {
     return view('welcome');

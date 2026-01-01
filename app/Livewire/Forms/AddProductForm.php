@@ -25,5 +25,4 @@ class AddProductForm extends Form
 
     #[Validate('nullable|image|mimes:jpg,png,webp,jpeg|max:10240')]
     public ?TemporaryUploadedFile $temporaryUploadedFile = null;
-
 }

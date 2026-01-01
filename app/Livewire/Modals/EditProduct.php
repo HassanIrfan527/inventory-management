@@ -14,6 +14,7 @@ class EditProduct extends Component
     use WithFileUploads;
 
     public EditProductForm $form;
+
     public ?Product $product = null;
 
     #[On('edit-product')]

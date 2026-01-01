@@ -3,11 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\Product;
-use Livewire\Component;
-
-use Livewire\WithPagination;
 use Livewire\Attributes\On;
-use Flux\Flux;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class ProductsTable extends Component
 {
@@ -25,15 +23,10 @@ class ProductsTable extends Component
 
     public $perPage = 12;
 
-
-
-
     public function updatingSearch()
     {
         $this->resetPage();
     }
-
-
 
     public function deleteProduct($productId)
     {
@@ -43,7 +36,6 @@ class ProductsTable extends Component
         }
         $this->resetPage();
     }
-
 
     public function render()
     {

@@ -59,6 +59,7 @@ class Profile extends Component
     {
         $this->dispatch('toast', message: $text, type: $type);
     }
+
     /**
      * Send an email verification notification to the current user.
      */

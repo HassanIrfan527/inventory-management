@@ -11,7 +11,9 @@ class Contact extends Model
 {
     /** @use HasFactory<\Database\Factories\ContactFactory> */
     use HasFactory;
+
     use SoftDeletes;
+
     protected $fillable = [
         'name',
         'email',
@@ -20,7 +22,6 @@ class Contact extends Model
         'address',
         'landmark',
     ];
-
 
     // protected $casts = [
     //     'phone' => ,
@@ -31,10 +32,10 @@ class Contact extends Model
     {
         return Attribute::make(
             // SAVING TO DB: Remove the dash
-            set: fn($value) => str_replace('-', '', $value),
+            set: fn ($value) => str_replace('-', '', $value),
 
             // RETRIEVING FROM DB: Put the dash back for the UI
-            get: fn($value) => substr($value, 0, 4) . '-' . substr($value, 4),
+            get: fn ($value) => substr($value, 0, 4).'-'.substr($value, 4),
         );
     }
 
@@ -42,10 +43,10 @@ class Contact extends Model
     {
         return Attribute::make(
             // SAVING TO DB: Remove the dash
-            set: fn($value) => str_replace('-', '', $value),
+            set: fn ($value) => str_replace('-', '', $value),
 
             // RETRIEVING FROM DB: Put the dash back for the UI
-            get: fn($value) => substr($value, 0, 4) . '-' . substr($value, 4),
+            get: fn ($value) => substr($value, 0, 4).'-'.substr($value, 4),
         );
     }
 

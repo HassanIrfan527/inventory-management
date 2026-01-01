@@ -4,10 +4,9 @@ namespace App\Livewire\Settings;
 
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
+use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
-
-use Livewire\Component;
 
 class CompanyInfo extends Component
 {
@@ -42,6 +41,7 @@ class CompanyInfo extends Component
             'temporaryUploadedFile.uploaded' => 'The logo failed to upload. Please try again.',
         ];
     }
+
     /**
     /**
      * Mount the component.
