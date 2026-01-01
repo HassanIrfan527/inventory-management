@@ -6,6 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
+    protected $fillable = [
+        'order_id',
+        'invoice_number',
+        'total_amount',
+        'data',
+        'status',
+        'type',
+        'due_date',
+        'invoice_path'
+    ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
     public static function boot()
     {
         parent::boot();
