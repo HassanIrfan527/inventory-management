@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\InvoiceType;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -11,6 +12,22 @@ class Order extends Model
     public function contact()
     {
         return $this->belongsTo(Contact::class);
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    // Helper to get the specific types
+    public function customerInvoice()
+    {
+        return $this->hasOne(Invoice::class)->where('type', InvoiceType::CUSTOMER->value);
+    }
+
+    public function supplierInvoice()
+    {
+        return $this->hasOne(Invoice::class)->where('type', InvoiceType::SUPPLIER->value);
     }
 
     public function activities()
