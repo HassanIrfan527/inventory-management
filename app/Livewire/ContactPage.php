@@ -83,10 +83,10 @@ class ContactPage extends Component
         return $this->contact->activities()->with('subject')->latest()->get();
     }
 
-    public function deleteContact($id): void
+    public function deleteContact($id = null): void
     {
-        $this->contact->delete($id);
-        // Optionally, you might want to redirect or reset some properties here
+        $this->contact->delete();
+        \Flux\Flux::modal('delete-modal')->close();
         $this->dispatch('toast', message: 'Contact deleted successfully', type: 'success');
         $this->redirect(route('contacts.all'), navigate: true);
     }

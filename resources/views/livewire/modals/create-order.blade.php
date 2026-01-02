@@ -12,7 +12,7 @@
                 <flux:dropdown class="w-full">
                     <flux:button class="w-full justify-between" icon="user" variant="outline" right-icon="chevron-down">
                         <span class="truncate">
-                            {{ $contact_id ? $this->contacts->firstWhere('id', $contact_id)->name : 'Select Customer' }}
+                            {{ $contact_id ? ($this->contacts->firstWhere('id', $contact_id)->name ?? 'Unknown Customer') : 'Select Customer' }}
                         </span>
                     </flux:button>
 
