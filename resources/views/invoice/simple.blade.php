@@ -1,384 +1,408 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Invoice #{{ $invoice->invoice_number }}</title>
     <style>
+        @font-face {
+            font-family: 'Montserrat';
+            src: url('{{ public_path('fonts/Montserrat-Regular.ttf') }}') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Montserrat';
+            src: url('{{ public_path('fonts/Montserrat-Bold.ttf') }}') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'NotoNaskhArabic';
+            src: url('{{ public_path('fonts/NotoNaskhArabic-Regular.ttf') }}') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'NotoNaskhArabic';
+            src: url('{{ public_path('fonts/NotoNaskhArabic-Bold.ttf') }}') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        @page {
+            margin: 0;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            color: #1a202c;
-            line-height: 1.6;
-            background: #f7fafc;
+            font-family: 'Montserrat', 'NotoNaskhArabic', sans-serif;
+            font-size: 12px;
+            color: #333;
+            line-height: 1.4;
+            width: 100%;
+            height: 100%;
         }
 
-        .invoice-container {
-            max-width: 900px;
-            margin: 20px auto;
-            background: white;
-            padding: 50px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        .invoice-wrapper {
+            width: 100%;
+            min-height: 100%;
         }
 
+        .w-100 { width: 100%; }
+        .w-50 { width: 50%; }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+
+        /* Header */
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 50px;
-            border-bottom: 2px solid #edf2f7;
-            padding-bottom: 30px;
+            background-color: #2d3748;
+            padding: 25px 35px;
         }
-
-        .company-info h1 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 8px;
+        .brand-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffffff;
         }
-
-        .company-info p {
-            font-size: 13px;
-            color: #718096;
-            margin: 4px 0;
+        .tagline {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9px;
+            color: #a0aec0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
         }
-
         .invoice-title {
-            text-align: right;
-        }
-
-        .invoice-title h2 {
+            font-family: 'Montserrat', sans-serif;
             font-size: 32px;
-            font-weight: 300;
-            color: #cbd5e0;
-            margin-bottom: 15px;
+            font-weight: bold;
+            color: #e8384f;
+            text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        .invoice-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            font-size: 13px;
+        /* Accent Line */
+        .accent-line {
+            height: 4px;
+            background-color: #e8384f;
         }
 
-        .detail-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .detail-label {
-            color: #718096;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 0.5px;
-        }
-
-        .detail-value {
-            color: #1a202c;
-            font-size: 14px;
-        }
-
-        .content {
-            margin: 50px 0;
-        }
-
-        .section-title {
-            color: #1a202c;
-            font-weight: 600;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 15px;
-            color: #718096;
-        }
-
-        .billing-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-
+        /* Billing Section */
         .billing-section {
-            padding: 20px;
-            background: #f7fafc;
-            border-radius: 6px;
+            background-color: #2d3748;
+            padding: 20px 35px 25px 35px;
         }
-
-        .billing-section h3 {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #718096;
-            margin-bottom: 12px;
-            letter-spacing: 0.5px;
+        .invoice-to-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 5px;
         }
-
-        .billing-section p {
+        .customer-name {
+            font-family: 'Montserrat', 'NotoNaskhArabic', sans-serif;
             font-size: 14px;
-            color: #1a202c;
-            line-height: 1.8;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 3px;
+        }
+        .customer-details {
+            font-family: 'Montserrat', 'NotoNaskhArabic', sans-serif;
+            font-size: 10px;
+            color: #cbd5e0;
+            line-height: 1.5;
+        }
+        .invoice-meta td {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            padding: 3px 0;
+        }
+        .invoice-meta .label {
+            font-weight: bold;
+            color: #ffffff;
+            padding-right: 15px;
+        }
+        .invoice-meta .value {
+            color: #cbd5e0;
         }
 
-        table {
+        /* Items Table */
+        .items-section {
+            padding: 20px 35px;
+        }
+        .items-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 30px 0;
         }
-
-        thead {
-            background: #f7fafc;
-            border-top: 1px solid #edf2f7;
-            border-bottom: 1px solid #edf2f7;
-        }
-
-        th {
-            padding: 15px;
+        .items-table th {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f7fafc;
+            padding: 10px 8px;
             text-align: left;
-            font-weight: 600;
-            font-size: 12px;
-            color: #718096;
+            font-weight: bold;
+            color: #2d3748;
+            font-size: 10px;
+            border-bottom: 2px solid #e2e8f0;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-
-        td {
-            padding: 15px;
-            font-size: 14px;
-            color: #1a202c;
-            border-bottom: 1px solid #edf2f7;
-        }
-
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        .text-right {
+        .items-table th.text-right {
             text-align: right;
         }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .summary {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 40px;
-        }
-
-        .summary-box {
-            width: 350px;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 20px;
-            font-size: 14px;
-            border-bottom: 1px solid #edf2f7;
-        }
-
-        .summary-row.total {
-            background: #1a202c;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-            padding: 16px 20px;
-            border: none;
-        }
-
-        .summary-row.total-label {
-            font-weight: 600;
-        }
-
-        .summary-row.subtotal {
-            color: #718096;
-        }
-
-        .summary-row.tax {
-            color: #718096;
-        }
-
-        .footer {
-            margin-top: 60px;
-            padding-top: 30px;
-            border-top: 1px solid #edf2f7;
-            text-align: center;
-            font-size: 12px;
-            color: #a0aec0;
-        }
-
-        .notes {
-            background: #f7fafc;
-            padding: 20px;
-            border-radius: 6px;
-            margin: 30px 0;
-        }
-
-        .notes h4 {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #718096;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
-
-        .notes p {
-            font-size: 13px;
-            color: #4a5568;
-            line-height: 1.8;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: #c3dafe;
-            color: #2c3e50;
-            border-radius: 20px;
+        .items-table td {
+            font-family: 'Montserrat', 'NotoNaskhArabic', sans-serif;
+            padding: 10px 8px;
+            border-bottom: 1px solid #e2e8f0;
             font-size: 11px;
-            font-weight: 600;
+            color: #4a5568;
+        }
+        .items-table td.text-right {
+            text-align: right;
+        }
+        .items-table .sl-col {
+            width: 35px;
+            text-align: center;
+        }
+        .items-table th.sl-col {
+            text-align: center;
         }
 
-        @media print {
-            body {
-                background: white;
-            }
+        /* Footer Section */
+        .footer-section {
+            padding: 15px 35px 20px 35px;
+            background-color: #f8fafc;
+        }
+        .thank-you {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .payment-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 6px;
+        }
+        .payment-details {
+            font-family: 'Montserrat', 'NotoNaskhArabic', sans-serif;
+            font-size: 9px;
+            color: #4a5568;
+            line-height: 1.7;
+        }
+        .payment-details .label {
+            display: inline-block;
+            width: 65px;
+            color: #718096;
+            font-weight: bold;
+        }
 
-            .invoice-container {
-                box-shadow: none;
-                max-width: 100%;
-                margin: 0;
-                padding: 0;
-            }
+        /* Totals */
+        .totals-table {
+            width: 100%;
+        }
+        .totals-table td {
+            font-family: 'Montserrat', sans-serif;
+            padding: 5px 0;
+            font-size: 11px;
+        }
+        .totals-table .label {
+            text-align: right;
+            color: #4a5568;
+            padding-right: 15px;
+            font-weight: bold;
+        }
+        .totals-table .value {
+            text-align: right;
+            color: #2d3748;
+            width: 100px;
+        }
+        .totals-table .total-row td {
+            padding-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            border-top: 2px solid #e2e8f0;
+        }
+        .totals-table .total-row .value {
+            color: #e8384f;
+            font-size: 16px;
+        }
+
+        /* Terms */
+        .terms-section {
+            padding: 15px 35px 20px 35px;
+        }
+        .terms-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        .terms-text {
+            font-family: 'Montserrat', 'NotoNaskhArabic', sans-serif;
+            font-size: 8px;
+            color: #718096;
+            line-height: 1.5;
+        }
+
+        /* Footer Bar */
+        .footer-bar {
+            background-color: #2d3748;
+            height: 20px;
         }
     </style>
 </head>
-
 <body>
-    <div class="invoice-container">
-        <!-- Header -->
-        <div class="header">
-            <div class="company-info">
-                <h1>{{ Auth::user()->companyInfo?->name }}</h1>
-                <p>{{ Auth::user()->companyInfo?->address }}</p>
-                {{-- <p>{{ Auth::user()->companyInfo->city }}, {{ Auth::user()->companyInfo->state }} {{ Auth::user()->companyInfo->zip }}</p> --}}
-                <p>{{ Auth::user()->companyInfo?->email }}</p>
-                <p>{{ Auth::user()->companyInfo?->phone }}</p>
-            </div>
-            <div class="invoice-title">
-                <h2>INVOICE</h2>
-            </div>
-        </div>
 
-        <!-- Invoice Details -->
-        <div class="invoice-details">
-            <div class="detail-group">
-                <span class="detail-label">Invoice Number</span>
-                <span class="detail-value">{{ $invoice->invoice_number }}</span>
-            </div>
-            <div class="detail-group">
-                <span class="detail-label">Invoice Date</span>
-                <span class="detail-value">{{ $invoice->created_at }}</span>
-            </div>
-            <div class="detail-group">
-                <span class="detail-label">Due Date</span>
-                <span class="detail-value">{{ $invoice->due_date }}</span>
-            </div>
-            <div class="detail-group">
-                <span class="detail-label">Status</span>
-                <span class="detail-value"><span class="badge">{{ $invoice->status }}</span></span>
-            </div>
-        </div>
+<div class="invoice-wrapper">
 
-        <!-- Billing Information -->
-        <div class="content">
-            <div class="billing-grid">
-                <div class="billing-section">
-                    <h3>Bill From</h3>
-                    <p>
-                        Acme Corporation<br>
-                        123 Business Street<br>
-                        New York, NY 10001<br>
-                        USA
-                    </p>
+    <!-- Header -->
+    <table class="w-100 header">
+        <tr>
+            <td class="w-50" style="vertical-align: middle;">
+                <div class="brand-name">{{ config('app.name', 'Brand Name') }}</div>
+                <div class="tagline">Inventory Management System</div>
+            </td>
+            <td class="w-50 text-right" style="vertical-align: middle;">
+                <div class="invoice-title">Invoice</div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Accent Line -->
+    <div class="accent-line"></div>
+
+    <!-- Billing Section -->
+    <table class="w-100 billing-section">
+        <tr>
+            <td class="w-50" style="vertical-align: top;">
+                <div class="invoice-to-label">Invoice To:</div>
+                <div class="customer-name">{{ $invoice->order->contact->name ?? 'N/A' }}</div>
+                <div class="customer-details">
+                    {{ $invoice->order->address ?? '' }}<br>
+                    @if($invoice->order->contact->city || $invoice->order->contact->state)
+                        {{ $invoice->order->contact->city ?? '' }}{{ $invoice->order->contact->city && $invoice->order->contact->state ? ', ' : '' }}{{ $invoice->order->contact->state ?? '' }} {{ $invoice->order->contact->zip_code ?? '' }}<br>
+                    @endif
+                    @if($invoice->order->contact->phone)
+                        {{ $invoice->order->contact->phone }}
+                    @endif
                 </div>
-                <div class="billing-section">
-                    <h3>Bill To</h3>
-                    <p>
-                        John Smith<br>
-                        XYZ Industries<br>
-                        456 Enterprise Avenue<br>
-                        Los Angeles, CA 90001<br>
-                        USA
-                    </p>
-                </div>
-            </div>
-
-            <!-- Line Items Table -->
-            <table>
-                <thead>
+            </td>
+            <td class="w-50" style="vertical-align: top;">
+                <table class="invoice-meta" style="float: right;">
                     <tr>
-                        <th>Description</th>
-                        <th class="text-center">Quantity</th>
-                        <th class="text-right">Unit Price</th>
-                        <th class="text-right">Amount</th>
+                        <td class="label">Invoice #:</td>
+                        <td class="value">{{ $invoice->invoice_number ?? 'N/A' }}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach($invoice->order->products as $product)
                     <tr>
-                        <td>{{ $product->name }}</td>
-                        <td class="text-center">{{ $product->pivot->quantity }}</td>
-                        <td class="text-right">${{ number_format($product->retail_price, 2) }}</td>
-                        <td class="text-right">${{ number_format($product->retail_price * $product->pivot->quantity, 2) }}</td>
+                        <td class="label">Date:</td>
+                        <td class="value">{{ $invoice->created_at ? $invoice->created_at->format('d M, Y') : 'N/A' }}</td>
                     </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    @if($invoice->due_date)
+                    <tr>
+                        <td class="label">Due Date:</td>
+                        <td class="value">{{ \Carbon\Carbon::parse($invoice->due_date)->format('d M, Y') }}</td>
+                    </tr>
+                    @endif
+                </table>
+            </td>
+        </tr>
+    </table>
 
-            <!-- Summary -->
-            <div class="summary">
-                <div class="summary-box">
-                    <div class="summary-row subtotal">
-                        <span>Subtotal</span>
-                        <span>${{ number_format($invoice->order->total_amount - $invoice->order->delivery_charge, 2) }}</span>
-                    </div>
-                    <div class="summary-row tax">
-                        <span>Delivery Charges</span>
-                        <span>${{ number_format($invoice->order->delivery_charge, 2) }}</span>
-                    </div>
-                    <div class="summary-row total">
-                        <span class="total-label">Subtotal</span>
-                        <span>${{ number_format($invoice->order->total_amount, 2) }}</span>
-                    </div>
+    <!-- Items Table -->
+    <div class="items-section">
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th class="sl-col">#</th>
+                    <th>Item</th>
+                    <th class="text-right" style="width: 90px;">Price</th>
+                    <th class="text-right" style="width: 50px;">Qty</th>
+                    <th class="text-right" style="width: 100px;">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($invoice->order->products as $index => $product)
+                <tr>
+                    <td class="sl-col">{{ $index + 1 }}</td>
+                    <td>{{ $product->name ?? 'N/A' }}</td>
+                    <td class="text-right">Rs {{ number_format($product->pivot->sale_price ?? 0, 2) }}</td>
+                    <td class="text-right">{{ $product->pivot->quantity ?? 0 }}</td>
+                    <td class="text-right" style="font-weight: bold;">Rs {{ number_format(($product->pivot->sale_price ?? 0) * ($product->pivot->quantity ?? 0), 2) }}</td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" class="text-center" style="padding: 20px; color: #a0aec0;">No items found.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer Section -->
+    <table class="w-100 footer-section">
+        <tr>
+            <td class="w-50" style="vertical-align: top; padding-right: 20px;">
+                <div class="thank-you">Thank you for your business!</div>
+                <div class="payment-label">Payment Info</div>
+                <div class="payment-details">
+                    <div><span class="label">Account #:</span> {{ config('company.account_number') ?? config('settings.account_number') ?? '1234 5678 9012' }}</div>
+                    <div><span class="label">A/C Name:</span> {{ config('company.account_name') ?? config('settings.account_name') ?? config('app.name', 'Your Company') }}</div>
+                    <div><span class="label">Bank:</span> {{ config('company.bank_details') ?? config('settings.bank_details') ?? 'Your Bank Name' }}</div>
                 </div>
-            </div>
+            </td>
+            <td class="w-50" style="vertical-align: top;">
+                <table class="totals-table">
+                    <tr>
+                        <td class="label">Subtotal:</td>
+                        <td class="value">Rs {{ number_format($invoice->order->subtotal_amount ?? ($invoice->order->total_amount - ($invoice->order->delivery_charge ?? 0) + ($invoice->order->discount_amount ?? 0)) ?? 0, 2) }}</td>
+                    </tr>
+                    @if(($invoice->order->discount_amount ?? 0) > 0)
+                    <tr>
+                        <td class="label">Discount:</td>
+                        <td class="value" style="color: #38a169;">- Rs {{ number_format($invoice->order->discount_amount, 2) }}</td>
+                    </tr>
+                    @endif
+                    @if(($invoice->order->delivery_charge ?? 0) > 0)
+                    <tr>
+                        <td class="label">Delivery:</td>
+                        <td class="value">Rs {{ number_format($invoice->order->delivery_charge, 2) }}</td>
+                    </tr>
+                    @endif
+                    @if(($invoice->order->tax_rate ?? 0) > 0)
+                    <tr>
+                        <td class="label">Tax:</td>
+                        <td class="value">{{ number_format($invoice->order->tax_rate, 2) }}%</td>
+                    </tr>
+                    @endif
+                    <tr class="total-row">
+                        <td class="label">Grand Total:</td>
+                        <td class="value">Rs {{ number_format($invoice->order->total_amount ?? 0, 2) }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 
-            <!-- Notes -->
-            <div class="notes">
-                <h4>Notes</h4>
-                <p>Thank you for your business. Payment is due within 30 days of invoice date. Please make checks
-                    payable to Acme Corporation. For questions regarding this invoice, please contact our accounting
-                    department.</p>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <p>&copy; 2024 Acme Corporation. All rights reserved. | Tax ID: 12-3456789</p>
+    <!-- Terms Section -->
+    <div class="terms-section">
+        <div class="terms-label">Terms & Conditions</div>
+        <div class="terms-text">
+            {{ config('company.invoice_terms') ?? 'Payment is due within 30 days. Late payments may incur additional charges. Please include invoice number with payment.' }}
         </div>
     </div>
-</body>
 
+    <!-- Footer Bar -->
+    <div class="footer-bar"></div>
+
+</div>
+
+</body>
 </html>

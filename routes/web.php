@@ -3,6 +3,7 @@
 use App\Livewire\ContactPage;
 use App\Livewire\Dashboard;
 use App\Livewire\Inventory;
+use App\Livewire\Invoices;
 use App\Livewire\Orders;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\CompanyInfo;
@@ -32,7 +33,7 @@ Route::get('inventory', Inventory::class)
     ->middleware(['auth', 'verified'])
     ->name('inventory');
 
-Route::view('invoices', 'invoices')
+Route::get('/invoices', Invoices::class)
     ->middleware(['auth', 'verified'])
     ->name('invoices');
 

@@ -3,6 +3,7 @@
 /public/build
 /public/hot
 /public/storage
+/public/fonts
 /storage/*.key
 /storage/pail
 /vendor
@@ -23,3 +24,5 @@ yarn-error.log
 /.zed
 /nativephp
 /nativephp/.env
+/storage
+
