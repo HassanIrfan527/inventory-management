@@ -15,7 +15,7 @@ class GenerateInvoiceModal extends Component
     public function open(int $orderId)
     {
         $this->order = Order::with(['contact', 'products'])->find($orderId);
-        
+
         Flux::modal('generate-invoice-modal')->show();
     }
 

@@ -14,13 +14,14 @@ class Invoice extends Model
         'status',
         'type',
         'due_date',
-        'invoice_path'
+        'invoice_path',
     ];
 
     public function order()
     {
         return $this->belongsTo(Order::class);
     }
+
     public static function boot()
     {
         parent::boot();

@@ -8,6 +8,7 @@ use Livewire\Component;
 class ContactsTable extends Component
 {
     public string $search = '';
+
     public string $sortBy = 'name';
 
     protected $listeners = ['contact-added' => '$refresh'];
@@ -31,13 +32,13 @@ class ContactsTable extends Component
         return Contact::query()
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->where('name', 'like', '%' . $this->search . '%')
-                        ->orWhere('email', 'like', '%' . $this->search . '%');
+                    $q->where('name', 'like', '%'.$this->search.'%')
+                        ->orWhere('email', 'like', '%'.$this->search.'%');
                 });
             })
-            ->when($this->sortBy === 'name', fn($q) => $q->orderBy('name'))
-            ->when($this->sortBy === 'created_at', fn($q) => $q->latest())
-            ->when($this->sortBy === 'updated_at', fn($q) => $q->latest('updated_at'))
+            ->when($this->sortBy === 'name', fn ($q) => $q->orderBy('name'))
+            ->when($this->sortBy === 'created_at', fn ($q) => $q->latest())
+            ->when($this->sortBy === 'updated_at', fn ($q) => $q->latest('updated_at'))
             ->get();
     }
 

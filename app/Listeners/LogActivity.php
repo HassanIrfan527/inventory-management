@@ -4,8 +4,6 @@ namespace App\Listeners;
 
 use App\Events\OrderCreated;
 use App\Models\Contact;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class LogActivity
 {

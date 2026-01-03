@@ -18,7 +18,6 @@ class Activity extends Model
         'properties',
     ];
 
-
     public function subject()
     {
         // This must match the 'subject' prefix used in your migration (subject_id, subject_type)

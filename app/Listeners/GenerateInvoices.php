@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\OrderCreated;
 use App\Jobs\GenerateInvoiceJob;
 use Illuminate\Contracts\Queue\ShouldQueue;
+
 class GenerateInvoices implements ShouldQueue
 {
     /**
@@ -23,6 +24,6 @@ class GenerateInvoices implements ShouldQueue
         if ($event->createInvoice) {
             GenerateInvoiceJob::dispatch($event->order);
         }
-        return;
+
     }
 }

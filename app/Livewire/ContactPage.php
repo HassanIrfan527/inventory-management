@@ -19,6 +19,7 @@ class ContactPage extends Component
     public ?string $address = null;
 
     public ?string $landmark = null;
+
     public string $note = '';
 
     protected $queryString = ['edit'];

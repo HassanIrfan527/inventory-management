@@ -2,14 +2,14 @@
 
 namespace App\Livewire;
 
-use App\Models\Invoice;
 use App\Enums\InvoiceStatus;
 use App\Enums\InvoiceType;
-use Livewire\Component;
-use Livewire\WithPagination;
+use App\Models\Invoice;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Title('Invoices')]
 class Invoices extends Component
@@ -20,6 +20,7 @@ class Invoices extends Component
     public $search = '';
 
     public $filterType = '';
+
     public $filterStatus = '';
 
     public function updatingSearch()
@@ -30,12 +31,12 @@ class Invoices extends Component
     public function download($id)
     {
         $invoice = Invoice::with(['order.contact', 'order.products'])->findOrFail($id);
-        
+
         $pdf = Pdf::loadView('invoice.modern', ['invoice' => $invoice]);
-        
+
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf->output();
-        }, $invoice->invoice_number . '.pdf');
+        }, $invoice->invoice_number.'.pdf');
     }
 
     public function render()
@@ -43,9 +44,9 @@ class Invoices extends Component
         $query = Invoice::query()
             ->with(['order.contact'])
             ->when($this->search, function ($query) {
-                $query->where('invoice_number', 'like', '%' . $this->search . '%')
+                $query->where('invoice_number', 'like', '%'.$this->search.'%')
                     ->orWhereHas('order.contact', function ($q) {
-                        $q->where('name', 'like', '%' . $this->search . '%');
+                        $q->where('name', 'like', '%'.$this->search.'%');
                     });
             })
             ->when($this->filterType, function ($query) {
@@ -65,7 +66,7 @@ class Invoices extends Component
 
         return view('livewire.invoices', [
             'invoices' => $query->paginate(10),
-            'stats' => $stats
+            'stats' => $stats,
         ]);
     }
 }
