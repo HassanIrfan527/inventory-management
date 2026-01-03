@@ -32,7 +32,9 @@ class ProductsTable extends Component
     {
         $product = Product::find($productId);
         if ($product) {
+            $productName = $product->name;
             $product->delete();
+            $this->dispatch('toast', type: 'success', message: "Product '{$productName}' has been removed from inventory.");
         }
         $this->resetPage();
     }

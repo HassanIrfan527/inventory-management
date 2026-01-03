@@ -57,8 +57,8 @@
             @if ($products->count() > 0)
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     @foreach ($products as $product)
-                        <div
-                            class="group rounded-lg border border-neutral-200 bg-white overflow-hidden transition-all hover:shadow-lg hover:border-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:border-neutral-600 dark:hover:shadow-xl">
+                        <div wire:key="product-{{ $product->id }}"
+                            class="group rounded-lg border border-neutral-200 bg-white overflow-hidden transition-all hover:shadow-lg hover:border-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:border-neutral-600 dark:hover:shadow-xl relative">
                             <!-- Product Image -->
                             <div
                                 class="relative aspect-square overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-neutral-800 dark:to-neutral-700">
@@ -99,14 +99,41 @@
                                         {{ $product->product_id }}
                                     </button>
                                     <!-- Delete Icon -->
-                                    <button
-                                        class="absolute top-3 left-3 p-1.5 rounded-lg bg-red-500/90 hover:bg-red-600 text-white transition-colors cursor-pointer"
-                                        title="Delete product">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                        </svg>
-                                    </button>
+                                    <flux:modal.trigger name="delete-product-{{ $product->id }}">
+                                        <button
+                                            class="absolute top-3 left-3 p-1.5 rounded-lg bg-red-500/90 hover:bg-red-600 text-white transition-colors cursor-pointer"
+                                            title="Delete product">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </flux:modal.trigger>
+
+                                    <flux:modal name="delete-product-{{ $product->id }}" class="max-w-md">
+                                        <div class="space-y-6">
+                                            <div class="flex items-start text-left gap-4">
+                                                <div class="rounded-full bg-red-50 p-3 dark:bg-red-950 shrink-0">
+                                                    <flux:icon icon="trash-2" class="h-6 w-6 text-red-600 dark:text-red-400" />
+                                                </div>
+                                                <div class="space-y-2">
+                                                    <flux:heading size="lg">Delete Product</flux:heading>
+                                                    <flux:text class="leading-relaxed">
+                                                        Are you sure you want to delete <strong>{{ $product->name }}</strong>? This action will permanently remove it from your inventory.
+                                                    </flux:text>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-4">
+                                                <flux:modal.close>
+                                                    <flux:button variant="ghost" class="w-full sm:w-auto">Cancel</flux:button>
+                                                </flux:modal.close>
+                                                <flux:button type="submit" variant="primary" color="danger" wire:click="deleteProduct({{ $product->id }})" class="w-full sm:w-auto">
+                                                    Delete Product
+                                                </flux:button>
+                                            </div>
+                                        </div>
+                                    </flux:modal>
 
                                 </div>
 
