@@ -3,27 +3,28 @@
 namespace App\Livewire\Modals;
 
 use App\Events\OrderCreated;
+use App\Livewire\Forms\ContactForm;
 use App\Models\Contact;
-use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Product;
 use Flux\Flux;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+
 class CreateOrder extends Component
 {
+    public ContactForm $newContact;
+
     public int $step = 1;
 
     // Customer Selection
-    public string $customer_selection_type = 'existing';
+    public string $customerSelectionType = 'existing';
+
     public $contact_id = '';
-    public string $new_customer_name = '';
-    public string $new_customer_email = '';
-    public string $new_customer_phone = '';
-    public string $new_customer_address = '';
 
     // Order Info
     public $status = 'Pending';
+
     public $address = '';
 
     public $delivery_charge = 0;
@@ -34,6 +35,7 @@ class CreateOrder extends Component
 
     // Invoice Info
     public bool $generate_invoice = false;
+
     public string $invoice_template = 'simple';
 
     #[Computed]
@@ -59,6 +61,14 @@ class CreateOrder extends Component
         $this->items = array_values($this->items);
     }
 
+    public function selectContact($id, $address)
+    {
+        if ($id) {
+            $this->contact_id = $id;
+            $this->address = $address;
+        }
+    }
+
     // Superseded by updateItemProduct for custom dropdown
     public function updateItemProduct($index, $productId)
     {
@@ -76,6 +86,7 @@ class CreateOrder extends Component
         foreach ($this->items as $item) {
             $subtotal += ((int) $item['quantity'] * (int) $item['price']);
         }
+
         return $subtotal;
     }
 
@@ -103,16 +114,16 @@ class CreateOrder extends Component
 
     protected function validateStep1()
     {
-        if ($this->customer_selection_type === 'existing') {
+        if ($this->customerSelectionType === 'existing') {
             $this->validate([
                 'contact_id' => 'required|exists:contacts,id',
             ]);
         } else {
             $this->validate([
-                'new_customer_name' => 'required|string|max:255',
-                'new_customer_email' => 'nullable|email|max:255|unique:contacts,email',
-                'new_customer_phone' => 'nullable|string|max:20',
-                'new_customer_address' => 'nullable|string',
+                'newContact.name' => 'required|string|max:255',
+                'newContact.email' => 'nullable|email|max:255|unique:contacts,email',
+                'newContact.phone' => 'nullable|string|max:20',
+                'newContact.address' => 'nullable|string',
             ]);
         }
     }
@@ -132,12 +143,14 @@ class CreateOrder extends Component
 
     public function save()
     {
-        if ($this->customer_selection_type === 'new') {
+        if ($this->customerSelectionType === 'new') {
             $contact = Contact::create([
-                'name' => $this->new_customer_name,
-                'email' => $this->new_customer_email,
-                'phone' => $this->new_customer_phone,
-                'address' => $this->new_customer_address,
+                'name' => $this->newContact->name,
+                'email' => $this->newContact->email,
+                'phone' => $this->newContact->phone,
+                'address' => $this->newContact->address,
+                'landmark' => $this->newContact->landmark,
+                'whatsapp_no' => $this->newContact->whatsapp_no,
             ]);
             $this->contact_id = $contact->id;
         }
@@ -163,7 +176,7 @@ class CreateOrder extends Component
         // Dispatch the Order created event
         OrderCreated::dispatch($order, $this->generate_invoice);
 
-        $this->reset(['contact_id', 'items', 'status', 'delivery_charge', 'address', 'step', 'customer_selection_type', 'new_customer_name', 'new_customer_email', 'new_customer_phone', 'new_customer_address', 'generate_invoice', 'invoice_template']);
+        $this->reset(['contact_id', 'items', 'status', 'delivery_charge', 'address', 'step', 'customerSelectionType', 'new_customer_name', 'new_customer_email', 'new_customer_phone', 'new_customer_address', 'generate_invoice', 'invoice_template']);
         $this->items = [['product_id' => '', 'quantity' => 1, 'price' => 0]];
 
         Flux::modal('create-order')->close();
@@ -171,7 +184,6 @@ class CreateOrder extends Component
         $this->dispatch('order-created');
         $this->dispatch('toast', variant: 'success', heading: 'Order Created', text: 'The order has been created successfully.');
     }
-
 
     public function render()
     {
