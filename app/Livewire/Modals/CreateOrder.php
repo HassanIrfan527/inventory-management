@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Modals;
 
+use App\Events\OrderCreated;
 use App\Models\Contact;
 use App\Models\Invoice;
 use App\Models\Order;
@@ -9,8 +10,6 @@ use App\Models\Product;
 use Flux\Flux;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Storage;
 class CreateOrder extends Component
 {
     public $contact_id = '';
@@ -100,18 +99,8 @@ class CreateOrder extends Component
             ]);
         }
 
-        // Generate Invoice
-        $invoice = Invoice::create([
-            'order_id' => $order->id,
-            'due_date' => now()->addDays(30)->toDateString(),
-        ]);
-        $this->finalizeInvoice($invoice->id);
-
-
-        Contact::find($this->contact_id, 'id')->logActivity('Order Created & Invoice Generated', $order, json_encode([
-            'status' => $this->status,
-            'total_amount' => $this->total,
-        ]));
+        // Dispatch the Order created event
+        OrderCreated::dispatch($order);
 
         $this->reset(['contact_id', 'items', 'status', 'delivery_charge', 'address']);
         $this->items = [['product_id' => '', 'quantity' => 1, 'price' => 0]];
@@ -121,25 +110,6 @@ class CreateOrder extends Component
     }
 
 
-
-    public function finalizeInvoice($invoiceId)
-    {
-        $invoice = Invoice::with('order.products', 'order.contact')->findOrFail($invoiceId);
-
-        // 1. Point to your Blade file and pass data
-        $pdf = Pdf::loadView('invoice.simple', ['invoice' => $invoice]);
-
-        // 2. Define the filename and path
-        $fileName = 'invoices/' . $invoice->invoice_number . '.pdf';
-
-        // 3. Save the actual file to Storage
-        Storage::disk('public')->put($fileName, $pdf->output());
-
-        // 4. Update the Database with the path
-        $invoice->update([
-            'invoice_path' => $fileName
-        ]);
-    }
     public function render()
     {
         return view('livewire.modals.create-order');
