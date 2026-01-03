@@ -22,16 +22,23 @@
             </div>
         </div>
 
-        <!-- Avg Retail Price -->
+        <!-- Avg. Profit Margin -->
         <div class="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-700 dark:bg-neutral-900">
             <div class="flex items-center justify-between">
                 <div class="flex flex-col gap-1">
-                    <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Avg Retail Price</p>
-                    <p class="text-2xl font-bold text-neutral-900 dark:text-white">Rs. {{ number_format(\App\Models\Product::avg('retail_price') ?? 0, 0) }}</p>
+                    <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Avg. Profit Margin</p>
+                    <p class="text-2xl font-bold text-neutral-900 dark:text-white">
+                        @php
+                            $totalRetail = \App\Models\Product::sum('retail_price');
+                            $totalPurchase = \App\Models\Product::sum('purchase_price');
+                            $margin = $totalRetail > 0 ? (($totalRetail - $totalPurchase) / $totalRetail) * 100 : 0;
+                        @endphp
+                        {{ round($margin, 1) }}%
+                    </p>
                 </div>
-                <div class="rounded-lg bg-green-100 dark:bg-green-900/30 p-3">
-                    <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <div class="rounded-lg bg-orange-100 dark:bg-orange-900/30 p-3 text-orange-600 dark:text-orange-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                     </svg>
                 </div>
             </div>
