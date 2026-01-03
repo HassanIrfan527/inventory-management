@@ -200,8 +200,8 @@
                                         </button>
 
                                         <!-- Generate Invoice (Document) -->
-                                        <button @click.stop="alert('Invoice generation logic here')"
-                                            class="group relative text-neutral-500 hover:text-purple-600 dark:text-neutral-400 dark:hover:text-purple-400">
+                                        <button wire:click.stop="$dispatch('open-generate-invoice-modal', { orderId: {{ $order->id }} })"
+                                            class="group relative text-neutral-500 hover:text-purple-600 dark:text-neutral-400 dark:hover:text-purple-400 cursor-pointer">
                                             <svg class="h-5 w-5" fill="none" stroke="currentColor"
                                                 viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -372,4 +372,5 @@
         </div>
     </div>
     <livewire:modals.create-order />
+    <livewire:modals.generate-invoice-modal />
 </div>
