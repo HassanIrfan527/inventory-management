@@ -12,10 +12,16 @@ class ViewProduct extends Component
     public ?Product $product = null;
 
     #[On('view-product')]
-    public function open($productId)
+    public function open($id)
     {
-        $this->product = Product::find($productId);
-        Flux::modal('view-product')->show();
+        \Illuminate\Support\Facades\Log::info('ViewProduct event received for ID: '.$id);
+        $this->product = Product::find($id);
+
+        if ($this->product) {
+            Flux::modal('view-product')->show();
+        } else {
+            \Illuminate\Support\Facades\Log::error('Product not found for ID: '.$id);
+        }
     }
 
     public function render()

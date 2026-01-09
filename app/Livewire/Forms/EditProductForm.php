@@ -29,6 +29,9 @@ class EditProductForm extends Form
     #[Validate('nullable|image|mimes:jpg,png,webp,jpeg|max:10240')]
     public ?TemporaryUploadedFile $temporaryUploadedFile = null;
 
+    #[Validate('nullable|array')]
+    public $categories = []; // Array of category IDs
+
     public function setProduct(Product $product)
     {
         $this->product = $product;
@@ -37,6 +40,7 @@ class EditProductForm extends Form
         $this->cost_price = $product->purchase_price;
         $this->retail_price = $product->retail_price;
         $this->delivery_charges = $product->delivery_charges;
+        $this->categories = $product->categories()->pluck('categories.id')->toArray();
     }
 
     public function update()
@@ -54,5 +58,10 @@ class EditProductForm extends Form
             'delivery_charges' => $this->delivery_charges,
             'product_image' => $path,
         ]);
+
+        if (isset($this->categories)) {
+            // Sync categories (handles adding/removing)
+            $this->product->categories()->sync($this->categories);
+        }
     }
 }

@@ -27,13 +27,16 @@
                 <!-- Product Image -->
                 <div class="md:col-span-1 space-y-4">
                     <div class="space-y-4">
-                        <div class="aspect-square rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 relative group overflow-hidden">
+                        <div
+                            class="aspect-square rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 relative group overflow-hidden">
                             @if ($selectedProduct->product_image)
-                                <img src="{{ Storage::url($selectedProduct->product_image) }}" alt="{{ $selectedProduct->name }}" class="w-full h-full object-cover" />
+                                <img src="{{ Storage::url($selectedProduct->product_image) }}"
+                                    alt="{{ $selectedProduct->name }}" class="w-full h-full object-cover" />
                             @else
                                 <flux:icon.photo class="size-16 text-neutral-300 dark:text-neutral-600" />
                             @endif
-                            <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                            <div
+                                class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                                 <span class="text-white text-xs font-medium">Change Image</span>
                             </div>
                         </div>

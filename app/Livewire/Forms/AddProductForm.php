@@ -25,4 +25,9 @@ class AddProductForm extends Form
 
     #[Validate('nullable|image|mimes:jpg,png,webp,jpeg|max:10240')]
     public ?TemporaryUploadedFile $temporaryUploadedFile = null;
+
+    #[Validate('nullable|array')]
+    public $categories = []; // Changed to array for possible multiple selection, or single.
+    // Plan said "option al field", but pivot table exists. I'll make it multiple select in UI to be safe/powerful
+    // User asked "show the category as an option al field", I will use a Flux Select which supports multiple
 }

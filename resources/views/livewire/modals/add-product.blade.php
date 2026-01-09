@@ -25,6 +25,33 @@
                 wire:model="product.description" />
         </flux:field>
 
+            <flux:field>
+                <flux:label badge="Optional">Categories</flux:label>
+                <flux:dropdown class="w-full">
+                    <flux:button class="w-full justify-between" icon="tag" variant="outline" right-icon="chevron-down">
+                        <span class="truncate">Select categories...</span>
+                    </flux:button>
+
+                    <flux:menu class="max-h-60 overflow-y-auto" anchor="start">
+                        @foreach ($allCategories as $category)
+                            <flux:menu.item wire:click="toggleCategory({{ $category->id }})" icon="{{ in_array($category->id, $product->categories) ? 'check' : '' }}">
+                                {{ $category->name }}
+                            </flux:menu.item>
+                        @endforeach
+                    </flux:menu>
+                </flux:dropdown>
+
+                @if (count($product->categories) > 0)
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        @foreach ($allCategories->whereIn('id', $product->categories) as $category)
+                            <flux:badge color="blue" removable wire:click="toggleCategory({{ $category->id }})">
+                                {{ $category->name }}
+                            </flux:badge>
+                        @endforeach
+                    </div>
+                @endif
+            </flux:field>
+
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <flux:field>
                 <flux:label badge="Required">Cost Price</flux:label>

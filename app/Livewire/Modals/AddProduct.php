@@ -14,6 +14,13 @@ class AddProduct extends Component
 
     public AddProductForm $product;
 
+    public $allCategories = [];
+
+    public function mount()
+    {
+        $this->allCategories = \App\Models\Category::orderBy('name')->get();
+    }
+
     public function addProduct()
     {
         $this->product->validate();
@@ -23,7 +30,7 @@ class AddProduct extends Component
             $path = $this->product->temporaryUploadedFile->store('product_images', 'public');
         }
 
-        Product::create([
+        $product = Product::create([
             'name' => $this->product->name,
             'description' => $this->product->description,
             'purchase_price' => $this->product->cost_price,
@@ -32,11 +39,25 @@ class AddProduct extends Component
             'product_image' => $path,
         ]);
 
+        if (! empty($this->product->categories)) {
+            $product->categories()->attach($this->product->categories);
+        }
+
         $this->product->reset();
+        $this->product->categories = []; // Explicitly reset categories
 
         Flux::modal('add-product')->close();
 
         $this->dispatch('product-added');
+    }
+
+    public function toggleCategory($categoryId)
+    {
+        if (in_array($categoryId, $this->product->categories)) {
+            $this->product->categories = array_diff($this->product->categories, [$categoryId]);
+        } else {
+            $this->product->categories[] = $categoryId;
+        }
     }
 
     public function render()
