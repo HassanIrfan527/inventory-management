@@ -18,30 +18,26 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('dashboard', Dashboard::class)
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/contact/{contact}', ContactPage::class)
+        ->middleware('can:view,contact')
+        ->name('contact.show');
 
-Route::view('contacts', 'contacts')
-    ->middleware(['auth', 'verified'])
-    ->name('contacts.all');
+    Route::get('inventory', Inventory::class)
+        ->name('inventory');
 
-Route::get('/contact/{contact}', ContactPage::class)
-    ->middleware(['auth', 'verified'])
-    ->name('contact.show');
+    Route::get('/invoices', Invoices::class)
+        ->name('invoices');
 
-Route::get('inventory', Inventory::class)
-    ->middleware(['auth', 'verified'])
-    ->name('inventory');
+    Route::get('/orders', Orders::class)
+        ->name('orders');
 
-Route::get('/invoices', Invoices::class)
-    ->middleware(['auth', 'verified'])
-    ->name('invoices');
+    Route::get('dashboard', Dashboard::class)
+        ->name('dashboard');
 
-Route::get('/orders', Orders::class)
-    ->middleware(['auth', 'verified'])
-    ->name('orders');
-
+    Route::view('contacts', 'contacts')
+        ->name('contacts.all');
+});
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
