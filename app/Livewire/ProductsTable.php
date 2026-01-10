@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Category;
 use App\Models\Product;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -24,6 +25,10 @@ class ProductsTable extends Component
     public $perPage = 12;
 
     public $selectedCategory = null;
+
+    public $selectedProducts = [];
+
+    public $targetCategory = '';
 
     public function updatingSearch()
     {
@@ -55,6 +60,32 @@ class ProductsTable extends Component
         $this->resetPage();
     }
 
+    public function bulkChangeCategory()
+    {
+        $this->validate([
+            'targetCategory' => 'required|exists:categories,id',
+            'selectedProducts' => 'required|array|min:1',
+        ]);
+
+        $category = Category::find($this->targetCategory);
+        
+        Product::whereIn('id', $this->selectedProducts)->get()->each(function ($product) use ($category) {
+            $product->categories()->sync([$category->id]);
+        });
+
+        $count = count($this->selectedProducts);
+        $this->dispatch('toast', type: 'success', message: "Updated category for {$count} products to '{$category->name}'.");
+        
+        $this->selectedProducts = [];
+        $this->targetCategory = '';
+        $this->dispatch('close-modal', name: 'bulk-change-category');
+    }
+
+    public function clearSelection()
+    {
+        $this->selectedProducts = [];
+    }
+
     public function render()
     {
         $products = Product::query()
@@ -70,7 +101,7 @@ class ProductsTable extends Component
             ->orderBy($this->sortBy, 'desc')
             ->paginate($this->perPage);
 
-        $categories = \App\Models\Category::orderBy('name')->get();
+        $categories = Category::orderBy('name')->get();
 
         return view('livewire.products-table', [
             'products' => $products,

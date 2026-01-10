@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,7 +10,7 @@ class Product extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
-
+    use BelongsToUser;
     protected $fillable = [
         'name',
         'description',
@@ -42,7 +43,7 @@ class Product extends Model
                 do {
                     // random 5 digit number
                     $randomNumber = random_int(10000, 99999);
-                    $newId = 'PROD-'.$randomNumber;
+                    $newId = 'PROD-' . $randomNumber;
                 } while (
                     self::where('product_id', $newId)->exists()
                 );
