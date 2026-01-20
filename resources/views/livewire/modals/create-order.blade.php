@@ -152,11 +152,23 @@
                             <div class="grid grid-cols-12 gap-2 items-start" wire:key="item-{{ $index }}">
                                 <div class="col-span-12 md:col-span-5">
                                     <flux:dropdown class="w-full">
-                                        <flux:button class="w-full justify-between" icon="tag" variant="outline"
+                                        <flux:button class="w-full justify-between" variant="outline"
                                             right-icon="chevron-down">
-                                            <span class="truncate">
-                                                {{ $item['product_id'] ? $this->products->firstWhere('id', $item['product_id'])?->name : 'Select Product' }}
-                                            </span>
+                                            @php
+                                                $selectedProduct = $item['product_id'] ? $this->products->firstWhere('id', $item['product_id']) : null;
+                                            @endphp
+                                            <div class="flex items-center gap-2 overflow-hidden">
+                                                @if ($selectedProduct && $selectedProduct->product_image)
+                                                    <img src="{{ Storage::url($selectedProduct->product_image) }}"
+                                                        alt="{{ $selectedProduct->name }}"
+                                                        class="w-5 h-5 rounded object-cover flex-shrink-0 bg-neutral-100 dark:bg-neutral-800">
+                                                @else
+                                                    <flux:icon name="tag" size="sm" class="text-neutral-400" />
+                                                @endif
+                                                <span class="truncate">
+                                                    {{ $selectedProduct ? $selectedProduct->name : 'Select Product' }}
+                                                </span>
+                                            </div>
                                         </flux:button>
 
                                         <flux:menu class="max-h-60 overflow-y-auto w-full max-w-xs md:max-w-md"
@@ -164,9 +176,24 @@
                                             @foreach ($this->products as $product)
                                                 <flux:menu.item
                                                     wire:click="updateItemProduct({{ $index }}, '{{ $product->id }}')">
-                                                    <span class="truncate block">
-                                                        {{ $product->name }}
-                                                    </span>
+                                                    <div class="flex items-center gap-3">
+                                                        @if ($product->product_image)
+                                                            <img src="{{ Storage::url($product->product_image) }}"
+                                                                alt="{{ $product->name }}"
+                                                                class="w-10 h-10 rounded-lg object-cover flex-shrink-0 bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">
+                                                        @else
+                                                            <div
+                                                                class="w-10 h-10 rounded-lg flex items-center justify-center bg-neutral-100 dark:bg-neutral-800 text-neutral-400 border border-neutral-200 dark:border-neutral-700">
+                                                                <flux:icon name="photo" size="sm" />
+                                                            </div>
+                                                        @endif
+                                                        <div class="flex flex-col truncate">
+                                                            <span
+                                                                class="truncate font-medium text-neutral-900 dark:text-white">{{ $product->name }}</span>
+                                                            <span class="text-xs text-neutral-500">Rs.
+                                                                {{ number_format($product->retail_price, 0) }}</span>
+                                                        </div>
+                                                    </div>
                                                 </flux:menu.item>
                                             @endforeach
                                         </flux:menu>

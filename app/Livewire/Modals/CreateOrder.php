@@ -176,7 +176,7 @@ class CreateOrder extends Component
         // Dispatch the Order created event
         OrderCreated::dispatch($order, $this->generate_invoice);
 
-        $this->reset(['contact_id', 'items', 'status', 'delivery_charge', 'address', 'step', 'customerSelectionType', 'new_customer_name', 'new_customer_email', 'new_customer_phone', 'new_customer_address', 'generate_invoice', 'invoice_template']);
+        $this->reset(['contact_id', 'items', 'status', 'delivery_charge', 'address', 'step', 'customerSelectionType', 'generate_invoice', 'invoice_template']);
         $this->items = [['product_id' => '', 'quantity' => 1, 'price' => 0]];
 
         Flux::modal('create-order')->close();
