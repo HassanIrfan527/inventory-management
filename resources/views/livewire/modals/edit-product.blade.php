@@ -24,26 +24,63 @@
                 <flux:separator variant="subtle" class="my-6" />
     
                 <form wire:submit.prevent="save" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Product Image -->
-                    <div class="md:col-span-1 space-y-4">
-                        <div class="space-y-4">
-                            <div class="aspect-square rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 relative group overflow-hidden">
-                                @if ($form->temporaryUploadedFile)
-                                    <img src="{{ $form->temporaryUploadedFile->temporaryUrl() }}" class="w-full h-full object-cover" />
-                                @elseif ($product->product_image)
-                                    <img src="{{ Storage::url($product->product_image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover" />
-                                @else
-                                    <flux:icon.photo class="size-16 text-neutral-300 dark:text-neutral-600" />
-                                @endif
-                                <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
-                                    <label for="edit-photo-upload" class="cursor-pointer text-white text-xs font-medium w-full h-full flex items-center justify-center">
-                                        Change Image
-                                        <input type="file" id="edit-photo-upload" wire:model="form.temporaryUploadedFile" class="hidden">
-                                    </label>
-                                </div>
+                <!-- Product Images -->
+                <div class="md:col-span-1 space-y-4">
+                    <flux:label>Product Images</flux:label>
+                    <div class="border border-neutral-200 dark:border-neutral-700 rounded-xl p-4 space-y-4">
+                         <!-- Existing Images -->
+                        @if($product->images->count() > 0)
+                            <div class="grid grid-cols-2 gap-2">
+                                @foreach($product->images as $image)
+                                    <div class="relative group aspect-square rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-700">
+                                        <img src="{{ Storage::url($image->image_path) }}" class="w-full h-full object-cover">
+                                    </div>
+                                @endforeach
                             </div>
+                        @else
+                             <div class="text-xs text-neutral-500 text-center py-4">No images uploaded.</div>
+                        @endif
+
+                        <flux:separator variant="subtle" />
+
+                        <!-- Upload New -->
+                        <div x-data="{
+                            previews: [],
+                            handleFileSelect(event) {
+                                this.previews = [];
+                                const files = event.target.files;
+                                for (let i = 0; i < files.length; i++) {
+                                    const file = files[i];
+                                    if (file.type.startsWith('image/')) {
+                                        const reader = new FileReader();
+                                        reader.onload = (e) => {
+                                            this.previews.push(e.target.result);
+                                        };
+                                        reader.readAsDataURL(file);
+                                    }
+                                }
+                            }
+                        }">
+                           <div class="grid grid-cols-2 gap-2 mb-2" x-show="previews.length > 0">
+                                <template x-for="(preview, index) in previews" :key="index">
+                                    <div class="relative group aspect-square rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-700">
+                                         <img :src="preview" class="w-full h-full object-cover">
+                                    </div>
+                                </template>
+                            </div>
+
+                            <label for="edit-dropzone-file" class="flex flex-col items-center justify-center w-full h-24 border-2 border-neutral-300 border-dashed rounded-xl cursor-pointer bg-neutral-50 dark:hover:bg-neutral-800 dark:bg-neutral-900 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:border-neutral-500 transition-all">
+                                <div class="flex flex-col items-center justify-center pt-2 pb-3">
+                                    <flux:icon.plus class="w-6 h-6 mb-1 text-neutral-500 dark:text-neutral-400" />
+                                    <p class="text-xs text-neutral-500 dark:text-neutral-400">Add Images</p>
+                                </div>
+                                <input id="edit-dropzone-file" type="file" multiple class="hidden" wire:model="form.new_product_images" @change="handleFileSelect" />
+                            </label>
+                             <flux:error name="form.new_product_images" />
+                             <flux:error name="form.new_product_images.*" />
                         </div>
                     </div>
+                </div>
     
                     <!-- Edit Form -->
                     <div class="md:col-span-2 space-y-6">

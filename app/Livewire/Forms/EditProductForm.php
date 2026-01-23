@@ -26,8 +26,8 @@ class EditProductForm extends Form
     #[Validate('required|numeric|min:0')]
     public $delivery_charges = '';
 
-    #[Validate('nullable|image|mimes:jpg,png,webp,jpeg|max:10240')]
-    public ?TemporaryUploadedFile $temporaryUploadedFile = null;
+    #[Validate(['new_product_images.*' => 'image|max:10240'])]
+    public $new_product_images = [];
 
     #[Validate('nullable|array')]
     public $categories = []; // Array of category IDs
@@ -45,9 +45,13 @@ class EditProductForm extends Form
 
     public function update()
     {
-        $path = $this->product->product_image;
-        if ($this->temporaryUploadedFile) {
-            $path = $this->temporaryUploadedFile->store('product_images', 'public');
+        if (!empty($this->new_product_images)) {
+            foreach ($this->new_product_images as $image) {
+                $path = $image->store('product_images', 'public');
+                $this->product->images()->create([
+                    'image_path' => $path
+                ]);
+            }
         }
 
         $this->product->update([
@@ -56,7 +60,6 @@ class EditProductForm extends Form
             'purchase_price' => $this->cost_price,
             'retail_price' => $this->retail_price,
             'delivery_charges' => $this->delivery_charges,
-            'product_image' => $path,
         ]);
 
         if (isset($this->categories)) {

@@ -17,7 +17,6 @@ class Product extends Model
         'purchase_price',
         'retail_price',
         'delivery_charges',
-        'product_image',
     ];
 
     public static function totalInventoryValue()
@@ -31,6 +30,11 @@ class Product extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
     }
 
     public static function boot()

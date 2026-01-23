@@ -23,8 +23,8 @@ class AddProductForm extends Form
     #[Validate('required|numeric|min:0')]
     public $delivery_charges = '';
 
-    #[Validate('nullable|image|mimes:jpg,png,webp,jpeg|max:10240')]
-    public ?TemporaryUploadedFile $temporaryUploadedFile = null;
+    #[Validate(['product_images.*' => 'image|max:10240'])]
+    public $product_images = [];
 
     #[Validate('nullable|array')]
     public $categories = []; // Changed to array for possible multiple selection, or single.

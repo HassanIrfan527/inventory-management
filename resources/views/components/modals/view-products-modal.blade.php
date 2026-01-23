@@ -41,8 +41,8 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Product Image -->
                 <div class="md:col-span-1">
-                    @if ($selectedProduct->product_image)
-                        <img src="{{ Storage::url($selectedProduct->product_image) }}"
+                    @if ($selectedProduct->images->first()->image_path ?? false)
+                        <img src="{{ Storage::url($selectedProduct->images->first()->image_path ?? false) }}"
                             alt="{{ $selectedProduct->name }}"
                             class="aspect-square rounded-xl object-cover border border-neutral-200 dark:border-neutral-700" />
                     @else

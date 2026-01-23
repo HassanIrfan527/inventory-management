@@ -21,6 +21,15 @@
                                 <flux:icon.copy class="size-3 cursor-pointer" />
                             </button>
                         </div>
+                        @if($product->categories->isNotEmpty())
+                                        <div class="mt-4 flex flex-wrap gap-2">
+                                            @foreach($product->categories as $category)
+                                                <div class="px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                                                    {{ $category->name }}
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
                     </div>
                     <div class="flex items-center gap-2">
                         @php
@@ -31,21 +40,36 @@
                         <flux:badge color="{{ $margin > 0 ? 'green' : 'red' }}" size="sm">{{ $margin }}% Margin</flux:badge>
                     </div>
                 </div>
-    
+
                 <flux:separator variant="subtle" class="my-6" />
-    
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Product Image -->
+                    <!-- Product Images -->
                     <div class="md:col-span-1">
-                        @if ($product->product_image)
-                            <img src="{{ Storage::url($product->product_image) }}" alt="{{ $product->name }}" class="aspect-square rounded-xl object-cover border border-neutral-200 dark:border-neutral-700" />
+                        @if ($product->images->count() > 0)
+                            <div class="space-y-4">
+                                <!-- Main Image (First one) -->
+                                <div class="aspect-square rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-700">
+                                     <img src="{{ Storage::url($product->images->first()->image_path) }}" class="w-full h-full object-cover">
+                                </div>
+                                <!-- Grid for others -->
+                                @if($product->images->count() > 1)
+                                    <div class="grid grid-cols-4 gap-2">
+                                        @foreach($product->images as $image)
+                                            <div class="aspect-square rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-700 cursor-pointer hover:opacity-80 transition-opacity">
+                                                 <img src="{{ Storage::url($image->image_path) }}" class="w-full h-full object-cover">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
                         @else
                             <div class="aspect-square rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center border border-neutral-200 dark:border-neutral-700">
                                 <flux:icon.photo class="size-16 text-neutral-300 dark:text-neutral-600" />
                             </div>
                         @endif
                     </div>
-    
+
                     <!-- Product Details -->
                     <div class="md:col-span-2 space-y-6">
                         <div>
@@ -57,7 +81,7 @@
                             </div>
                             <flux:textarea readonly rows="3">{{ $product->description ?? 'No description provided.' }}</flux:textarea>
                         </div>
-    
+
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <div class="flex items-center justify-between mb-2">
@@ -68,7 +92,7 @@
                                 </div>
                                 <flux:input readonly value="Rs. {{ number_format($product->purchase_price, 0) }}" icon="banknotes" />
                             </div>
-    
+
                             <div>
                                 <div class="flex items-center justify-between mb-2">
                                     <flux:label>Retail Price</flux:label>
@@ -79,18 +103,10 @@
                                 <!-- Prominent Retail Price -->
                                 <div class="relative">
                                     <flux:input readonly value="Rs. {{ number_format($product->retail_price, 0) }}" icon="tag" class="font-bold text-lg text-blue-600 dark:text-blue-400" />
-                                    @if($product->categories->isNotEmpty())
-                                        <div class="mt-4 flex flex-wrap gap-2">
-                                            @foreach($product->categories as $category)
-                                                <div class="px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
-                                                    {{ $category->name }}
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endif
+
                                 </div>
                             </div>
-    
+
                             @if($product->delivery_charges > 0)
                             <div>
                                 <div class="flex items-center justify-between mb-2">
@@ -105,7 +121,7 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="flex justify-end gap-2 pt-4">
                      <button wire:click="$dispatch('edit-product', { id: {{ $product->id }} })" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-neutral-900 text-white hover:bg-neutral-900/90 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90 h-10 px-4 py-2">
                         <flux:icon.pencil class="size-4" />

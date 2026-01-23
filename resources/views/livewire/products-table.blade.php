@@ -87,8 +87,8 @@
                         <!-- Product Image -->
                         <div
                             class="relative aspect-square overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-neutral-800 dark:to-neutral-700">
-                            @if ($product->product_image)
-                                <img src="{{ Storage::url($product->product_image) }}" alt="{{ $product->name }}"
+                            @if ($product->images->first()->image_path ?? false)
+                                <img src="{{ Storage::url($product->images->first()->image_path) }}" alt="{{ $product->name }}"
                                     class="w-full h-full object-cover">
                             @else
                                 <div class="absolute inset-0 flex items-center justify-center">
