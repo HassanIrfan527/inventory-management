@@ -77,6 +77,5 @@
     <!-- Products Section -->
     <livewire:products-table :viewType="$viewType" />
     <livewire:modals.add-product />
-    <livewire:modals.view-product />
-    <livewire:modals.edit-product />
+    <livewire:modals.product-details />
 </div>
