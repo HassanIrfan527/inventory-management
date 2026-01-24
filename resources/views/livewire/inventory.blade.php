@@ -1,10 +1,19 @@
 <div class="flex h-full w-full flex-1 flex-col gap-6">
     <!-- Page Header -->
-    <div class="flex flex-col gap-2">
-        <h1 class="text-3xl font-bold text-neutral-900 dark:text-white">Products Inventory</h1>
-        <p class="text-sm text-neutral-600 dark:text-neutral-400">Manage your product inventory and pricing</p>
-    </div>
 
+    <div class="flex flex-row items-center justify-between gap-4 p-5">
+        <div class="flex flex-col gap-2">
+            <h1 class="text-3xl font-bold text-neutral-900 dark:text-white">Products Inventory</h1>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Manage your product inventory and pricing</p>
+        </div>
+        <div>
+            <flux:modal.trigger name="product-view-settings">
+                <flux:button square class="bg-transparent">
+                    <flux:icon.columns-3-cog />
+                </flux:button>
+            </flux:modal.trigger>
+        </div>
+    </div>
     <!-- Stats Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <!-- Total Products -->
@@ -62,8 +71,11 @@
         </div>
     </div>
 
+    <!-- Settings Modal -->
+    <livewire:modals.product-view-settings :viewType="$viewType" />
+
     <!-- Products Section -->
-    <livewire:products-table />
+    <livewire:products-table :viewType="$viewType" />
     <livewire:modals.add-product />
     <livewire:modals.view-product />
     <livewire:modals.edit-product />

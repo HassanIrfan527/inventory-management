@@ -4,17 +4,26 @@ namespace App\Livewire;
 
 use App\Models\Product;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\On;
 use Livewire\Component;
+use App\Enums\ProductView;
 
 #[Title('Products Inventory')]
 class Inventory extends Component
 {
+    public ProductView $viewType = ProductView::Grid; // Default view type
     public $totalProducts = 0;
 
     public $totalInventoryValue = 0;
 
     public $avg_margin = 0;
 
+    #[On('set-view-type')]
+    public function setView(string $type)
+    {
+        // tryFrom returns null if the string doesn't match an Enum case
+        $this->viewType = ProductView::tryFrom($type) ?? ProductView::Grid;
+    }
     public function mount()
     {
         $this->totalProducts = Product::count();

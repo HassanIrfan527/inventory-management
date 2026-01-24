@@ -7,6 +7,7 @@ use App\Models\Product;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Reactive;
 
 class ProductsTable extends Component
 {
@@ -17,6 +18,9 @@ class ProductsTable extends Component
     {
         $this->render();
     }
+
+    #[Reactive]
+    public $viewType;
 
     public $search = '';
 
@@ -68,14 +72,14 @@ class ProductsTable extends Component
         ]);
 
         $category = Category::find($this->targetCategory);
-        
+
         Product::whereIn('id', $this->selectedProducts)->get()->each(function ($product) use ($category) {
             $product->categories()->sync([$category->id]);
         });
 
         $count = count($this->selectedProducts);
         $this->dispatch('toast', type: 'success', message: "Updated category for {$count} products to '{$category->name}'.");
-        
+
         $this->selectedProducts = [];
         $this->targetCategory = '';
         $this->dispatch('close-modal', name: 'bulk-change-category');
@@ -84,6 +88,32 @@ class ProductsTable extends Component
     public function clearSelection()
     {
         $this->selectedProducts = [];
+    }
+
+    public function toggleAll()
+    {
+        $productsOnPage = Product::query()
+            ->when($this->search, function ($query) {
+                return $query->where('name', 'like', "%{$this->search}%")
+                    ->orWhere('product_id', 'like', "%{$this->search}%");
+            })
+            ->when($this->selectedCategory, function ($query) {
+                return $query->whereHas('categories', function ($q) {
+                    $q->where('categories.id', $this->selectedCategory);
+                });
+            })
+            ->paginate($this->perPage)
+            ->pluck('id')
+            ->map(fn($id) => (string) $id)
+            ->toArray();
+
+        $allSelected = count(array_intersect($productsOnPage, $this->selectedProducts)) === count($productsOnPage);
+
+        if ($allSelected) {
+            $this->selectedProducts = array_diff($this->selectedProducts, $productsOnPage);
+        } else {
+            $this->selectedProducts = array_unique(array_merge($this->selectedProducts, $productsOnPage));
+        }
     }
 
     public function render()
