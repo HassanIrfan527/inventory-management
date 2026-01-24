@@ -32,6 +32,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/orders', Orders::class)
         ->name('orders');
 
+    Route::get('/scout', App\Livewire\Scout::class)
+        ->name('scout');
     Route::get('dashboard', Dashboard::class)
         ->name('dashboard');
 

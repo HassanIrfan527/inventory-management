@@ -19,8 +19,9 @@
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
                     wire:navigate>Dashboard
                 </flux:navlist.item>
-                <flux:navlist.item icon="user" :href="route('contacts.all')" :current="request()->routeIs('contacts')"
-                    wire:navigate>Contacts
+
+                <flux:navlist.item icon="user" :href="route('contacts.all')"
+                    :current="request()->routeIs('contacts')" wire:navigate>Contacts
                 </flux:navlist.item>
 
                 <flux:navlist.item icon="list-ordered" :href="route('orders')" :current="request()->routeIs('orders')"
@@ -37,10 +38,15 @@
         </flux:navlist>
 
         <flux:spacer />
-        <flux:separator/>
+        <flux:separator />
 
 
         <flux:navlist variant="outline">
+            <flux:navlist.item icon="bot" :href="route('scout')" :current="request()->routeIs('scout')"
+                wire:navigate>
+                Scout
+            </flux:navlist.item>
+
             <flux:navlist.item icon="box" :href="route('inventory')" :current="request()->routeIs('inventory')"
                 wire:navigate>
                 Inventory
