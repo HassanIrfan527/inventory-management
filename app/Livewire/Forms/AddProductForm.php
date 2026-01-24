@@ -3,7 +3,6 @@
 namespace App\Livewire\Forms;
 
 use Livewire\Attributes\Validate;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Form;
 
 class AddProductForm extends Form

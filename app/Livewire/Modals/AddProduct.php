@@ -33,12 +33,12 @@ class AddProduct extends Component
             'delivery_charges' => $this->product->delivery_charges,
         ]);
 
-        if (!empty($this->product->product_images)) {
+        if (! empty($this->product->product_images)) {
             foreach ($this->product->product_images as $image) {
-               $path = $image->store('product_images', 'public');
-               $product->images()->create([
-                   'image_path' => $path
-               ]);
+                $path = $image->store('product_images', 'public');
+                $product->images()->create([
+                    'image_path' => $path,
+                ]);
             }
         }
 

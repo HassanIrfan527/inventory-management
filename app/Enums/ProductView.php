@@ -9,6 +9,7 @@ enum ProductView: string
     case Compact = 'compact';
     case Gallery = 'gallery';
     case Kanban = 'kanban';
+
     public function icon(): string
     {
         return match ($this) {
@@ -20,4 +21,3 @@ enum ProductView: string
         };
     }
 }
-

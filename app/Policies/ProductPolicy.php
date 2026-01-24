@@ -4,15 +4,14 @@ namespace App\Policies;
 
 use App\Models\Product;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ProductPolicy
 {
-
     private function isOwner(User $user, Product $product): bool
     {
         return $user->id === $product->user_id;
     }
+
     /**
      * Determine whether the user can view any models.
      */

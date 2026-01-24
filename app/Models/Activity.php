@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     use BelongsToUser;
+
     /** @use HasFactory<\Database\Factories\ActivityFactory> */
     use HasFactory;
 

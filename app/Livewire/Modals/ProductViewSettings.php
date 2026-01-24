@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Modals;
 
-use Livewire\Component;
 use Livewire\Attributes\Reactive;
+use Livewire\Component;
+
 class ProductViewSettings extends Component
 {
     #[Reactive]

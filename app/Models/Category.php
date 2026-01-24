@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use BelongsToUser;
+
     protected $fillable = ['name'];
 
     public function products()

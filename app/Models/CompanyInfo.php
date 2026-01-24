@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class CompanyInfo extends Model
 {
     use BelongsToUser;
+
     /** @use HasFactory<\Database\Factories\CompanyInfoFactory> */
     use HasFactory;
 

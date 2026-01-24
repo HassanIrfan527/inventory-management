@@ -4,7 +4,6 @@ namespace App\Livewire\Forms;
 
 use App\Models\Product;
 use Livewire\Attributes\Validate;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Form;
 
 class EditProductForm extends Form
@@ -45,11 +44,11 @@ class EditProductForm extends Form
 
     public function update()
     {
-        if (!empty($this->new_product_images)) {
+        if (! empty($this->new_product_images)) {
             foreach ($this->new_product_images as $image) {
                 $path = $image->store('product_images', 'public');
                 $this->product->images()->create([
-                    'image_path' => $path
+                    'image_path' => $path,
                 ]);
             }
         }

@@ -4,11 +4,9 @@ namespace App\Policies;
 
 use App\Models\Contact;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ContactPolicy
 {
-
     private function isOwner(User $user, Contact $contact): bool
     {
         return $user->id === $contact->user_id;

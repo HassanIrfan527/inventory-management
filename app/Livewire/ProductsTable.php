@@ -5,9 +5,9 @@ namespace App\Livewire;
 use App\Models\Category;
 use App\Models\Product;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Reactive;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Livewire\Attributes\Reactive;
 
 class ProductsTable extends Component
 {
@@ -104,7 +104,7 @@ class ProductsTable extends Component
             })
             ->paginate($this->perPage)
             ->pluck('id')
-            ->map(fn($id) => (string) $id)
+            ->map(fn ($id) => (string) $id)
             ->toArray();
 
         $allSelected = count(array_intersect($productsOnPage, $this->selectedProducts)) === count($productsOnPage);
