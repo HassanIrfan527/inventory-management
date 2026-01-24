@@ -3,11 +3,13 @@
 namespace App\Livewire\Settings;
 
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
+#[Layout('layouts.app')]
 class CompanyInfo extends Component
 {
     use WithFileUploads;

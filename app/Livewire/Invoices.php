@@ -6,12 +6,14 @@ use App\Enums\InvoiceStatus;
 use App\Enums\InvoiceType;
 use App\Models\Invoice;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Title('Invoices')]
+#[Layout('layouts.app')]
 class Invoices extends Component
 {
     use WithPagination;

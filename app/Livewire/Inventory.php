@@ -4,11 +4,13 @@ namespace App\Livewire;
 
 use App\Enums\ProductView;
 use App\Models\Product;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Products Inventory')]
+#[Layout('layouts.app')]
 class Inventory extends Component
 {
     public ProductView $viewType = ProductView::Grid; // Default view type
