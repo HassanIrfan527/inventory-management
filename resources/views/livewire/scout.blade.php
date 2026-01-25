@@ -13,122 +13,158 @@
     </div>
 
     <!-- Main Content Area -->
-    <div class="flex-1 flex flex-col items-center justify-center p-4 z-10">
-        <!-- Logo & Title -->
-        <div class="flex flex-col items-center mb-12 animate-fade-in-up">
-            <div class="relative w-24 h-24 mb-6 group">
-                <!-- Glowing effect behind logo -->
-                <div class="absolute inset-0 bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 rounded-2xl blur-xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 animate-pulse"></div>
-                
-                <div class="relative w-full h-full bg-white dark:bg-zinc-800/80 backdrop-blur-xl rounded-2xl border border-white/20 dark:border-zinc-700/50 shadow-2xl flex items-center justify-center overflow-hidden">
-                    <!-- Aesthetic Logo: Smart Shopping Bag -->
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="w-14 h-14">
-                        <defs>
-                            <linearGradient id="bag-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#3b82f6" /> <!-- Blue-500 -->
-                                <stop offset="100%" style="stop-color:#8b5cf6" /> <!-- Violet-500 -->
-                            </linearGradient>
-                            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                                <feGaussianBlur stdDeviation="2" result="blur" />
-                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                            </filter>
-                        </defs>
-                        
-                        <!-- Bag Handle -->
-                        <path d="M16 11V7a4 4 0 0 0-8 0v4" stroke="url(#bag-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        
-                        <!-- Bag Body -->
-                        <path d="M5 9h14l1 12H4L5 9z" fill="url(#bag-gradient)" fill-opacity="0.1" stroke="url(#bag-gradient)" stroke-width="2" stroke-linejoin="round"/>
-                        
-                        <!-- Digital Brain / Sparkle Center -->
-                        <g transform="translate(12, 16)">
-                            <path d="M-3 -1 L0 -4 L3 -1 L0 2 Z" fill="#fff" class="dark:fill-white">
-                                <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" />
-                            </path>
-                            <!-- Connecting Circuit Lines -->
-                            <line x1="-3" y1="-1" x2="-6" y2="-2" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round" />
-                            <line x1="3" y1="-1" x2="6" y2="-2" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" />
-                            <line x1="0" y1="2" x2="0" y2="4" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" />
-                            <circle cx="-6" cy="-2" r="1" fill="#60a5fa" />
-                            <circle cx="6" cy="-2" r="1" fill="#a78bfa" />
-                            <circle cx="0" cy="4" r="1" fill="#818cf8" />
-                        </g>
-                    </svg>
+    <div class="flex-1 flex flex-col items-center p-4 z-10 overflow-y-auto scrollbar-hide" id="chat-container">
+        @if (empty($history))
+            <!-- Logo & Title (Show only when empty) -->
+            <div class="flex-1 flex flex-col items-center justify-center animate-fade-in-up">
+                <div class="relative w-24 h-24 mb-6 group">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 rounded-2xl blur-xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 animate-pulse">
+                    </div>
+
+                    <div
+                        class="relative w-full h-full bg-white dark:bg-zinc-800/80 backdrop-blur-xl rounded-2xl border border-white/20 dark:border-zinc-700/50 shadow-2xl flex items-center justify-center overflow-hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="w-14 h-14">
+                            <defs>
+                                <linearGradient id="cart-gradient" x1="0%" y1="0%" x2="100%"
+                                    y2="100%">
+                                    <stop offset="0%" style="stop-color:#3b82f6" />
+                                    <stop offset="100%" style="stop-color:#a855f7" />
+                                </linearGradient>
+                            </defs>
+                            <path
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17"
+                                stroke="url(#cart-gradient)" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <circle cx="9" cy="20" r="1.5" fill="url(#cart-gradient)" />
+                            <circle cx="17" cy="20" r="1.5" fill="url(#cart-gradient)" />
+                            <g class="animate-pulse">
+                                <path d="M15 6L16 3L17 6L20 7L17 8L16 11L15 8L12 7L15 6Z" fill="#fbbf24"
+                                    class="dark:fill-yellow-400" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+                <h1
+                    class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 to-zinc-600 dark:from-white dark:to-zinc-400">
+                    Scout
+                </h1>
+                <p class="mt-2 text-zinc-500 dark:text-zinc-400 text-lg">
+                    How can I help you manage your inventory today?
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl w-full px-4 mt-12">
+                    <button wire:click="$set('userInput', 'Show me an inventory summary')"
+                        class="p-4 rounded-xl text-left border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors group">
+                        <div
+                            class="mb-2 w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <flux:icon.chart-bar class="w-5 h-5" />
+                        </div>
+                        <div class="font-medium text-zinc-900 dark:text-zinc-100">Inventory Summary</div>
+                        <div class="text-sm text-zinc-500 dark:text-zinc-400">Total value and stats...</div>
+                    </button>
+                    <button wire:click="$set('userInput', 'Create a new category named New Stock')"
+                        class="p-4 rounded-xl text-left border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors group">
+                        <div
+                            class="mb-2 w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <flux:icon.plus class="w-5 h-5" />
+                        </div>
+                        <div class="font-medium text-zinc-900 dark:text-zinc-100">Add Category</div>
+                        <div class="text-sm text-zinc-500 dark:text-zinc-400">Create a new organizational category...
+                        </div>
+                    </button>
+                    <button wire:click="$set('userInput', 'Search for products named Shirt')"
+                        class="p-4 rounded-xl text-left border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors group">
+                        <div
+                            class="mb-2 w-8 h-8 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <flux:icon.magnifying-glass class="w-5 h-5" />
+                        </div>
+                        <div class="font-medium text-zinc-900 dark:text-zinc-100">Find Products</div>
+                        <div class="text-sm text-zinc-500 dark:text-zinc-400">Search for specific items...</div>
+                    </button>
                 </div>
             </div>
+        @else
+            <!-- Chat History -->
+            <div class="w-full max-w-4xl space-y-6 pt-8 pb-32">
+                @foreach ($history as $chat)
+                    @if ($chat['role'] === 'user')
+                        <div class="flex justify-end pr-4 animate-fade-in-up">
+                            <div
+                                class="max-w-[80%] bg-zinc-100 dark:bg-zinc-800 px-4 py-3 rounded-2xl rounded-tr-none text-zinc-900 dark:text-zinc-100 shadow-sm">
+                                {{ $chat['content'] }}
+                            </div>
+                        </div>
+                    @elseif($chat['role'] === 'assistant')
+                        <div class="flex justify-start pl-4 animate-fade-in-up">
+                            <div class="flex gap-4 max-w-[90%]">
+                                <div
+                                    class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-500 to-purple-500 flex-shrink-0 flex items-center justify-center shadow-lg">
+                                    <flux:icon.sparkles class="w-5 h-5 text-white" />
+                                </div>
+                                <div
+                                    class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-5 py-4 rounded-3xl rounded-tl-none text-zinc-800 dark:text-zinc-200 shadow-sm leading-relaxed prose prose-zinc dark:prose-invert max-w-none">
+                                    {!! \Illuminate\Support\Str::markdown($chat['content'] ?? '') !!}
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
 
-            <h1
-                class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 to-zinc-600 dark:from-white dark:to-zinc-400">
-                Scout
-            </h1>
-            <p class="mt-2 text-zinc-500 dark:text-zinc-400 text-lg">
-                Your intelligent shopping assistant
-            </p>
-        </div>
-
-        <!-- Suggestions / Capabilities (Optional decorative elements) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl w-full px-4 animate-fade-in-up delay-100">
-            <button
-                class="p-4 rounded-xl text-left border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors group">
-                <div
-                    class="mb-2 w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <flux:icon.magnifying-glass class="w-5 h-5" />
+                <!-- Loading State -->
+                <div wire:loading wire:target="sendMessage" class="flex justify-start pl-4">
+                    <div class="flex gap-4">
+                        <div
+                            class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-500 to-purple-500 flex-shrink-0 flex items-center justify-center animate-pulse">
+                            <flux:icon.sparkles class="w-5 h-5 text-white" />
+                        </div>
+                        <div class="flex items-center gap-2 px-5 py-4 bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl">
+                            <div class="w-2 h-2 bg-zinc-400 rounded-full animate-bounce"></div>
+                            <div class="w-2 h-2 bg-zinc-400 rounded-full animate-bounce [animation-delay:-.3s]"></div>
+                            <div class="w-2 h-2 bg-zinc-400 rounded-full animate-bounce [animation-delay:-.5s]"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="font-medium text-zinc-900 dark:text-zinc-100">Find products</div>
-                <div class="text-sm text-zinc-500 dark:text-zinc-400">Search logic inventory...</div>
-            </button>
-            <button
-                class="p-4 rounded-xl text-left border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors group">
-                <div
-                    class="mb-2 w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <flux:icon.chart-bar class="w-5 h-5" />
-                </div>
-                <div class="font-medium text-zinc-900 dark:text-zinc-100">Analyze sales</div>
-                <div class="text-sm text-zinc-500 dark:text-zinc-400">Show me this week's revenue...</div>
-            </button>
-            <button
-                class="p-4 rounded-xl text-left border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors group">
-                <div
-                    class="mb-2 w-8 h-8 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <flux:icon.plus class="w-5 h-5" />
-                </div>
-                <div class="font-medium text-zinc-900 dark:text-zinc-100">Create order</div>
-                <div class="text-sm text-zinc-500 dark:text-zinc-400">Draft a new order for...</div>
-            </button>
-        </div>
+            </div>
+        @endif
     </div>
 
     <!-- Bottom Command Palette Area -->
-    <div class="w-full max-w-3xl mx-auto p-4 md:p-6 z-20">
-        <div class="relative group">
+    <div class="w-full max-w-4xl mx-auto p-4 md:p-6 z-20">
+        <form wire:submit.prevent="sendMessage" class="relative group">
             <div
                 class="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500">
             </div>
             <div
                 class="relative flex items-center bg-white dark:bg-zinc-800/90 backdrop-blur-xl rounded-2xl border border-zinc-200 dark:border-zinc-700 shadow-2xl overflow-hidden p-2">
                 <div class="pl-4 text-zinc-400">
-                    <flux:icon.sparkles class="w-6 h-6 text-yellow-500 animate-pulse" />
+                    <flux:icon.sparkles class="w-6 h-6 text-yellow-500 transition-colors group-hover:text-yellow-400" />
                 </div>
-                <input type="text" placeholder="Ask Scout anything..."
+                <input type="text" wire:model.defer="userInput"
+                    placeholder="Ask Scout to manage inventory, find products, or create categories..."
                     class="w-full h-14 bg-transparent border-0 focus:ring-0 text-lg px-4 text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500"
-                    autofocus>
+                    autofocus required>
                 <div class="flex items-center gap-2 pr-2">
-                    <button
-                        class="p-2 rounded-xl bg-zinc-100 dark:bg-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-600 text-zinc-500 dark:text-zinc-300 transition-colors"
-                        title="Voice Input">
-                        <flux:icon.microphone class="w-5 h-5" />
-                    </button>
-                    <button class="p-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white transition-colors"
-                        title="Submit">
-                        <flux:icon.paper-airplane class="w-5 h-5" />
+                    <button type="submit" wire:loading.attr="disabled"
+                        class="p-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        title="Send message">
+                        <flux:icon.paper-airplane wire:loading.remove wire:target="sendMessage" class="w-5 h-5" />
+                        <div wire:loading wire:target="sendMessage"
+                            class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                     </button>
                 </div>
             </div>
-            <div class="text-center mt-3">
+            <div class="flex justify-between items-center mt-3 px-2">
                 <p class="text-xs text-zinc-400 dark:text-zinc-500">
-                    Scout can make mistakes. Please verify important information.
+                    Scout is powered by **ollama / qwen2.5** and can create records in your database.
                 </p>
+                <div class="flex gap-4 text-xs font-medium text-zinc-400 dark:text-zinc-500">
+                    <span>Press <kbd
+                            class="px-1 py-0.5 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 font-sans">Enter</kbd>
+                        to send</span>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
