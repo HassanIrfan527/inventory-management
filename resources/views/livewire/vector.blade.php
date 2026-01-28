@@ -26,25 +26,25 @@
                     </div>
                 </div>
 
-                <div class="space-y-3">
-                    <h1 class="text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
-                        Scout <span class="bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded-full align-top ml-1 uppercase tracking-widest">AI</span>
-                    </h1>
-                    <p class="text-xl text-zinc-500 dark:text-zinc-400 font-medium">
-                        Your intelligent operations partner.
-                    </p>
-                </div>
+                <h1
+                    class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 to-zinc-600 dark:from-white dark:to-zinc-400">
+                    Vector
+                </h1>
+                <p class="mt-2 text-zinc-500 dark:text-zinc-400 text-lg">
+                    How can I help you manage your inventory today?
+                </p>
 
-                <!-- Strategic Quick Starts -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
-                    <button wire:click="$set('userInput', 'Show me an inventory summary')" class="p-5 rounded-2xl text-left border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm hover:border-blue-500/50 hover:bg-white dark:hover:bg-zinc-800/80 transition-all group">
-                        <div class="mb-3 w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl w-full px-4 mt-12">
+                    <button wire:click="$set('userInput', 'Show me an inventory summary')"
+                        class="p-4 rounded-xl text-left border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors group">
+                        <div
+                            class="mb-2 w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
                             <flux:icon.chart-bar class="w-5 h-5" />
                         </div>
                         <h3 class="font-bold text-zinc-900 dark:text-zinc-100">Analytics</h3>
                         <p class="text-xs text-zinc-500 dark:text-zinc-500 mt-1 line-clamp-2">Get real-time stock levels and valuation.</p>
                     </button>
-                    
+
                     <button wire:click="$set('userInput', 'Search for products named Shirt')" class="p-5 rounded-2xl text-left border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm hover:border-purple-500/50 hover:bg-white dark:hover:bg-zinc-800/80 transition-all group">
                         <div class="mb-3 w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
                             <flux:icon.magnifying-glass class="w-5 h-5" />
@@ -87,9 +87,9 @@
 
                         <div class="relative group max-w-[85%] @if($chat['role'] === 'user') items-end @endif">
                             <div class="px-5 py-3.5 rounded-2xl shadow-sm text-sm md:text-base leading-relaxed
-                                @if($chat['role'] === 'user') 
+                                @if($chat['role'] === 'user')
                                     bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-tr-none
-                                @else 
+                                @else
                                     bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-tl-none prose prose-zinc dark:prose-invert max-w-none
                                 @endif">
                                 @if($chat['role'] === 'user')
@@ -129,7 +129,7 @@
     <div class="w-full max-w-4xl mx-auto p-4 md:p-8 z-20">
         <form wire:submit.prevent="sendMessage" class="relative group">
             <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-[22px] blur opacity-15 group-focus-within:opacity-40 transition duration-500"></div>
-            
+
             <div class="relative flex items-center bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl rounded-[20px] border border-zinc-200/50 dark:border-zinc-800/50 shadow-xl overflow-hidden p-1.5 ring-1 ring-zinc-900/5 dark:ring-white/5">
                 <div class="pl-4 flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
@@ -141,8 +141,8 @@
                 </div>
 
                 <input type="text" wire:model.defer="userInput"
-                    placeholder="Ask Scout anything..."
-                    class="w-full h-14 bg-transparent border-0 focus:ring-0 text-lg md:text-xl px-4 text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600"
+                    placeholder="Ask Vector to manage inventory, find products, or create categories..."
+                    class="w-full h-14 bg-transparent border-0 focus:ring-0 text-lg px-4 text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500"
                     autofocus required>
 
                 <div class="flex items-center gap-2 pr-2">
@@ -154,15 +154,14 @@
                     </button>
                 </div>
             </div>
-
-            <!-- Footer Details -->
-            <div class="flex justify-between items-center mt-4 px-4 text-[11px] font-semibold tracking-wide uppercase text-zinc-400 dark:text-zinc-600">
-                <div class="flex items-center gap-2">
-                    <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
-                    System Ready
-                </div>
-                <div class="flex gap-4">
-                    <span class="hover:text-zinc-600 dark:hover:text-zinc-400 transition-colors cursor-default underline decoration-zinc-300 dark:decoration-zinc-800 underline-offset-4">⌘+Enter to Send</span>
+            <div class="flex justify-between items-center mt-3 px-2">
+                <p class="text-xs text-zinc-400 dark:text-zinc-500">
+                    Vector is powered by **ollama / qwen2.5** and can create records in your database.
+                </p>
+                <div class="flex gap-4 text-xs font-medium text-zinc-400 dark:text-zinc-500">
+                    <span>Press <kbd
+                            class="px-1 py-0.5 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 font-sans">Enter</kbd>
+                        to send</span>
                 </div>
             </div>
         </form>

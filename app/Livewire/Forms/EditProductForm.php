@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Product;
+use App\Services\ProductService;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
@@ -44,26 +45,19 @@ class EditProductForm extends Form
 
     public function update()
     {
-        if (! empty($this->new_product_images)) {
-            foreach ($this->new_product_images as $image) {
-                $path = $image->store('product_images', 'public');
-                $this->product->images()->create([
-                    'image_path' => $path,
-                ]);
-            }
-        }
+        $productService = app(ProductService::class);
 
-        $this->product->update([
-            'name' => $this->name,
-            'description' => $this->description,
-            'purchase_price' => $this->cost_price,
-            'retail_price' => $this->retail_price,
-            'delivery_charges' => $this->delivery_charges,
-        ]);
-
-        if (isset($this->categories)) {
-            // Sync categories (handles adding/removing)
-            $this->product->categories()->sync($this->categories);
-        }
+        $productService->updateProduct(
+            $this->product,
+            [
+                'name' => $this->name,
+                'description' => $this->description,
+                'cost_price' => $this->cost_price,
+                'retail_price' => $this->retail_price,
+                'delivery_charges' => $this->delivery_charges,
+            ],
+            $this->categories,
+            $this->new_product_images,
+        );
     }
 }

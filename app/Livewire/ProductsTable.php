@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Services\ProductService;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
@@ -56,11 +57,18 @@ class ProductsTable extends Component
     public function deleteProduct($productId)
     {
         $product = Product::find($productId);
-        if ($product) {
-            $productName = $product->name;
-            $product->delete();
-            $this->dispatch('toast', type: 'success', message: "Product '{$productName}' has been removed from inventory.");
+
+        if (! $product) {
+            return;
         }
+
+        $productName = $product->name;
+
+        $productService = app(ProductService::class);
+        $productService->deleteProduct($product);
+
+        $this->dispatch('toast', type: 'success', message: "Product '{$productName}' has been removed from inventory.");
+
         $this->resetPage();
     }
 
@@ -71,14 +79,15 @@ class ProductsTable extends Component
             'selectedProducts' => 'required|array|min:1',
         ]);
 
+        $productService = app(ProductService::class);
+
+        $count = $productService->assignCategoryToProducts($this->selectedProducts, (int) $this->targetCategory);
+
         $category = Category::find($this->targetCategory);
 
-        Product::whereIn('id', $this->selectedProducts)->get()->each(function ($product) use ($category) {
-            $product->categories()->sync([$category->id]);
-        });
-
-        $count = count($this->selectedProducts);
-        $this->dispatch('toast', type: 'success', message: "Updated category for {$count} products to '{$category->name}'.");
+        if ($category) {
+            $this->dispatch('toast', type: 'success', message: "Updated category for {$count} products to '{$category->name}'.");
+        }
 
         $this->selectedProducts = [];
         $this->targetCategory = '';

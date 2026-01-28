@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Modals;
 
-use App\Events\OrderCreated;
 use App\Livewire\Forms\ContactForm;
 use App\Models\Contact;
-use App\Models\Order;
 use App\Models\Product;
+use App\Services\ContactService;
+use App\Services\OrderService;
 use Flux\Flux;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -144,7 +144,9 @@ class CreateOrder extends Component
     public function save()
     {
         if ($this->customerSelectionType === 'new') {
-            $contact = Contact::create([
+            $contactService = app(ContactService::class);
+
+            $contact = $contactService->createContact([
                 'name' => $this->newContact->name,
                 'email' => $this->newContact->email,
                 'phone' => $this->newContact->phone,
@@ -152,29 +154,23 @@ class CreateOrder extends Component
                 'landmark' => $this->newContact->landmark,
                 'whatsapp_no' => $this->newContact->whatsapp_no,
             ]);
+
             $this->contact_id = $contact->id;
         }
 
         $this->validateStep1();
         $this->validateStep2();
 
-        $order = Order::create([
-            'contact_id' => $this->contact_id,
-            'status' => $this->status,
-            'total_amount' => $this->total,
-            'delivery_charge' => $this->delivery_charge ?: 0,
-            'address' => $this->address,
-        ]);
+        $orderService = app(OrderService::class);
 
-        foreach ($this->items as $item) {
-            $order->products()->attach($item['product_id'], [
-                'quantity' => $item['quantity'],
-                'sale_price' => $item['price'],
-            ]);
-        }
-
-        // Dispatch the Order created event
-        OrderCreated::dispatch($order, $this->generate_invoice);
+        $orderService->createOrder(
+            contactId: (int) $this->contact_id,
+            status: $this->status,
+            items: $this->items,
+            deliveryCharge: (int) ($this->delivery_charge ?: 0),
+            address: $this->address ?: null,
+            generateInvoice: $this->generate_invoice,
+        );
 
         $this->reset(['contact_id', 'items', 'status', 'delivery_charge', 'address', 'step', 'customerSelectionType', 'generate_invoice', 'invoice_template']);
         $this->items = [['product_id' => '', 'quantity' => 1, 'price' => 0]];
