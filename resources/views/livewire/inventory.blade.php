@@ -2,15 +2,21 @@
     <!-- Page Header -->
 
     <div class="flex flex-row items-center justify-between gap-4 p-5">
-        <div class="flex flex-col gap-2">
-            <h1 class="text-3xl font-bold text-neutral-900 dark:text-white">Products Inventory</h1>
-            <p class="text-sm text-neutral-600 dark:text-neutral-400">Manage your product inventory and pricing</p>
+        <div class="flex flex-col gap-1">
+            <flux:heading size="xl" level="1">Products inventory</flux:heading>
+            <flux:text size="sm" class="text-neutral-600 dark:text-neutral-400">
+                Manage your product inventory and pricing.
+            </flux:text>
         </div>
         <div>
             <flux:modal.trigger name="product-view-settings">
-                <flux:button square class="bg-transparent">
-                    <flux:icon.columns-3-cog />
-                </flux:button>
+                <flux:button
+                    square
+                    variant="subtle"
+                    size="sm"
+                    icon="columns-3-cog"
+                    aria-label="Inventory view settings"
+                />
             </flux:modal.trigger>
         </div>
     </div>

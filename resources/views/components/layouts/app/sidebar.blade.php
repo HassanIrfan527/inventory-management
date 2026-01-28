@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     @include('partials.head')
 </head>
 
-<body class="min-h-screen bg-white dark:bg-zinc-800">
-    <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+<body class="min-h-screen bg-zinc-50 dark:bg-zinc-900">
+    <flux:sidebar
+        sticky
+        stashable
+        class="border-e border-zinc-200/80 bg-zinc-50/90 backdrop-blur-sm dark:border-zinc-800/80 dark:bg-zinc-900/95 transition-all duration-300">
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-        <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
-            {{-- <x-app-logo /> --}}
-            Shop & Services
-        </a>
+        <flux:brand :href="route('dashboard')" :name="config('app.name')" wire:navigate>
+            <x-slot name="logo" class="size-8 rounded-md bg-accent-content text-accent-foreground flex items-center justify-center">
+                <x-app-logo-icon class="size-5 fill-current text-white dark:text-black" />
+            </x-slot>
+        </flux:brand>
 
         <flux:navlist variant="outline">
             <flux:navlist.group :heading="__('Platform')" class="grid">
@@ -53,6 +57,31 @@
             </flux:navlist.item>
 
         </flux:navlist>
+
+        <div class="mt-4 hidden lg:flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400 px-1">
+            <span>{{ __('Appearance') }}</span>
+
+            <flux:dropdown x-data align="end">
+                <flux:button
+                    variant="subtle"
+                    square
+                    size="sm"
+                    class="h-8 w-8"
+                    aria-label="{{ __('Preferred color scheme') }}"
+                >
+                    <flux:icon.sun x-show="$flux.appearance === 'light'" variant="mini" class="text-zinc-500 dark:text-white" />
+                    <flux:icon.moon x-show="$flux.appearance === 'dark'" variant="mini" class="text-zinc-500 dark:text-white" />
+                    <flux:icon.moon x-show="$flux.appearance === 'system' && $flux.dark" variant="mini" />
+                    <flux:icon.sun x-show="$flux.appearance === 'system' && ! $flux.dark" variant="mini" />
+                </flux:button>
+
+                <flux:menu>
+                    <flux:menu.item icon="sun" x-on:click="$flux.appearance = 'light'">{{ __('Light') }}</flux:menu.item>
+                    <flux:menu.item icon="moon" x-on:click="$flux.appearance = 'dark'">{{ __('Dark') }}</flux:menu.item>
+                    <flux:menu.item icon="computer-desktop" x-on:click="$flux.appearance = 'system'">{{ __('System') }}</flux:menu.item>
+                </flux:menu>
+            </flux:dropdown>
+        </div>
 
         <!-- Desktop User Menu -->
         <flux:dropdown class="hidden lg:block" position="bottom" align="start">

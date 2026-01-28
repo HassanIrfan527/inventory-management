@@ -1,8 +1,10 @@
 <div class="flex h-full w-full flex-1 flex-col gap-6">
     <!-- Page Header -->
     <div class="flex flex-col gap-2">
-        <h1 class="text-3xl font-bold text-neutral-900 dark:text-white">Contacts</h1>
-        <p class="text-sm text-neutral-600 dark:text-neutral-400">Manage and view all your contacts in one place</p>
+        <flux:heading size="xl" level="1">Contacts</flux:heading>
+        <flux:text size="sm" class="text-neutral-600 dark:text-neutral-400">
+            Manage and view all your contacts in one place.
+        </flux:text>
     </div>
 
     <!-- Search & Filters Section -->
@@ -20,7 +22,7 @@
 
             <!-- Add New Contact Button -->
             <flux:modal.trigger name="add-contact-modal">
-                <flux:button variant="primary" icon="plus">Add Contact</flux:button>
+                <flux:button variant="primary" color="indigo" icon="plus">Add Contact</flux:button>
             </flux:modal.trigger>
         </div>
 

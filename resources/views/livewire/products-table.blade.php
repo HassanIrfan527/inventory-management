@@ -3,32 +3,29 @@
         <div class="flex flex-col gap-6">
             <!-- Search & Filters Section -->
             <div class="flex flex-col gap-4 rounded-lg border border-neutral-200 bg-white p-5 dark:border-neutral-700 dark:bg-neutral-900"
-                x-data="{ showFilters: true }">
+                x-data="{ showFilters: false }">
 
                 <!-- Search Bar -->
                 <div class="flex gap-3">
-                    <div class="flex-1 relative">
-                        <input type="text" placeholder="Search products by name or ID..." wire:model.live="search"
-                            class="w-full px-4 py-2.5 pl-10 rounded-lg border border-neutral-300 bg-white text-neutral-900 placeholder-neutral-500 transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-neutral-600 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-400 dark:focus:border-blue-400 dark:focus:ring-blue-400/20">
-                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
+                    <div class="flex-1">
+                        <flux:input
+                            wire:model.live.debounce.300ms="search"
+                            icon="magnifying-glass"
+                            placeholder="Search products by name or ID..."
+                        />
                     </div>
 
                     <!-- Filter Toggle Button -->
-                    <button @click="showFilters = !showFilters"
-                        class="px-4 py-2.5 rounded-lg border border-neutral-300 bg-white text-neutral-700 font-medium hover:bg-neutral-50 transition-colors dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700">
-                        <svg class="w-5 h-5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                        </svg>
-                    </button>
+                    <flux:button
+                        variant="outline"
+                        size="sm"
+                        icon="funnel"
+                        x-on:click="showFilters = !showFilters"
+                    />
 
                     <!-- Add New Product Button -->
                     <flux:modal.trigger name="add-product">
-                        <flux:button variant="primary" color="blue" class="flex items-center gap-2" icon="plus">
+                        <flux:button variant="primary" color="indigo" class="flex items-center gap-2" icon="plus">
                             Add New Product
                         </flux:button>
                     </flux:modal.trigger>
@@ -59,8 +56,8 @@
                 </div>
             @endif
 
-            <!-- Filter Options (Show by default) -->
-            <div x-show="showFilters = true" x-transition
+            <!-- Filter Options -->
+            <div x-show="showFilters" x-transition
                 class="flex gap-3 pt-3 border-t border-neutral-200 dark:border-neutral-700">
                 <flux:dropdown>
                     <flux:button icon-trailing="chevron-down">Sort by</flux:button>
@@ -75,10 +72,13 @@
                     </flux:menu>
                 </flux:dropdown>
 
-                <button wire:click="$set('sortBy', null)"
-                    class="px-3 py-2 rounded-lg border border-neutral-300 bg-white text-neutral-700 text-sm font-medium hover:bg-neutral-50 transition-colors dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700">
-                    Reset Filters
-                </button>
+                <flux:button
+                    variant="outline"
+                    size="sm"
+                    wire:click="$set('sortBy', null)"
+                >
+                    Reset filters
+                </flux:button>
             </div>
         </div>
 
