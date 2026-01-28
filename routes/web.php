@@ -14,9 +14,12 @@ use App\Livewire\Settings\TwoFactor;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// use App\Livewire\ContactUs;
+// use App\Livewire\Welcome;
+
+Route::livewire('/','pages::welcome')->name('home');
+
+Route::livewire('/contact-us','pages::contact-us')->name('contact.us');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/contact/{contact}', ContactPage::class)

@@ -9,11 +9,11 @@ use LarAgent\Attributes\Tool;
 
 class Scout extends Agent
 {
-    protected $model = 'qwen2.5:7b';
+    // protected $model = 'qwen2.5:7b';
 
     protected $history = 'session';
 
-    protected $provider = 'ollama';
+    protected $provider = 'openrouter';
 
     protected $tools = [];
 

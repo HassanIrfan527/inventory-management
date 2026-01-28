@@ -4,8 +4,10 @@ namespace App\Livewire;
 
 use App\Models\Contact;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+#[Layout('layouts.app')]
 class ContactPage extends Component
 {
     public Contact $contact;
