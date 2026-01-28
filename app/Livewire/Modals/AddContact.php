@@ -3,7 +3,7 @@
 namespace App\Livewire\Modals;
 
 use App\Livewire\Forms\ContactForm;
-use App\Models\Contact;
+use App\Services\ContactService;
 use Flux\Flux;
 use Livewire\Component;
 
@@ -18,8 +18,8 @@ class AddContact extends Component
         $data = $this->form->all();
         unset($data['id']);
 
-        $contact = Contact::create($data);
-        $contact->logActivity('Contact created');
+        $contactService = app(ContactService::class);
+        $contactService->createContact($data);
 
         $this->form->reset();
 

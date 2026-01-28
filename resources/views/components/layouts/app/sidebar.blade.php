@@ -46,9 +46,9 @@
 
 
         <flux:navlist variant="outline">
-            <flux:navlist.item icon="bot" :href="route('scout')" :current="request()->routeIs('scout')"
+            <flux:navlist.item icon="bot" :href="route('vector')" :current="request()->routeIs('vector')"
                 wire:navigate>
-                Scout
+                Vector
             </flux:navlist.item>
 
             <flux:navlist.item icon="box" :href="route('inventory')" :current="request()->routeIs('inventory')"

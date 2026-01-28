@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Contact;
+use App\Services\ContactService;
 use Livewire\Component;
 
 class ContactsTable extends Component
@@ -20,7 +21,15 @@ class ContactsTable extends Component
 
     public function deleteContact(int $id): void
     {
-        Contact::findOrFail($id)->delete();
+        $contact = Contact::find($id);
+
+        if (! $contact) {
+            return;
+        }
+
+        $contactService = app(ContactService::class);
+        $contactService->deleteContact($contact);
+
         \Flux\Flux::modal("delete-contact-{$id}")->close();
         $this->reset();
         $this->dispatch('toast', message: 'Contact deleted successfully', type: 'success');
