@@ -4,7 +4,6 @@ namespace App\Livewire\Forms;
 
 use App\Models\Product;
 use Livewire\Attributes\Validate;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Form;
 
 class EditProductForm extends Form
@@ -26,8 +25,11 @@ class EditProductForm extends Form
     #[Validate('required|numeric|min:0')]
     public $delivery_charges = '';
 
-    #[Validate('nullable|image|mimes:jpg,png,webp,jpeg|max:10240')]
-    public ?TemporaryUploadedFile $temporaryUploadedFile = null;
+    #[Validate(['new_product_images.*' => 'image|max:10240'])]
+    public $new_product_images = [];
+
+    #[Validate('nullable|array')]
+    public $categories = []; // Array of category IDs
 
     public function setProduct(Product $product)
     {
@@ -37,13 +39,18 @@ class EditProductForm extends Form
         $this->cost_price = $product->purchase_price;
         $this->retail_price = $product->retail_price;
         $this->delivery_charges = $product->delivery_charges;
+        $this->categories = $product->categories()->pluck('categories.id')->toArray();
     }
 
     public function update()
     {
-        $path = $this->product->product_image;
-        if ($this->temporaryUploadedFile) {
-            $path = $this->temporaryUploadedFile->store('product_images', 'public');
+        if (! empty($this->new_product_images)) {
+            foreach ($this->new_product_images as $image) {
+                $path = $image->store('product_images', 'public');
+                $this->product->images()->create([
+                    'image_path' => $path,
+                ]);
+            }
         }
 
         $this->product->update([
@@ -52,7 +59,11 @@ class EditProductForm extends Form
             'purchase_price' => $this->cost_price,
             'retail_price' => $this->retail_price,
             'delivery_charges' => $this->delivery_charges,
-            'product_image' => $path,
         ]);
+
+        if (isset($this->categories)) {
+            // Sync categories (handles adding/removing)
+            $this->product->categories()->sync($this->categories);
+        }
     }
 }

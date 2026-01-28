@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
+    use BelongsToUser;
+
     protected $fillable = [
         'order_id',
         'invoice_number',
@@ -14,13 +17,14 @@ class Invoice extends Model
         'status',
         'type',
         'due_date',
-        'invoice_path'
+        'invoice_path',
     ];
 
     public function order()
     {
         return $this->belongsTo(Order::class);
     }
+
     public static function boot()
     {
         parent::boot();

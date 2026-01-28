@@ -8,39 +8,41 @@ use App\Livewire\Orders;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\CompanyInfo;
 use App\Livewire\Settings\Password;
+use App\Livewire\Settings\ProductCategories;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\TwoFactor;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// use App\Livewire\ContactUs;
+// use App\Livewire\Welcome;
 
-Route::get('dashboard', Dashboard::class)
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::livewire('/','pages::welcome')->name('home');
 
-Route::view('contacts', 'contacts')
-    ->middleware(['auth', 'verified'])
-    ->name('contacts.all');
+Route::livewire('/contact-us','pages::contact-us')->name('contact.us');
 
-Route::get('/contact/{contact}', ContactPage::class)
-    ->middleware(['auth', 'verified'])
-    ->name('contact.show');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/contact/{contact}', ContactPage::class)
+        ->middleware('can:view,contact')
+        ->name('contact.show');
 
-Route::get('inventory', Inventory::class)
-    ->middleware(['auth', 'verified'])
-    ->name('inventory');
+    Route::get('inventory', Inventory::class)
+        ->name('inventory');
 
-Route::get('/invoices', Invoices::class)
-    ->middleware(['auth', 'verified'])
-    ->name('invoices');
+    Route::get('/invoices', Invoices::class)
+        ->name('invoices');
 
-Route::get('/orders', Orders::class)
-    ->middleware(['auth', 'verified'])
-    ->name('orders');
+    Route::get('/orders', Orders::class)
+        ->name('orders');
 
+    Route::get('/scout', App\Livewire\Scout::class)
+        ->name('scout');
+    Route::get('dashboard', Dashboard::class)
+        ->name('dashboard');
+
+    Route::view('contacts', 'contacts')
+        ->name('contacts.all');
+});
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
@@ -48,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('user-password.edit');
     Route::get('settings/appearance', Appearance::class)->name('appearance.edit');
     Route::get('settings/company-info', CompanyInfo::class)->name('company-info.edit');
+    Route::get('settings/product-categories', ProductCategories::class)->name('product-categories.edit');
     Route::get('settings/two-factor', TwoFactor::class)
         ->middleware(
             when(

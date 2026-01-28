@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
+    use BelongsToUser;
+
     /** @use HasFactory<\Database\Factories\ActivityFactory> */
     use HasFactory;
 
@@ -17,7 +20,6 @@ class Activity extends Model
         'subject_type',
         'properties',
     ];
-
 
     public function subject()
     {

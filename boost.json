@@ -1,7 +1,6 @@
 {
     "agents": [
         "claude_code",
-        "copilot",
         "gemini"
     ],
     "editors": [
@@ -9,5 +8,7 @@
         "gemini",
         "vscode"
     ],
-    "guidelines": []
+    "guidelines": [
+        "laravel/fortify"
+    ]
 }

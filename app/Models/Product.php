@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    use BelongsToUser;
+
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
 
@@ -16,7 +19,6 @@ class Product extends Model
         'purchase_price',
         'retail_price',
         'delivery_charges',
-        'product_image',
     ];
 
     public static function totalInventoryValue()
@@ -25,6 +27,24 @@ class Product extends Model
 
         return $total;
 
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class)
+            ->using(OrderProduct::class)
+            ->withPivot('quantity', 'sale_price')
+            ->withTimestamps();
     }
 
     public static function boot()

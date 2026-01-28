@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use App\Enums\InvoiceType;
+use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    use BelongsToUser;
+
     protected $guarded = [];
 
     public function contact()
@@ -35,6 +38,7 @@ class Order extends Model
         // 'subject' is the name of the relationship defined in Activity.php
         return $this->morphMany(Activity::class, 'subject');
     }
+
     public function products()
     {
         return $this->belongsToMany(Product::class)
@@ -63,7 +67,7 @@ class Order extends Model
                 do {
                     // random 5 digit number
                     $randomNumber = random_int(10000, 99999);
-                    $newId = 'ORDER-' . $randomNumber;
+                    $newId = 'ORDER-'.$randomNumber;
                 } while (
                     self::where('order_number', $newId)->exists()
                 );

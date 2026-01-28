@@ -3,11 +3,13 @@
 namespace App\Livewire;
 
 use App\Models\Order;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Orders Management')]
+#[Layout('layouts.app')]
 class Orders extends Component
 {
     // Static Data for Mockup

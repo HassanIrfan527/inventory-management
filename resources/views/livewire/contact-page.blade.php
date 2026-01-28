@@ -13,7 +13,7 @@
             </div>
             @if ($edit)
                 <div class="flex items-center gap-2">
-                    <flux:button variant="primary" color="gray" wire:click="$set('edit', false)">Cancel</flux:button>
+                    <flux:button variant="outline" color="zinc" wire:click="$set('edit', false)">Cancel</flux:button>
                     <flux:modal.trigger name="delete-modal">
                         <flux:button variant="danger">Delete</flux:button>
                     </flux:modal.trigger>
@@ -21,7 +21,7 @@
                 </div>
             @else
                 <div class="flex items-center gap-2">
-                    <flux:button variant="primary" color="blue" wire:click="$set('edit', true)">Edit</flux:button>
+                    <flux:button variant="primary" color="indigo" wire:click="$set('edit', true)">Edit</flux:button>
 
                     <flux:modal.trigger name="delete-modal">
                         <flux:button variant="danger">Delete</flux:button>
@@ -108,7 +108,7 @@
                     <div class="p-6">
                         <flux:textarea wire:model="note" placeholder="Add a note about this contact..." class="min-h-[8rem]" />
                         <div class="mt-4 flex justify-end">
-                            <flux:button variant="primary" wire:click="addNote">Save Note</flux:button>
+                            <flux:button variant="primary" color="indigo" wire:click="addNote">Save Note</flux:button>
                         </div>
                     </div>
                 </div>

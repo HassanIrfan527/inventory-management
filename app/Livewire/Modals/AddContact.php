@@ -2,11 +2,10 @@
 
 namespace App\Livewire\Modals;
 
-use Livewire\Component;
-
 use App\Livewire\Forms\ContactForm;
 use App\Models\Contact;
 use Flux\Flux;
+use Livewire\Component;
 
 class AddContact extends Component
 {
@@ -16,7 +15,10 @@ class AddContact extends Component
     {
         $this->form->validate();
 
-        $contact = Contact::create($this->form->all());
+        $data = $this->form->all();
+        unset($data['id']);
+
+        $contact = Contact::create($data);
         $contact->logActivity('Contact created');
 
         $this->form->reset();

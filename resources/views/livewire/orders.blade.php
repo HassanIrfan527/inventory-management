@@ -1,8 +1,10 @@
 <div class="flex h-full w-full flex-1 flex-col gap-6">
     <!-- Page Header -->
     <div class="flex flex-col gap-2">
-        <h1 class="text-3xl font-bold text-neutral-900 dark:text-white">Orders Management</h1>
-        <p class="text-sm text-neutral-600 dark:text-neutral-400">View and track customer orders efficiently.</p>
+        <flux:heading size="xl" level="1">Orders</flux:heading>
+        <flux:text size="sm" class="text-neutral-600 dark:text-neutral-400">
+            View and track customer orders efficiently.
+        </flux:text>
     </div>
 
     <!-- Stats Grid -->
@@ -75,26 +77,33 @@
         <div
             class="flex flex-col justify-between gap-4 border-b border-neutral-200 p-5 md:flex-row md:items-center dark:border-neutral-700">
             <h2 class="text-lg font-semibold text-neutral-900 dark:text-white">Recent Orders</h2>
-            <div class="flex gap-2">
-                <div class="relative">
-                    <input type="text" placeholder="Search orders..."
-                        class="w-full rounded-lg border-neutral-300 bg-neutral-50 px-4 py-2 text-sm text-neutral-900 focus:border-blue-500 focus:ring-blue-500 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-400 sm:w-64" />
-                    <svg class="absolute right-3 top-2.5 h-4 w-4 text-neutral-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
+            <div class="flex flex-wrap gap-2">
+                <div class="w-full sm:w-72">
+                    <flux:input
+                        icon="magnifying-glass"
+                        size="sm"
+                        placeholder="Search orders by ID, customer, or status..."
+                    />
                 </div>
-                <button
-                    class="inline-flex items-center gap-2 rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700">
-                    <flux:icon.funnel />
+
+                <flux:button
+                    variant="subtle"
+                    size="sm"
+                    icon="funnel"
+                    class="border border-neutral-200 dark:border-neutral-700"
+                >
                     Filter
-                </button>
+                </flux:button>
+
                 <flux:modal.trigger name="create-order">
-                    <button
-                        class="rounded-lg bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100">
-                        Create Order
-                    </button>
+                    <flux:button
+                        variant="primary"
+                        color="indigo"
+                        size="sm"
+                        icon="plus"
+                    >
+                        Create order
+                    </flux:button>
                 </flux:modal.trigger>
             </div>
         </div>
@@ -200,8 +209,8 @@
                                         </button>
 
                                         <!-- Generate Invoice (Document) -->
-                                        <button @click.stop="alert('Invoice generation logic here')"
-                                            class="group relative text-neutral-500 hover:text-purple-600 dark:text-neutral-400 dark:hover:text-purple-400">
+                                        <button wire:click.stop="$dispatch('open-generate-invoice-modal', { orderId: {{ $order->id }} })"
+                                            class="group relative text-neutral-500 hover:text-purple-600 dark:text-neutral-400 dark:hover:text-purple-400 cursor-pointer">
                                             <svg class="h-5 w-5" fill="none" stroke="currentColor"
                                                 viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -372,4 +381,5 @@
         </div>
     </div>
     <livewire:modals.create-order />
+    <livewire:modals.generate-invoice-modal />
 </div>

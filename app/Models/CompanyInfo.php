@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class CompanyInfo extends Model
 {
+    use BelongsToUser;
+
     /** @use HasFactory<\Database\Factories\CompanyInfoFactory> */
     use HasFactory;
 
