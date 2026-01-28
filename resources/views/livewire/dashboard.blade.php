@@ -1,13 +1,14 @@
 <div class="flex flex-col gap-6">
     <div class="flex flex-col gap-2">
-        <h1 class="text-3xl font-bold text-neutral-900 dark:text-white">Dashboard</h1>
-        <p class="text-sm text-neutral-600 dark:text-neutral-400">See your key metrics and recent activity</p>
+        <flux:heading size="xl" level="1">Dashboard</flux:heading>
+        <flux:text size="sm" class="text-neutral-600 dark:text-neutral-400">
+            See your key metrics and recent activity.
+        </flux:text>
     </div>
 
     {{-- Key Metrics --}}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div
-            class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900 flex flex-col gap-2">
+        <flux:card class="relative flex flex-col gap-2 rounded-xl p-6 bg-white/80 dark:bg-zinc-900/80">
             <div class="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
                 <flux:icon.shopping-bag class="size-4" />
                 <span class="text-sm font-medium">Total Products</span>
@@ -15,10 +16,9 @@
             <div class="text-2xl font-semibold text-zinc-900 dark:text-white">
                 {{ $this->stats['total_products'] }}
             </div>
-        </div>
+        </flux:card>
 
-        <div
-            class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900 flex flex-col gap-2">
+        <flux:card class="relative flex flex-col gap-2 rounded-xl p-6 bg-white/80 dark:bg-zinc-900/80">
             <div class="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
                 <flux:icon.shopping-cart class="size-4" />
                 <span class="text-sm font-medium">Total Orders</span>
@@ -31,10 +31,9 @@
                     {{ $this->stats['pending_orders'] }} Pending
                 </div>
             </div>
-        </div>
+        </flux:card>
 
-        <div
-            class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900 flex flex-col gap-2">
+        <flux:card class="relative flex flex-col gap-2 rounded-xl p-6 bg-white/80 dark:bg-zinc-900/80">
             <div class="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
                 <flux:icon.users class="size-4" />
                 <span class="text-sm font-medium">Total Contacts</span>
@@ -42,10 +41,9 @@
             <div class="text-2xl font-semibold text-zinc-900 dark:text-white">
                 {{ $this->stats['total_contacts'] }}
             </div>
-        </div>
+        </flux:card>
 
-        <div
-            class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900 flex flex-col gap-2">
+        <flux:card class="relative flex flex-col gap-2 rounded-xl p-6 bg-white/80 dark:bg-zinc-900/80">
             <div class="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
                 <flux:icon.banknotes class="size-4" />
                 <span class="text-sm font-medium">Total Revenue</span>
@@ -53,7 +51,7 @@
             <div class="text-2xl font-semibold text-zinc-900 dark:text-white">
                 Rs. {{ number_format($this->stats['total_revenue']) }}
             </div>
-        </div>
+        </flux:card>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">

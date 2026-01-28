@@ -2,9 +2,11 @@
     <!-- Page Header -->
     <div class="flex flex-col gap-2">
         <div class="flex items-center justify-between">
-            <div class="flex flex-col gap-2">
-                <h1 class="text-3xl font-bold text-neutral-900 dark:text-white">Invoices</h1>
-                <p class="text-sm text-neutral-600 dark:text-neutral-400">View, manage, and download invoices for orders.</p>
+            <div class="flex flex-col gap-1">
+                <flux:heading size="xl" level="1">Invoices</flux:heading>
+                <flux:text size="sm" class="text-neutral-600 dark:text-neutral-400">
+                    View, manage, and download invoices for orders.
+                </flux:text>
             </div>
             <div class="flex items-center gap-2">
                 <flux:navlist.item icon="newspaper" :href="route('invoices')" class="md:hidden" />
@@ -75,24 +77,37 @@
         <div class="flex flex-col justify-between gap-4 border-b border-neutral-200 p-5 md:flex-row md:items-center dark:border-neutral-700">
             <h2 class="text-lg font-semibold text-neutral-900 dark:text-white">All Invoices</h2>
             <div class="flex flex-wrap gap-2">
-                <div class="relative w-full sm:w-auto">
-                    <input type="text" placeholder="Search invoices..." wire:model.live="search"
-                        class="w-full rounded-lg border-neutral-300 bg-neutral-50 px-4 py-2 pl-10 text-sm text-neutral-900 focus:border-blue-500 focus:ring-blue-500 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-400 sm:w-64" />
-                    <svg class="absolute left-3 top-2.5 h-4 w-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
+                <div class="w-full sm:w-64">
+                    <flux:input
+                        wire:model.live.debounce.300ms="search"
+                        icon="magnifying-glass"
+                        size="sm"
+                        placeholder="Search invoices by number, customer, or order..."
+                    />
                 </div>
-                <select wire:model.live="filterType" class="rounded-lg border-neutral-300 bg-neutral-50 px-3 py-2 text-sm text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white">
-                    <option value="">All Types</option>
-                    <option value="customer">Customer</option>
-                    <option value="supplier">Supplier</option>
-                </select>
-                <select wire:model.live="filterStatus" class="rounded-lg border-neutral-300 bg-neutral-50 px-3 py-2 text-sm text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white">
-                    <option value="">All Statuses</option>
-                    <option value="pending">Pending</option>
-                    <option value="paid">Paid</option>
-                    <option value="overdue">Overdue</option>
-                </select>
+
+                <flux:select
+                    wire:model.live="filterType"
+                    size="sm"
+                    placeholder="All types"
+                    class="min-w-[9rem]"
+                >
+                    <flux:select.option value="">All types</flux:select.option>
+                    <flux:select.option value="customer">Customer</flux:select.option>
+                    <flux:select.option value="supplier">Supplier</flux:select.option>
+                </flux:select>
+
+                <flux:select
+                    wire:model.live="filterStatus"
+                    size="sm"
+                    placeholder="All statuses"
+                    class="min-w-[9rem]"
+                >
+                    <flux:select.option value="">All statuses</flux:select.option>
+                    <flux:select.option value="pending">Pending</flux:select.option>
+                    <flux:select.option value="paid">Paid</flux:select.option>
+                    <flux:select.option value="overdue">Overdue</flux:select.option>
+                </flux:select>
             </div>
         </div>
 
@@ -170,7 +185,7 @@
                                     <div class="space-y-6">
                                         <div class="flex items-center justify-between">
                                             <flux:heading size="lg">Invoice Preview</flux:heading>
-                                            <flux:button wire:click="download({{ $invoice->id }})" variant="primary" size="sm" icon="download">
+                                            <flux:button wire:click="download({{ $invoice->id }})" variant="primary" color="indigo" size="sm" icon="download">
                                                 Download PDF
                                             </flux:button>
                                         </div>
