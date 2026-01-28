@@ -1,11 +1,16 @@
 <div class="h-full w-full">
 
-    <flux:button variant="ghost" wire:navigate href="{{ route('contacts.all') }}" icon="arrow-left" />
+    <flux:button variant="ghost" wire:navigate href="{{ route('contacts.all') }}" icon="arrow-left">
+        Back to contacts
+    </flux:button>
 
-    <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {{-- Header --}}
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div class="flex items-center gap-4">
+                <div class="hidden sm:flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-900/40 dark:text-blue-300 font-semibold">
+                    {{ mb_substr($contact->name, 0, 1) }}
+                </div>
                 <div>
                     <flux:heading>{{ $contact->name }}</flux:heading>
                     <flux:text class="text-zinc-500 dark:text-zinc-400">{{ $contact->email }}</flux:text>

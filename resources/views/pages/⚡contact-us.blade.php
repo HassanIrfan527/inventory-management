@@ -35,7 +35,7 @@ new #[Title('Contact Us | Kinetic Hub')] #[Layout('layouts.public')] class exten
 };
 ?>
 
-<div class="py-24 sm:py-32">
+<div class="py-24 sm:py-32 bg-zinc-50 dark:bg-zinc-950/50">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
             {{--

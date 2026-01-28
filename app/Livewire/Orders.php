@@ -7,12 +7,14 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Title('Orders Management')]
 #[Layout('layouts.app')]
 class Orders extends Component
 {
-    // Static Data for Mockup
+    use WithPagination;
+
     public ?int $totalOrders = null;
 
     public ?int $completedOrders = null;
@@ -21,21 +23,34 @@ class Orders extends Component
 
     public ?int $totalRevenue = null;
 
-    public $orders;
+    public function mount(): void
+    {
+        $this->hydrateMetrics();
+    }
 
-    public function mount()
+    protected function hydrateMetrics(): void
     {
         $this->totalOrders = Order::count();
         $this->completedOrders = Order::where('status', 'completed')->count();
         $this->pendingOrders = Order::where('status', 'pending')->count();
         $this->totalRevenue = Order::sum('total_amount');
-
-        $this->orders = Order::with(['contact', 'products'])->get();
     }
 
     #[On('order-created')]
+    public function refreshOrders(): void
+    {
+        $this->resetPage();
+        $this->hydrateMetrics();
+    }
+
     public function render()
     {
-        return view('livewire.orders');
+        $orders = Order::with(['contact', 'products'])
+            ->latest()
+            ->paginate(10);
+
+        return view('livewire.orders', [
+            'orders' => $orders,
+        ]);
     }
 }

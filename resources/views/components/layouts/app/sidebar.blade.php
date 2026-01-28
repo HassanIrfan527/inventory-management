@@ -9,57 +9,34 @@
     <flux:sidebar
         sticky
         stashable
-        class="border-e border-zinc-200/80 bg-zinc-50/90 backdrop-blur-sm dark:border-zinc-800/80 dark:bg-zinc-900/95 transition-all duration-300">
+        x-data="{ collapsed: false }"
+        class="border-e border-zinc-200/80 bg-zinc-50/90 backdrop-blur-sm dark:border-zinc-800/80 dark:bg-zinc-900/95 transition-all duration-300"
+        x-bind:class="collapsed ? 'w-20' : 'w-64'"
+    >
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-        <flux:brand :href="route('dashboard')" :name="config('app.name')" wire:navigate>
-            <x-slot name="logo" class="size-8 rounded-md bg-accent-content text-accent-foreground flex items-center justify-center">
-                <x-app-logo-icon class="size-5 fill-current text-white dark:text-black" />
-            </x-slot>
-        </flux:brand>
+        <div class="flex items-center justify-between gap-2 pe-2">
+            <flux:brand :href="route('dashboard')" :name="config('app.name')" wire:navigate>
+                <x-slot name="logo" class="size-8 rounded-md bg-accent-content text-accent-foreground flex items-center justify-center">
+                    <x-app-logo-icon class="size-5 fill-current text-white dark:text-black" />
+                </x-slot>
+            </flux:brand>
 
-        <flux:navlist variant="outline">
-            <flux:navlist.group :heading="__('Platform')" class="grid">
-                <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
-                    wire:navigate>Dashboard
-                </flux:navlist.item>
+            <!-- Collapse toggle (desktop) -->
+            <button
+                type="button"
+                class="hidden lg:inline-flex items-center justify-center rounded-md p-1 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-zinc-800 transition-colors"
+                x-on:click="collapsed = !collapsed"
+                x-tooltip.raw="Toggle sidebar"
+            >
+                <flux:icon.chevrons-left class="size-4" x-show="!collapsed" />
+                <flux:icon.chevrons-right class="size-4" x-show="collapsed" />
+            </button>
+        </div>
 
-                <flux:navlist.item icon="user" :href="route('contacts.all')"
-                    :current="request()->routeIs('contacts')" wire:navigate>Contacts
-                </flux:navlist.item>
-
-                <flux:navlist.item icon="list-ordered" :href="route('orders')" :current="request()->routeIs('orders')"
-                    wire:navigate>Orders
-                </flux:navlist.item>
-
-                <flux:navlist.item icon="newspaper" :href="route('invoices')" :current="request()->routeIs('invoices')"
-                    wire:navigate>Invoices
-                </flux:navlist.item>
-
-
-
-            </flux:navlist.group>
-        </flux:navlist>
-
-        <flux:spacer />
-        <flux:separator />
-
-
-        <flux:navlist variant="outline">
-            <flux:navlist.item icon="bot" :href="route('vector')" :current="request()->routeIs('vector')"
-                wire:navigate>
-                Vector
-            </flux:navlist.item>
-
-            <flux:navlist.item icon="box" :href="route('inventory')" :current="request()->routeIs('inventory')"
-                wire:navigate>
-                Inventory
-            </flux:navlist.item>
-
-        </flux:navlist>
-
+        <!-- Appearance switcher - directly under brand -->
         <div class="mt-4 hidden lg:flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400 px-1">
-            <span>{{ __('Appearance') }}</span>
+            <span x-show="!collapsed">{{ __('Appearance') }}</span>
 
             <flux:dropdown x-data align="end">
                 <flux:button
@@ -82,6 +59,50 @@
                 </flux:menu>
             </flux:dropdown>
         </div>
+
+        <flux:navlist variant="outline">
+            <flux:navlist.group :heading="__('Platform')" class="grid">
+                <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
+                    wire:navigate>
+                    <span x-show="!collapsed">Dashboard</span>
+                </flux:navlist.item>
+
+                <flux:navlist.item icon="user" :href="route('contacts.all')"
+                    :current="request()->routeIs('contacts')" wire:navigate>
+                    <span x-show="!collapsed">Contacts</span>
+                </flux:navlist.item>
+
+                <flux:navlist.item icon="list-ordered" :href="route('orders')" :current="request()->routeIs('orders')"
+                    wire:navigate>
+                    <span x-show="!collapsed">Orders</span>
+                </flux:navlist.item>
+
+                <flux:navlist.item icon="newspaper" :href="route('invoices')" :current="request()->routeIs('invoices')"
+                    wire:navigate>
+                    <span x-show="!collapsed">Invoices</span>
+                </flux:navlist.item>
+
+
+
+            </flux:navlist.group>
+        </flux:navlist>
+
+        <flux:spacer />
+        <flux:separator />
+
+
+        <flux:navlist variant="outline">
+            <flux:navlist.item icon="bot" :href="route('vector')" :current="request()->routeIs('vector')"
+                wire:navigate>
+                <span x-show="!collapsed">Vector</span>
+            </flux:navlist.item>
+
+            <flux:navlist.item icon="box" :href="route('inventory')" :current="request()->routeIs('inventory')"
+                wire:navigate>
+                <span x-show="!collapsed">Inventory</span>
+            </flux:navlist.item>
+
+        </flux:navlist>
 
         <!-- Desktop User Menu -->
         <flux:dropdown class="hidden lg:block" position="bottom" align="start">

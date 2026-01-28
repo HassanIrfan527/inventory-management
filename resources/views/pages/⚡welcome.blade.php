@@ -19,7 +19,7 @@ new #[Title('Welcome to Kinetic Hub')] #[Layout('layouts.public')] class extends
     --}}
 
     <!-- Hero Section -->
-    <div class="relative pt-10 pb-20 sm:pt-16 sm:pb-32 lg:pb-48">
+    <div class="relative pt-10 pb-20 sm:pt-16 sm:pb-32 lg:pb-48 bg-gradient-to-b from-zinc-50 to-white dark:from-zinc-950 dark:to-zinc-900">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="lg:grid lg:grid-cols-12 lg:gap-x-8 lg:gap-y-20">
                 <div class="relative z-10 mx-auto max-w-2xl lg:col-span-7 lg:mx-0 lg:pt-4">

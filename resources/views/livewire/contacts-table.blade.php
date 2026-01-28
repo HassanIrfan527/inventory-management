@@ -1,6 +1,10 @@
 <div class="flex h-full w-full flex-1 flex-col gap-6">
     <!-- Page Header -->
     <div class="flex flex-col gap-2">
+        <div class="inline-flex items-center gap-2 rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300 w-fit">
+            <flux:icon.users class="w-3.5 h-3.5" />
+            <span>CRM · Contacts</span>
+        </div>
         <flux:heading size="xl" level="1">Contacts</flux:heading>
         <flux:text size="sm" class="text-neutral-600 dark:text-neutral-400">
             Manage and view all your contacts in one place.
