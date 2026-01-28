@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\V1\ContactController;
+use App\Http\Controllers\Api\V1\InvoiceController;
+use App\Http\Controllers\Api\V1\ItemController;
+use App\Http\Controllers\Api\V1\OrderController;
 use App\Livewire\ContactPage;
 use App\Livewire\Dashboard;
 use App\Livewire\Inventory;
@@ -32,8 +36,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/orders', Orders::class)
         ->name('orders');
 
-    Route::get('/scout', App\Livewire\Scout::class)
-        ->name('scout');
+    Route::get('/vector', App\Livewire\Vector::class)
+        ->name('vector');
     Route::get('dashboard', Dashboard::class)
         ->name('dashboard');
 
@@ -60,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('two-factor.show');
 });
 
-// API routes for products
+// Legacy API route for fetching a single product
 Route::middleware(['auth', 'verified'])->prefix('api')->group(function () {
     Route::get('products/{product}', function (\App\Models\Product $product) {
         return response()->json([
@@ -77,3 +81,19 @@ Route::middleware(['auth', 'verified'])->prefix('api')->group(function () {
         ]);
     });
 });
+
+// Versioned JSON API (v1)
+Route::middleware(['auth', 'verified'])
+    ->prefix('api/v1')
+    ->as('api.v1.')
+    ->group(function () {
+        Route::apiResource('items', ItemController::class)
+            ->parameters(['items' => 'product']);
+
+        Route::apiResource('contacts', ContactController::class);
+
+        Route::apiResource('orders', OrderController::class);
+
+        Route::apiResource('invoices', InvoiceController::class)
+            ->only(['index', 'show', 'update', 'destroy']);
+    });

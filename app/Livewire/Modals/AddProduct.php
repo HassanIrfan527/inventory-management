@@ -3,7 +3,7 @@
 namespace App\Livewire\Modals;
 
 use App\Livewire\Forms\AddProductForm;
-use App\Models\Product;
+use App\Services\ProductService;
 use Flux\Flux;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -25,26 +25,19 @@ class AddProduct extends Component
     {
         $this->product->validate();
 
-        $product = Product::create([
-            'name' => $this->product->name,
-            'description' => $this->product->description,
-            'purchase_price' => $this->product->cost_price,
-            'retail_price' => $this->product->retail_price,
-            'delivery_charges' => $this->product->delivery_charges,
-        ]);
+        $productService = app(ProductService::class);
 
-        if (! empty($this->product->product_images)) {
-            foreach ($this->product->product_images as $image) {
-                $path = $image->store('product_images', 'public');
-                $product->images()->create([
-                    'image_path' => $path,
-                ]);
-            }
-        }
-
-        if (! empty($this->product->categories)) {
-            $product->categories()->attach($this->product->categories);
-        }
+        $product = $productService->createProduct(
+            data: [
+                'name' => $this->product->name,
+                'description' => $this->product->description,
+                'cost_price' => $this->product->cost_price,
+                'retail_price' => $this->product->retail_price,
+                'delivery_charges' => $this->product->delivery_charges,
+            ],
+            categories: $this->product->categories,
+            images: $this->product->product_images,
+        );
 
         $this->product->reset();
         $this->product->categories = []; // Explicitly reset categories

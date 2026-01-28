@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Contact;
+use App\Services\ContactService;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -86,7 +87,9 @@ class ContactPage extends Component
 
     public function deleteContact($id = null): void
     {
-        $this->contact->delete();
+        $contactService = app(ContactService::class);
+        $contactService->deleteContact($this->contact);
+
         \Flux\Flux::modal('delete-modal')->close();
         $this->dispatch('toast', message: 'Contact deleted successfully', type: 'success');
         $this->redirect(route('contacts.all'), navigate: true);

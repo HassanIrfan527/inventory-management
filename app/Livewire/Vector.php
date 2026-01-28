@@ -2,14 +2,14 @@
 
 namespace App\Livewire;
 
-use App\AiAgents\Scout as ScoutAIAgent;
+use App\AiAgents\Vector as VectorAIAgent;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('components.layouts.app')]
-#[Title('Scout - Your Personal Inventory Assistant')]
-class Scout extends Component
+#[Title('Vector - Your Personal Inventory Assistant')]
+class Vector extends Component
 {
     public $input = '';
 
@@ -20,7 +20,7 @@ class Scout extends Component
     public function mount()
     {
         // Use a unique but persistent ID for this user's session
-        $this->chatId = 'scout_chat_'.auth()->id();
+        $this->chatId = 'vector_chat_'.auth()->id();
     }
 
     public function sendMessage()
@@ -30,7 +30,7 @@ class Scout extends Component
         }
 
         // Use the standardized LarAgent 'for' method to maintain session
-        ScoutAIAgent::for($this->chatId)->respond($this->userInput);
+        VectorAIAgent::for($this->chatId)->respond($this->userInput);
 
         // Clear input
         $this->userInput = '';
@@ -39,7 +39,7 @@ class Scout extends Component
     public function render()
     {
         // Fetch history using the agent's history driver (session by default)
-        $rawHistory = ScoutAIAgent::for($this->chatId)->chatHistory()->toArray();
+        $rawHistory = VectorAIAgent::for($this->chatId)->chatHistory()->toArray();
 
         // Normalize history to ensure 'content' is always a string for the blade view
         $history = array_map(function ($chat) {
@@ -60,7 +60,7 @@ class Scout extends Component
             return $chat;
         }, $rawHistory);
 
-        return view('livewire.scout', [
+        return view('livewire.vector', [
             'history' => $history ?: [],
         ]);
     }

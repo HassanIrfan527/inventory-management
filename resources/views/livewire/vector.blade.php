@@ -48,7 +48,7 @@
 
                 <h1
                     class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 to-zinc-600 dark:from-white dark:to-zinc-400">
-                    Scout
+                    Vector
                 </h1>
                 <p class="mt-2 text-zinc-500 dark:text-zinc-400 text-lg">
                     How can I help you manage your inventory today?
@@ -142,7 +142,7 @@
                     <flux:icon.sparkles class="w-6 h-6 text-yellow-500 transition-colors group-hover:text-yellow-400" />
                 </div>
                 <input type="text" wire:model.defer="userInput"
-                    placeholder="Ask Scout to manage inventory, find products, or create categories..."
+                    placeholder="Ask Vector to manage inventory, find products, or create categories..."
                     class="w-full h-14 bg-transparent border-0 focus:ring-0 text-lg px-4 text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500"
                     autofocus required>
                 <div class="flex items-center gap-2 pr-2">
@@ -157,7 +157,7 @@
             </div>
             <div class="flex justify-between items-center mt-3 px-2">
                 <p class="text-xs text-zinc-400 dark:text-zinc-500">
-                    Scout is powered by **ollama / qwen2.5** and can create records in your database.
+                    Vector is powered by **ollama / qwen2.5** and can create records in your database.
                 </p>
                 <div class="flex gap-4 text-xs font-medium text-zinc-400 dark:text-zinc-500">
                     <span>Press <kbd
