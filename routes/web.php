@@ -21,9 +21,9 @@ use Laravel\Fortify\Features;
 // use App\Livewire\ContactUs;
 // use App\Livewire\Welcome;
 
-Route::livewire('/','pages::welcome')->name('home');
+Route::livewire('/', 'pages::welcome')->name('home');
 
-Route::livewire('/contact-us','pages::contact-us')->name('contact.us');
+Route::livewire('/contact-us', 'pages::contact-us')->name('contact.us');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/contact/{contact}', ContactPage::class)

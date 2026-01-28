@@ -13,9 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class InvoiceController extends Controller
 {
-    public function __construct(protected InvoiceService $invoiceService)
-    {
-    }
+    public function __construct(protected InvoiceService $invoiceService) {}
 
     public function index(Request $request)
     {

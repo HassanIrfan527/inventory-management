@@ -14,9 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ItemController extends Controller
 {
-    public function __construct(protected ProductService $productService)
-    {
-    }
+    public function __construct(protected ProductService $productService) {}
 
     public function index(Request $request)
     {

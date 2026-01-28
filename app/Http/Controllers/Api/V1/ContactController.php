@@ -14,9 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContactController extends Controller
 {
-    public function __construct(protected ContactService $contactService)
-    {
-    }
+    public function __construct(protected ContactService $contactService) {}
 
     public function index(Request $request)
     {
