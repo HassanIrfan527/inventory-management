@@ -1,4 +1,4 @@
 <x-layouts.app :title="__('Contacts')">
-    <livewire:contacts-table/>
-    <livewire:modals.add-contact />
+    <livewire:contacts.index/>
+    <livewire:contacts.modals.add-contact />
 </x-layouts.app>

@@ -10,7 +10,7 @@
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @fluxStyles
+    @fluxScripts
 </head>
 <body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased font-sans min-h-screen flex flex-col selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100">
 
@@ -30,6 +30,7 @@
                 <nav class="hidden md:flex items-center space-x-1">
                     <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">Home</x-nav-link>
                     <x-nav-link href="#features">Features</x-nav-link>
+                    <x-nav-link href="{{ route('blog.index') }}" :active="request()->routeIs('blog.index')">Blog</x-nav-link>
                     <x-nav-link href="{{ route('contact.us') }}" :active="request()->routeIs('contact.us')">Contact</x-nav-link>
                 </nav>
 
@@ -53,6 +54,7 @@
                         <flux:menu class="min-w-48">
                             <flux:menu.item href="{{ route('home') }}" icon="home">Home</flux:menu.item>
                             <flux:menu.item href="#features" icon="sparkles">Features</flux:menu.item>
+                            <flux:menu.item href="{{ route('blog.index') }}" icon="newspaper">Blog</flux:menu.item>
                             <flux:menu.item href="{{ route('contact.us') }}" icon="envelope">Contact</flux:menu.item>
                             <flux:menu.separator />
                              @auth

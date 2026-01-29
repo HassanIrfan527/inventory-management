@@ -1,3 +1,14 @@
+<?php
+
+use Livewire\Attributes\Layout;
+use Livewire\Component;
+
+new #[Layout('layouts.app')] class extends Component
+{
+    //
+};
+?>
+
 <section class="w-full">
     @include('partials.settings-heading')
 

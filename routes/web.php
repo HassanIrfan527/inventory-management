@@ -4,39 +4,34 @@ use App\Http\Controllers\Api\V1\ContactController;
 use App\Http\Controllers\Api\V1\InvoiceController;
 use App\Http\Controllers\Api\V1\ItemController;
 use App\Http\Controllers\Api\V1\OrderController;
-use App\Livewire\ContactPage;
+use App\Livewire\Contacts\Show as ContactShow;
 use App\Livewire\Dashboard;
-use App\Livewire\Inventory;
-use App\Livewire\Invoices;
-use App\Livewire\Orders;
-use App\Livewire\Settings\Appearance;
+use App\Livewire\Invoices\Index as InvoicesIndex;
+use App\Livewire\Orders\Index as OrdersIndex;
 use App\Livewire\Settings\CompanyInfo;
-use App\Livewire\Settings\Password;
 use App\Livewire\Settings\ProductCategories;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\TwoFactor;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
-// use App\Livewire\ContactUs;
-// use App\Livewire\Welcome;
-
-Route::livewire('/', 'pages::welcome')->name('home');
+Route::livewire('/', 'welcome')->name('home');
+Route::get('/blog', \App\Livewire\Blog\Index::class)->name('blog.index');
 
 Route::livewire('/contact-us', 'pages::contact-us')->name('contact.us');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/contact/{contact}', ContactPage::class)
+    Route::get('/contact/{contact}', ContactShow::class)
         ->middleware('can:view,contact')
         ->name('contact.show');
 
-    Route::get('inventory', Inventory::class)
+    Route::livewire('inventory', 'products.inventory')
         ->name('inventory');
 
-    Route::get('/invoices', Invoices::class)
+    Route::get('/invoices', InvoicesIndex::class)
         ->name('invoices');
 
-    Route::get('/orders', Orders::class)
+    Route::get('/orders', OrdersIndex::class)
         ->name('orders');
 
     Route::get('/vector', App\Livewire\Vector::class)
@@ -51,8 +46,8 @@ Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
     Route::get('settings/profile', Profile::class)->name('profile.edit');
-    Route::get('settings/password', Password::class)->name('user-password.edit');
-    Route::get('settings/appearance', Appearance::class)->name('appearance.edit');
+    Route::livewire('settings/password', 'settings.password')->name('user-password.edit');
+    Route::livewire('settings/appearance', 'settings.appearance')->name('appearance.edit');
     Route::get('settings/company-info', CompanyInfo::class)->name('company-info.edit');
     Route::get('settings/product-categories', ProductCategories::class)->name('product-categories.edit');
     Route::get('settings/two-factor', TwoFactor::class)
