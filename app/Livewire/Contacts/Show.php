@@ -4,7 +4,6 @@ namespace App\Livewire\Contacts;
 
 use App\Models\Contact;
 use App\Services\ContactService;
-use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -51,24 +50,30 @@ class Show extends Component
         $this->landmark = $contact->landmark;
     }
 
-    public function updated($property, $value): void
+    public function save(): void
     {
-        $this->validateOnly($property);
-        // Persist updates from primitive properties to the Contact model
-        if (str_starts_with($property, 'contact.')) {
-            $field = Str::after($property, 'contact.');
-            $this->contact->update([$field => $value]);
-            $this->dispatch('toast', message: 'Contact updated successfully', type: 'success');
+        $this->validate();
 
-            return;
-        }
+        $this->contact->update([
+            'phone' => $this->phone,
+            'whatsapp_no' => $this->whatsapp_no,
+            'address' => $this->address,
+            'landmark' => $this->landmark,
+        ]);
 
-        $fields = ['phone', 'whatsapp_no', 'address', 'landmark'];
-        if (in_array($property, $fields, true)) {
-            $this->contact->update([$property => $value]);
-            $this->contact->logActivity("Updated $property to $value");
-            $this->dispatch('toast', message: 'Contact updated successfully', type: 'success');
-        }
+        $this->contact->logActivity('Contact details updated');
+
+        $this->edit = false;
+        $this->dispatch('toast', message: 'Contact updated successfully', type: 'success');
+    }
+
+    public function cancel(): void
+    {
+        $this->edit = false;
+        $this->phone = $this->contact->phone;
+        $this->whatsapp_no = $this->contact->whatsapp_no;
+        $this->address = $this->contact->address;
+        $this->landmark = $this->contact->landmark;
     }
 
     public function addNote(): void
