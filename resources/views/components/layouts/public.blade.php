@@ -10,7 +10,7 @@
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @fluxScripts
+    @fluxAppearance
 </head>
 <body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased font-sans min-h-screen flex flex-col selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100">
 
@@ -29,21 +29,46 @@
                 <!-- Desktop Menu -->
                 <nav class="hidden md:flex items-center space-x-1">
                     <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">Home</x-nav-link>
-                    <x-nav-link href="#features">Features</x-nav-link>
+                    <x-nav-link href="{{ route('docs') }}" :active="request()->routeIs('docs')">Docs</x-nav-link>
+                    <x-nav-link href="{{ route('help') }}" :active="request()->routeIs('help')">Help</x-nav-link>
                     <x-nav-link href="{{ route('blog.index') }}" :active="request()->routeIs('blog.index')">Blog</x-nav-link>
                     <x-nav-link href="{{ route('contact.us') }}" :active="request()->routeIs('contact.us')">Contact</x-nav-link>
                 </nav>
 
-                <!-- CTA -->
-                <div class="hidden md:flex items-center gap-6">
-                    @auth
-                        <a href="{{ route('dashboard') }}" class="text-sm font-semibold text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm font-semibold text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">Log in</a>
-                        <flux:button href="{{ route('register') }}" variant="primary" size="sm" class="px-5 py-2.5 shadow-lg shadow-blue-500/20">
-                            Get Started
-                        </flux:button>
-                    @endauth
+                <div class="flex items-center gap-4">
+                    <!-- CTA & Appearance -->
+                    <div class="hidden md:flex items-center gap-6">
+                        <!-- Appearance switcher -->
+                        <flux:dropdown x-data align="end">
+                            <flux:button
+                                variant="subtle"
+                                square
+                                size="sm"
+                                class="h-9 w-9 border-none bg-transparent hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                                aria-label="{{ __('Preferred color scheme') }}"
+                            >
+                                <flux:icon.sun x-show="$flux.appearance === 'light'" x-cloak variant="mini" class="text-zinc-500 dark:text-white" />
+                                <flux:icon.moon x-show="$flux.appearance === 'dark'" x-cloak variant="mini" class="text-zinc-500 dark:text-white" />
+                                <flux:icon.moon x-show="$flux.appearance === 'system' && $flux.dark" x-cloak variant="mini" class="text-zinc-500 dark:text-white" />
+                                <flux:icon.sun x-show="$flux.appearance === 'system' && ! $flux.dark" x-cloak variant="mini" class="text-zinc-500 dark:text-white" />
+                            </flux:button>
+
+                            <flux:menu>
+                                <flux:menu.item icon="sun" x-on:click="$flux.appearance = 'light'">{{ __('Light') }}</flux:menu.item>
+                                <flux:menu.item icon="moon" x-on:click="$flux.appearance = 'dark'">{{ __('Dark') }}</flux:menu.item>
+                                <flux:menu.item icon="computer-desktop" x-on:click="$flux.appearance = 'system'">{{ __('System') }}</flux:menu.item>
+                            </flux:menu>
+                        </flux:dropdown>
+
+                        @auth
+                            <a href="{{ route('dashboard') }}" class="text-sm font-semibold text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">Dashboard</a>
+                        @else
+                            <a href="{{ route('login') }}" class="text-sm font-semibold text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">Log in</a>
+                            <flux:button href="{{ route('register') }}" variant="primary" size="sm" class="px-5 py-2.5 shadow-lg shadow-blue-500/20">
+                                Get Started
+                            </flux:button>
+                        @endauth
+                    </div>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -53,9 +78,16 @@
 
                         <flux:menu class="min-w-48">
                             <flux:menu.item href="{{ route('home') }}" icon="home">Home</flux:menu.item>
-                            <flux:menu.item href="#features" icon="sparkles">Features</flux:menu.item>
+                            <flux:menu.item href="{{ route('docs') }}" icon="document-text">Docs</flux:menu.item>
+                            <flux:menu.item href="{{ route('help') }}" icon="question-mark-circle">Help</flux:menu.item>
                             <flux:menu.item href="{{ route('blog.index') }}" icon="newspaper">Blog</flux:menu.item>
                             <flux:menu.item href="{{ route('contact.us') }}" icon="envelope">Contact</flux:menu.item>
+                            <flux:menu.separator />
+                            <flux:menu.submenu icon="paint-brush" label="Appearance">
+                                <flux:menu.item icon="sun" x-on:click="$flux.appearance = 'light'">Light</flux:menu.item>
+                                <flux:menu.item icon="moon" x-on:click="$flux.appearance = 'dark'">Dark</flux:menu.item>
+                                <flux:menu.item icon="computer-desktop" x-on:click="$flux.appearance = 'system'">System</flux:menu.item>
+                            </flux:menu.submenu>
                             <flux:menu.separator />
                              @auth
                                 <flux:menu.item href="{{ route('dashboard') }}" icon="squares-2x2">Dashboard</flux:menu.item>
@@ -109,10 +141,33 @@
             </div>
             <div class="mt-20 pt-8 border-t border-zinc-200 dark:border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-6">
                 <p class="text-zinc-500 dark:text-zinc-500 text-sm">&copy; {{ date('Y') }} Kinetic Hub. Crafted with precision.</p>
-                <div class="flex gap-6">
-                    {{-- Social Icons Placeholder --}}
-                    <a href="#" class="text-zinc-400 hover:text-blue-600 transition-colors"><flux:icon name="magnifying-glass" class="size-5" /></a>
-                    <a href="#" class="text-zinc-400 hover:text-blue-600 transition-colors"><flux:icon name="magnifying-glass" class="size-5" /></a>
+                <div class="flex items-center gap-6">
+                    <!-- Appearance switcher -->
+                    <flux:dropdown x-data align="end">
+                        <flux:button
+                            variant="subtle"
+                            square
+                            size="sm"
+                            class="h-9 w-9 border-none bg-transparent hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                            aria-label="{{ __('Preferred color scheme') }}"
+                        >
+                            <flux:icon.sun x-show="$flux.appearance === 'light'" x-cloak variant="mini" class="text-zinc-500 dark:text-white" />
+                            <flux:icon.moon x-show="$flux.appearance === 'dark'" x-cloak variant="mini" class="text-zinc-500 dark:text-white" />
+                            <flux:icon.moon x-show="$flux.appearance === 'system' && $flux.dark" x-cloak variant="mini" class="text-zinc-500 dark:text-white" />
+                            <flux:icon.sun x-show="$flux.appearance === 'system' && ! $flux.dark" x-cloak variant="mini" class="text-zinc-500 dark:text-white" />
+                        </flux:button>
+
+                        <flux:menu>
+                            <flux:menu.item icon="sun" x-on:click="$flux.appearance = 'light'">{{ __('Light') }}</flux:menu.item>
+                            <flux:menu.item icon="moon" x-on:click="$flux.appearance = 'dark'">{{ __('Dark') }}</flux:menu.item>
+                            <flux:menu.item icon="computer-desktop" x-on:click="$flux.appearance = 'system'">{{ __('System') }}</flux:menu.item>
+                        </flux:menu>
+                    </flux:dropdown>
+
+                    <div class="flex gap-4">
+                        <a href="#" class="text-zinc-400 hover:text-blue-600 transition-colors"><flux:icon.magnifying-glass class="size-5" /></a>
+                        <a href="#" class="text-zinc-400 hover:text-blue-600 transition-colors"><flux:icon.magnifying-glass class="size-5" /></a>
+                    </div>
                 </div>
             </div>
         </div>

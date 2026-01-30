@@ -19,6 +19,8 @@ Route::livewire('/', 'welcome')->name('home');
 Route::get('/blog', \App\Livewire\Blog\Index::class)->name('blog.index');
 
 Route::livewire('/contact-us', 'pages::contact-us')->name('contact.us');
+Route::get('/documentation', \App\Livewire\Docs::class)->name('docs');
+Route::get('/help', \App\Livewire\Help::class)->name('help');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/contact/{contact}', ContactShow::class)

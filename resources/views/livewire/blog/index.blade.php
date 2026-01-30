@@ -1,6 +1,6 @@
 <div class="py-12 sm:py-20 bg-zinc-50/50 dark:bg-zinc-950">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
-        <div class="max-w-2xl mx-auto text-center mb-16">
+        <div class="max-w-2xl mx-auto text-center mb-12 sm:mb-16">
             <h2 class="text-base font-semibold leading-7 text-blue-600 uppercase tracking-wide">The Kinetic Blog</h2>
             <p class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
                 Insights for modern business.
@@ -20,27 +20,27 @@
             
             @if($featured)
             <div class="lg:col-span-2 group cursor-pointer">
-                <div class="relative h-96 w-full overflow-hidden rounded-3xl mb-6">
+                <div class="relative h-64 sm:h-96 w-full overflow-hidden rounded-3xl mb-6">
                     <img src="{{ $featured['image'] }}" alt="{{ $featured['title'] }}" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 p-8">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6 sm:p-8">
                         <div class="flex items-center gap-2 mb-3">
-                            <span class="inline-flex items-center rounded-full bg-blue-600/90 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
+                            <span class="inline-flex items-center rounded-full bg-blue-600/90 px-3 py-1 text-[10px] sm:text-xs font-medium text-white backdrop-blur-md">
                                 {{ $featured['category'] }}
                             </span>
-                            <span class="text-zinc-300 text-xs">{{ $featured['read_time'] }}</span>
+                            <span class="text-zinc-300 text-[10px] sm:text-xs">{{ $featured['read_time'] }}</span>
                         </div>
-                        <h3 class="text-3xl font-bold text-white mb-2 leading-tight group-hover:underline decoration-blue-500 underline-offset-4 decoration-2">
+                        <h3 class="text-xl sm:text-3xl font-bold text-white mb-2 leading-tight group-hover:underline decoration-blue-500 underline-offset-4 decoration-2">
                             {{ $featured['title'] }}
                         </h3>
-                         <p class="text-zinc-300 line-clamp-2 max-w-xl">
+                         <p class="text-zinc-300 line-clamp-2 max-w-xl text-sm hidden sm:block">
                             {{ $featured['excerpt'] }}
                         </p>
                          <div class="flex items-center gap-3 mt-4">
-                             <div class="h-8 w-8 rounded-full bg-zinc-100 flex items-center justify-center text-xs font-bold text-zinc-900 border border-white/20">
+                             <div class="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-zinc-100 flex items-center justify-center text-[10px] sm:text-xs font-bold text-zinc-900 border border-white/20">
                                 {{ substr($featured['author'], 0, 1) }}
                             </div>
-                            <div class="text-sm font-medium text-white">
+                            <div class="text-[10px] sm:text-sm font-medium text-white">
                                 {{ $featured['author'] }} <span class="text-zinc-400 mx-1">•</span> {{ $featured['date'] }}
                             </div>
                         </div>
