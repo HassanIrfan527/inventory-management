@@ -193,20 +193,20 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
                                     <div class="flex items-center gap-3">
                                         <!-- View Details (Eye) -->
-                                        <button
-                                            @click.stop="expandedRow = expandedRow === {{ $order->id }} ? null : {{ $order->id }}"
-                                            class="group relative text-neutral-500 hover:text-blue-600 dark:text-neutral-400 dark:hover:text-blue-400">
-                                            <svg class="h-5 w-5" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
+                                        <div class="group relative">
+                                            <a href="{{ route('orders.show', $order) }}" wire:navigate
+                                                class="flex items-center text-neutral-500 hover:text-blue-600 dark:text-neutral-400 dark:hover:text-blue-400">
+                                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                </svg>
+                                            </a>
                                             <span
-                                                class="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded bg-neutral-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-white dark:text-neutral-900">View
+                                                class="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded bg-neutral-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-white dark:text-neutral-900 pointer-events-none">View
                                                 Details</span>
-                                        </button>
+                                        </div>
 
                                         <!-- Generate Invoice (Document) -->
                                         <button wire:click.stop="$dispatch('open-generate-invoice-modal', { orderId: {{ $order->id }} })"

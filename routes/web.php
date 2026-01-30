@@ -34,6 +34,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/orders', OrdersIndex::class)
         ->name('orders');
 
+    Route::get('/order/{order:order_number}', \App\Livewire\Orders\Show::class)
+        ->name('orders.show');
+
     Route::get('/vector', App\Livewire\Vector::class)
         ->name('vector');
     Route::get('dashboard', Dashboard::class)
