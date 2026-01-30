@@ -16,8 +16,6 @@ class Show extends Component
 
     public ?string $phone = null;
 
-    public ?string $whatsapp_no = null;
-
     public ?string $address = null;
 
     public ?string $landmark = null;
@@ -27,15 +25,13 @@ class Show extends Component
     protected $queryString = ['edit'];
 
     protected $rules = [
-        // Validates the format with the dash as it comes from the input
-        'phone' => ['required', 'regex:/^\d{4}-\d{7}$/'],
-
+        'phone' => ['required', 'regex:/^\+?[0-9\s\-()]+$/'],
     ];
 
     public function messages()
     {
         return [
-            'phone.regex' => 'Please enter a valid 11-digit number (03xx-xxxxxxx).',
+            'phone.regex' => 'Please enter a valid phone number.',
         ];
     }
 
@@ -43,25 +39,20 @@ class Show extends Component
     {
         $this->contact = $contact;
         $this->edit = $edit;
-        // $this->phone = $contact->phone;
         $this->phone = $contact->phone;
-        $this->whatsapp_no = $contact->whatsapp_no;
         $this->address = $contact->address;
         $this->landmark = $contact->landmark;
     }
 
-    public function save(): void
+    public function save(ContactService $contactService): void
     {
         $this->validate();
 
-        $this->contact->update([
+        $contactService->updateContact($this->contact, [
             'phone' => $this->phone,
-            'whatsapp_no' => $this->whatsapp_no,
             'address' => $this->address,
             'landmark' => $this->landmark,
         ]);
-
-        $this->contact->logActivity('Contact details updated');
 
         $this->edit = false;
         $this->dispatch('toast', message: 'Contact updated successfully', type: 'success');
@@ -71,7 +62,6 @@ class Show extends Component
     {
         $this->edit = false;
         $this->phone = $this->contact->phone;
-        $this->whatsapp_no = $this->contact->whatsapp_no;
         $this->address = $this->contact->address;
         $this->landmark = $this->contact->landmark;
     }

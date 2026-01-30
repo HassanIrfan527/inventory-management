@@ -58,8 +58,6 @@
                         <th class="px-6 py-4 text-left text-sm font-semibold text-neutral-900 dark:text-white">Phone
                         </th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-neutral-900 dark:text-white">
-                            WhatsApp</th>
-                        <th class="px-6 py-4 text-left text-sm font-semibold text-neutral-900 dark:text-white">
                             Created</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-neutral-900 dark:text-white">
                             Updated</th>
@@ -81,18 +79,6 @@
                                     <a href="tel:{{ $contact->phone }}"
                                         class="text-blue-600 hover:underline dark:text-blue-400">
                                         {{ $contact->phone }}
-                                    </a>
-                                @else
-                                    <span class="text-neutral-400">-</span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 text-sm text-neutral-600 dark:text-neutral-400">
-                                @if ($contact->whatsapp_no)
-                                    <a href="https://wa.me/{{ preg_replace('/\D/', '', $contact->whatsapp_no) }}"
-                                        target="_blank"
-                                        class="text-green-600 hover:underline dark:text-green-400 flex items-center gap-1">
-                                        <flux:icon.whatsapp class="w-4 h-4" />
-                                        {{ $contact->whatsapp_no }}
                                     </a>
                                 @else
                                     <span class="text-neutral-400">-</span>
@@ -141,7 +127,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-12 text-center">
+                            <td colspan="5" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center justify-center gap-3">
                                     <flux:icon.users class="w-12 h-12 text-neutral-300 dark:text-neutral-600" />
                                     <div>

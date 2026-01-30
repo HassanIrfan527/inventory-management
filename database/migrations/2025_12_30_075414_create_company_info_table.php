@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('company_info', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -31,6 +30,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('company_info');
+        Schema::table('company_info', function (Blueprint $table) {
+            $table->dropColumn('company_info_id');
+        });
 
     }
 };

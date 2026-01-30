@@ -11,13 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade');
-            $table->string('invoice_number')->unique();
-            $table->foreignId('order_id')->constrained(); // Link it to the order
-            $table->timestamp('due_date');
-            $table->string('payment_status'); // unpaid, paid, overdue
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
+            $table->timestamps();
+        });
+        Schema::create('contact_tag', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('contact_id')->constrained('contacts')->onDelete('cascade');
+            $table->foreignId('tag_id')->constrained('tags')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('tags');
     }
 };

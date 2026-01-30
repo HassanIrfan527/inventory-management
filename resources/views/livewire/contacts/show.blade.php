@@ -45,10 +45,8 @@
 
                     @if ($edit)
                         <form wire:submit="save" class="space-y-4">
-                            <flux:input label="Phone" icon="phone" wire:model="phone" x-mask="9999-9999999"
-                                placeholder="0300-1234567" />
-                            <flux:input label="WhatsApp" icon="whatsapp" wire:model="whatsapp_no" x-mask="9999-9999999"
-                                placeholder="0300-1234567" />
+                            <flux:input label="Phone" icon="phone" wire:model="phone"
+                                placeholder="+1 234 567 890" />
                             <flux:input label="Address" icon="map-pin" wire:model="address"
                                 placeholder="Residential address" />
                             <flux:input label="Landmark" icon="map-pin-house" wire:model="landmark"
@@ -70,17 +68,6 @@
                                     <p class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Phone</p>
                                     <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100">
                                         {{ $contact->phone ?? 'N/A' }}
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div
-                                class="flex items-start gap-3 rounded-lg p-2 transition hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
-                                <flux:icon.whatsapp class="mt-0.5 h-5 w-5 text-zinc-400" />
-                                <div>
-                                    <p class="text-xs font-medium text-zinc-500 dark:text-zinc-400">WhatsApp</p>
-                                    <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100">
-                                        {{ $contact->whatsapp_no ?? 'N/A' }}
                                     </p>
                                 </div>
                             </div>

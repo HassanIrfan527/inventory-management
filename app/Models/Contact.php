@@ -18,38 +18,66 @@ class Contact extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name',
+        'contact_id',
+        'first_name',
+        'last_name',
         'email',
         'phone',
-        'whatsapp_no',
         'address',
         'landmark',
+        'type',
+        'status',
+        'source',
+        'company_name',
+        'job_title',
+        'city',
+        'state',
+        'country',
+        'zip_code',
+        'notes',
+        'date_of_birth',
+        'preferred_contact_method',
+        'engagement_score',
+        'custom_fields',
+        'last_contacted_at',
+        'last_activity_at',
     ];
 
-    // protected $casts = [
-    //     'phone' => ,
-    //     'whatsapp_no' => ,
-    // ];
+    protected function casts(): array
+    {
+        return [
+            'type' => \App\Enums\Contacts\Type::class,
+            'status' => \App\Enums\Contacts\Status::class,
+            'source' => \App\Enums\Contacts\Source::class,
+            'preferred_contact_method' => \App\Enums\Contacts\PreferredContactMethod::class,
+            'custom_fields' => 'array',
+            'date_of_birth' => 'date',
+            'last_contacted_at' => 'datetime',
+            'last_activity_at' => 'datetime',
+            'engagement_score' => 'integer',
+        ];
+    }
+
+    protected function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => trim($this->first_name.' '.$this->last_name),
+        );
+    }
 
     protected function phone(): Attribute
     {
         return Attribute::make(
-            // SAVING TO DB: Remove the dash
-            set: fn ($value) => str_replace('-', '', $value),
-
-            // RETRIEVING FROM DB: Put the dash back for the UI
-            get: fn ($value) => substr($value, 0, 4).'-'.substr($value, 4),
+            set: fn ($value) => $value ? preg_replace('/[^0-9+]/', '', $value) : null,
+            get: fn ($value) => $value,
         );
     }
 
     protected function whatsappNo(): Attribute
     {
         return Attribute::make(
-            // SAVING TO DB: Remove the dash
-            set: fn ($value) => str_replace('-', '', $value),
-
-            // RETRIEVING FROM DB: Put the dash back for the UI
-            get: fn ($value) => substr($value, 0, 4).'-'.substr($value, 4),
+            set: fn ($value) => $value ? preg_replace('/[^0-9+]/', '', $value) : null,
+            get: fn ($value) => $value,
         );
     }
 

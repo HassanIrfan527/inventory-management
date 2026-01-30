@@ -8,13 +8,13 @@ class ContactForm extends Form
 {
     public ?int $id = null;
 
-    public string $name = '';
+    public string $first_name = '';
+
+    public string $last_name = '';
 
     public string $email = '';
 
     public string $phone = '';
-
-    public string $whatsapp_no = '';
 
     public string $address = '';
 
@@ -23,10 +23,10 @@ class ContactForm extends Form
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'nullable|string|max:255',
             'email' => 'nullable|email|unique:contacts,email'.($this->id ? ",$this->id" : ''),
-            'phone' => ['nullable', 'regex:/^\d{4}-\d{7}$/'],
-            'whatsapp_no' => ['nullable', 'regex:/^\d{4}-\d{7}$/'],
+            'phone' => ['nullable', 'regex:/^\+?[0-9\s\-()]+$/'],
             'address' => 'nullable|string|max:255',
             'landmark' => 'nullable|string|max:255',
         ];
@@ -35,8 +35,7 @@ class ContactForm extends Form
     public function messages(): array
     {
         return [
-            'phone.regex' => 'Please enter a valid format (03xx-xxxxxxx).',
-            'whatsapp_no.regex' => 'Please enter a valid format (03xx-xxxxxxx).',
+            'phone.regex' => 'Please enter a valid phone number.',
         ];
     }
 }

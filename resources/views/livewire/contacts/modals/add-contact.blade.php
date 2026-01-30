@@ -40,25 +40,25 @@ new class extends Component
     <form class="space-y-6" wire:submit.prevent="store">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <flux:field>
-                <flux:label badge="Required">Name</flux:label>
-                <flux:input placeholder="John Doe" wire:model="form.name" icon="user" autofocus />
+                <flux:label badge="Required">First Name</flux:label>
+                <flux:input placeholder="John" wire:model="form.first_name" icon="user" autofocus />
             </flux:field>
 
             <flux:field>
-                <flux:label badge="Optional">Email</flux:label>
-                <flux:input type="email" placeholder="john@example.com" wire:model="form.email" icon="envelope" />
+                <flux:label badge="Optional">Last Name</flux:label>
+                <flux:input placeholder="Doe" wire:model="form.last_name" icon="user" />
             </flux:field>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <flux:field>
-                <flux:label badge="Optional">Phone</flux:label>
-                <flux:input placeholder="03xx-xxxxxxx" wire:model="form.phone" icon="phone" x-mask="9999-9999999" />
+                <flux:label badge="Optional">Email</flux:label>
+                <flux:input type="email" placeholder="john@example.com" wire:model="form.email" icon="envelope" />
             </flux:field>
 
             <flux:field>
-                <flux:label badge="Optional">WhatsApp</flux:label>
-                <flux:input placeholder="03xx-xxxxxxx" wire:model="form.whatsapp_no" icon="whatsapp" x-mask="9999-9999999" />
+                <flux:label badge="Optional">Phone</flux:label>
+                <flux:input placeholder="+1 234 567 890" wire:model="form.phone" icon="phone" />
             </flux:field>
         </div>
 

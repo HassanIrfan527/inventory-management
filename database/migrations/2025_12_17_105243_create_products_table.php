@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade');
             $table->string('product_id')->unique();
             $table->string('name');
             $table->text('description')->nullable();

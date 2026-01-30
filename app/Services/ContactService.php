@@ -13,11 +13,12 @@ class ContactService
         return Contact::query()
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
-                    $q->where('name', 'like', '%'.$search.'%')
+                    $q->where('first_name', 'like', '%'.$search.'%')
+                        ->orWhere('last_name', 'like', '%'.$search.'%')
                         ->orWhere('email', 'like', '%'.$search.'%');
                 });
             })
-            ->when($sortBy === 'name', fn ($query) => $query->orderBy('name'))
+            ->when($sortBy === 'name', fn ($query) => $query->orderBy('first_name')->orderBy('last_name'))
             ->when($sortBy === 'created_at', fn ($query) => $query->latest())
             ->when($sortBy === 'updated_at', fn ($query) => $query->latest('updated_at'))
             ->paginate($perPage);

@@ -36,19 +36,13 @@ class Index extends Component
     }
 
     #[\Livewire\Attributes\Computed]
-    public function contacts()
+    public function contacts(ContactService $contactService)
     {
-        return Contact::query()
-            ->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    $q->where('name', 'like', '%'.$this->search.'%')
-                        ->orWhere('email', 'like', '%'.$this->search.'%');
-                });
-            })
-            ->when($this->sortBy === 'name', fn ($q) => $q->orderBy('name'))
-            ->when($this->sortBy === 'created_at', fn ($q) => $q->latest())
-            ->when($this->sortBy === 'updated_at', fn ($q) => $q->latest('updated_at'))
-            ->get();
+        return $contactService->listContacts(
+            search: $this->search,
+            sortBy: $this->sortBy,
+            perPage: 100 // Using a large number to match previous get() behavior or I can update to pagination later
+        )->getCollection();
     }
 
     public function render()
