@@ -31,101 +31,80 @@
     <!-- Stats Grid -->
     <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <!-- Total Orders -->
-        <div
-            class="group relative overflow-hidden rounded-2xl border border-emerald-100 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-emerald-900/30 dark:bg-zinc-900">
-            <div class="flex items-center justify-between">
+        <div class="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
+            <div class="absolute -right-2 -top-2 h-16 w-16 rounded-full bg-gradient-to-br from-emerald-500/10 to-teal-500/10 blur-2xl"></div>
+            <div class="relative flex items-center justify-between">
                 <div class="flex flex-col gap-1">
-                    <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Total
-                        Orders</p>
-                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($totalOrders) }}
-                    </p>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Total Orders</p>
+                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($totalOrders) }}</p>
                 </div>
-                <div
-                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400 ring-4 ring-emerald-50/50 dark:ring-emerald-900/10 transition-transform group-hover:scale-110">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400 ring-4 ring-emerald-50/50 dark:ring-emerald-900/10 transition-transform group-hover:scale-110">
                     <flux:icon.handbag class="h-6 w-6" />
                 </div>
             </div>
-            <div
-                class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-emerald-50 dark:border-emerald-900/10">
-                <span
-                    class="flex items-center gap-1 font-medium text-emerald-600 dark:text-emerald-400 shrink-0 whitespace-nowrap">
+            <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-emerald-50 dark:border-emerald-900/10">
+                <span class="flex items-center gap-1 font-medium text-emerald-600 dark:text-emerald-400 shrink-0 whitespace-nowrap">
                     <flux:icon.arrow-up-right class="h-4 w-4" />
                     <span>Global</span>
                 </span>
-                <span class="text-zinc-400 truncate">Orders placed</span>
+                <span class="text-zinc-400 truncate text-[10px] font-bold uppercase tracking-widest">Orders placed</span>
             </div>
         </div>
 
         <!-- Revenue -->
-        <div
-            class="group relative overflow-hidden rounded-2xl border border-teal-100 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-teal-900/30 dark:bg-zinc-900">
-            <div class="flex items-center justify-between">
-                <div class="flex flex-col gap-1">
-                    <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Total
-                        Revenue</p>
-                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">Rs.
-                        {{ number_format($totalRevenue) }}</p>
+        <div class="group relative overflow-hidden rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-600 to-teal-700 p-6 shadow-sm transition-all hover:shadow-lg dark:border-zinc-800">
+            <div class="relative">
+                <div class="flex items-center justify-between mb-3 text-white">
+                    <div class="flex flex-col gap-1">
+                        <p class="text-xs font-bold uppercase tracking-wider opacity-80">Total Revenue</p>
+                        <p class="text-3xl font-black tracking-tight mt-1">Rs. {{ number_format($totalRevenue) }}</p>
+                    </div>
+                    <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/20 text-white backdrop-blur-md ring-4 ring-white/10 transition-transform group-hover:rotate-12 group-hover:scale-110">
+                        <flux:icon.circle-dollar-sign class="h-7 w-7" />
+                    </div>
                 </div>
-                <div
-                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-600 dark:bg-teal-900/20 dark:text-teal-400 ring-4 ring-teal-50/50 dark:ring-teal-900/10 transition-transform group-hover:scale-110">
-                    <flux:icon.circle-dollar-sign class="h-6 w-6" />
+                <div class="flex items-center gap-2 text-white/70 pt-4 border-t border-white/10 mt-3 text-[10px] font-black uppercase tracking-widest leading-none">
+                     <flux:icon.banknotes class="h-4 w-4" />
+                     Net Sales
                 </div>
-            </div>
-            <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-teal-50 dark:border-teal-900/10">
-                <span
-                    class="flex items-center gap-1 font-medium text-teal-600 dark:text-teal-400 shrink-0 whitespace-nowrap">
-                    <flux:icon.banknotes class="h-4 w-4" />
-                    <span>Net Sales</span>
-                </span>
-                <span class="text-zinc-400 truncate">Total earnings</span>
             </div>
         </div>
 
         <!-- Pending -->
-        <div
-            class="group relative overflow-hidden rounded-2xl border border-amber-100 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-amber-900/30 dark:bg-zinc-900">
+        <div class="group relative overflow-hidden rounded-2xl border border-amber-100 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-amber-900/30 dark:bg-zinc-900">
             <div class="flex items-center justify-between">
                 <div class="flex flex-col gap-1">
-                    <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Pending
-                    </p>
-                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($pendingOrders) }}
-                    </p>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Pending</p>
+                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($pendingOrders) }}</p>
                 </div>
-                <div
-                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400 ring-4 ring-amber-50/50 dark:ring-amber-900/10 transition-transform group-hover:scale-110">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400 ring-4 ring-amber-50/50 dark:ring-amber-900/10 transition-transform group-hover:scale-110">
                     <flux:icon.clock class="h-6 w-6" />
                 </div>
             </div>
             <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-amber-50 dark:border-amber-900/10">
-                <span
-                    class="flex items-center gap-1 font-medium text-amber-600 dark:text-amber-400 shrink-0 whitespace-nowrap">
+                <span class="flex items-center gap-1 font-medium text-amber-600 dark:text-amber-400 shrink-0 whitespace-nowrap text-[10px] font-black uppercase tracking-widest">
                     <flux:icon.layers class="h-4 w-4" />
-                    <span>In Queue</span>
+                    In Queue
                 </span>
                 <span class="text-zinc-400 truncate">Awaiting processing</span>
             </div>
         </div>
 
         <!-- Completed -->
-        <div
-            class="group relative overflow-hidden rounded-2xl border border-sky-100 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-sky-900/30 dark:bg-zinc-900">
+        <div class="group relative overflow-hidden rounded-2xl border border-sky-100 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-sky-900/30 dark:bg-zinc-900">
             <div class="flex items-center justify-between">
                 <div class="flex flex-col gap-1">
-                    <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Completed
-                    </p>
-                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">
-                        {{ number_format($completedOrders) }}</p>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Completed</p>
+                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($completedOrders) }}</p>
                 </div>
-                <div
-                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sky-600 dark:bg-sky-900/20 dark:text-sky-400 ring-4 ring-sky-50/50 dark:ring-sky-900/10 transition-transform group-hover:scale-110">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sky-600 dark:bg-sky-900/20 dark:text-sky-400 ring-4 ring-sky-50/50 dark:ring-sky-900/10 transition-transform group-hover:scale-110">
                     <flux:icon.check-circle class="h-6 w-6" />
                 </div>
             </div>
             <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-sky-50 dark:border-sky-900/10">
-                <span
-                    class="flex items-center gap-1 font-medium text-sky-600 dark:text-sky-400 shrink-0 whitespace-nowrap">
+                <span class="flex items-center gap-1 font-medium text-sky-600 dark:text-sky-400 shrink-0 whitespace-nowrap text-[10px] font-black uppercase tracking-widest">
                     <flux:icon.check-circle class="h-4 w-4" />
-                    <span>Delivered</span>
+                    Delivered
                 </span>
                 <span class="text-zinc-400 truncate">Successful completions</span>
             </div>

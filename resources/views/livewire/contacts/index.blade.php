@@ -34,12 +34,13 @@
             <flux:button @click="showFilters = !showFilters" icon="adjustments-horizontal" variant="ghost" />
 
             {{-- Add New Contact Button --}}
-            <flux:modal.trigger name="add-contact-modal">
+
+            <a href="{{ route('contact.create') }}" wire:navigate>
                 <flux:button variant="primary" icon="plus"
                     class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0">
                     Add Contact
                 </flux:button>
-            </flux:modal.trigger>
+            </a>
         </div>
 
         {{-- Filter Options (Hidden by default) --}}
@@ -220,12 +221,12 @@
                                             Try adjusting your search or add a new contact
                                         </p>
                                     </div>
-                                    <flux:modal.trigger name="add-contact-modal">
-                                        <flux:button variant="primary" icon="plus" size="sm"
-                                            class="mt-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0">
-                                            Add Your First Contact
-                                        </flux:button>
-                                    </flux:modal.trigger>
+
+                                    <flux:button variant="primary" icon="plus" size="sm"
+                                        class="mt-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0">
+                                        Add Your First Contact
+                                    </flux:button>
+
                                 </div>
                             </td>
                         </tr>

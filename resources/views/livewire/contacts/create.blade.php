@@ -1,106 +1,111 @@
 <div class="w-full">
     {{-- Top Navigation --}}
     <div class="mb-6 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-            <flux:button variant="ghost" wire:click="cancel" icon="arrow-left" class="!pl-0 md:!pl-3">
-                Back to contacts
-            </flux:button>
-        </div>
+        @php
+            $breadcrumbItem = [
+                [
+                    'name' => 'Contacts',
+                    'href' => route('contacts.all'),
+                    'icon' => 'users',
+                ],
+                [
+                    'name' => 'Create Contact',
+                    'href' => route('contact.create'),
+                    'icon' => 'user-plus',
+                ],
+            ];
+        @endphp
+        <!-- Breadcrumbs -->
+        <x-custom-breadcrumb :items="$breadcrumbItem"></x-custom-breadcrumb>
 
         <div class="flex gap-3">
             <flux:button variant="ghost" wire:click="cancel">
                 Cancel
             </flux:button>
-            <flux:button variant="primary" wire:click="save" icon="check" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0">
+            <flux:button variant="primary" wire:click="save" icon="check"
+                class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0">
                 Save Contact
             </flux:button>
         </div>
     </div>
 
     {{-- Page Header --}}
-    <div class="mb-6 rounded-xl border border-zinc-200 bg-gradient-to-br from-emerald-50 to-teal-50 p-6 dark:border-zinc-800 dark:from-emerald-950/20 dark:to-teal-950/20">
+    <div
+        class="mb-6 rounded-xl border border-zinc-200 bg-gradient-to-br from-emerald-50 to-teal-50 p-6 dark:border-zinc-800 dark:from-emerald-950/20 dark:to-teal-950/20">
         <div class="flex items-center gap-4">
-            <div class="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 text-2xl font-bold text-white ring-4 ring-white dark:ring-zinc-900">
+            <div
+                class="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 text-2xl font-bold text-white ring-4 ring-white dark:ring-zinc-900">
                 <flux:icon name="user-plus" class="h-8 w-8" />
             </div>
             <div>
                 <h1 class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">Create New Contact</h1>
-                <p class="text-sm text-zinc-600 dark:text-zinc-400">Fill in the details below to add a new contact to your system</p>
+                <p class="text-sm text-zinc-600 dark:text-zinc-400">Fill in the details below to add a new contact to
+                    your system</p>
             </div>
         </div>
     </div>
 
     <div class="mx-auto max-w-4xl space-y-6">
-        
+
         {{-- ESSENTIAL INFORMATION --}}
-        <x-contacts.collapsible-section
-            wire-model="sectionEssential"
-            :is-open="$sectionEssential"
-            title="Essential Information"
-            subtitle="Required contact details"
-            icon="user-circle"
-        >
+        <x-contacts.collapsible-section wire-model="sectionEssential" :is-open="$sectionEssential" title="Essential Information"
+            subtitle="Required contact details" icon="user-circle">
             <form class="space-y-4">
                 <div class="grid gap-4 md:grid-cols-2">
                     <flux:field>
                         <flux:label>
                             First Name <span class="text-red-500">*</span>
                         </flux:label>
-                        <flux:input wire:model="first_name" placeholder="Enter first name" />
-                        <flux:error name="first_name" />
+                        <flux:input wire:model="form.first_name" placeholder="Enter first name" />
+                        <flux:error name="form.first_name" />
                     </flux:field>
 
                     <flux:field>
                         <flux:label>Last Name</flux:label>
-                        <flux:input wire:model="last_name" placeholder="Enter last name" />
-                        <flux:error name="last_name" />
+                        <flux:input wire:model="form.last_name" placeholder="Enter last name" />
+                        <flux:error name="form.last_name" />
                     </flux:field>
                 </div>
 
                 <flux:field>
                     <flux:label>Email Address</flux:label>
-                    <flux:input type="email" wire:model="email" placeholder="email@example.com" />
-                    <flux:error name="email" />
+                    <flux:input type="email" wire:model="form.email" placeholder="email@example.com" />
+                    <flux:error name="form.email" />
                 </flux:field>
 
                 <flux:field>
                     <flux:label>Phone Number</flux:label>
-                    <flux:input wire:model="phone" placeholder="+1234567890" />
-                    <flux:error name="phone" />
+                    <flux:input wire:model="form.phone" placeholder="+1234567890" />
+                    <flux:error name="form.phone" />
                 </flux:field>
 
                 <div class="grid gap-4 md:grid-cols-2">
                     <flux:field>
                         <flux:label>Contact Type</flux:label>
-                        <flux:select wire:model="type" placeholder="Select type">
+                        <flux:select wire:model="form.type" placeholder="Select type">
                             @foreach ($this->typeOptions as $value => $label)
                                 <flux:select.option :value="$value">{{ $label }}</flux:select.option>
                             @endforeach
                         </flux:select>
-                        <flux:error name="type" />
+                        <flux:error name="form.type" />
                     </flux:field>
 
                     <flux:field>
                         <flux:label>Status</flux:label>
-                        <flux:select wire:model="status" placeholder="Select status">
+                        <flux:select wire:model="form.status" placeholder="Select status">
                             @foreach ($this->statusOptions as $value => $label)
                                 <flux:select.option :value="$value">{{ $label }}</flux:select.option>
                             @endforeach
                         </flux:select>
-                        <flux:error name="status" />
+                        <flux:error name="form.status" />
                     </flux:field>
                 </div>
             </form>
         </x-contacts.collapsible-section>
 
         {{-- BUSINESS INFORMATION --}}
-        <x-contacts.collapsible-section
-            wire-model="sectionBusiness"
-            :is-open="$sectionBusiness"
-            title="Business Information"
-            subtitle="Professional details"
-            icon="building-office"
-        >
+        <x-contacts.collapsible-section wire-model="sectionBusiness" :is-open="$sectionBusiness" title="Business Information"
+            subtitle="Professional details" icon="building-office">
             <form class="space-y-4">
                 <flux:field>
                     <flux:label>Company Name</flux:label>
@@ -117,13 +122,8 @@
         </x-contacts.collapsible-section>
 
         {{-- CONTACT PREFERENCES --}}
-        <x-contacts.collapsible-section
-            wire-model="sectionContact"
-            :is-open="$sectionContact"
-            title="Contact Preferences"
-            subtitle="Communication settings"
-            icon="chat-bubble-left-right"
-        >
+        <x-contacts.collapsible-section wire-model="sectionContact" :is-open="$sectionContact" title="Contact Preferences"
+            subtitle="Communication settings" icon="chat-bubble-left-right">
             <form class="space-y-4">
                 <flux:field>
                     <flux:label>Preferred Contact Method</flux:label>
@@ -138,13 +138,8 @@
         </x-contacts.collapsible-section>
 
         {{-- LOCATION DETAILS --}}
-        <x-contacts.collapsible-section
-            wire-model="sectionLocation"
-            :is-open="$sectionLocation"
-            title="Location Details"
-            subtitle="Address information"
-            icon="map-pin"
-        >
+        <x-contacts.collapsible-section wire-model="sectionLocation" :is-open="$sectionLocation" title="Location Details"
+            subtitle="Address information" icon="map-pin">
             <form class="space-y-4">
                 <flux:field>
                     <flux:label>Street Address</flux:label>
@@ -189,13 +184,8 @@
         </x-contacts.collapsible-section>
 
         {{-- CRM & MARKETING --}}
-        <x-contacts.collapsible-section
-            wire-model="sectionCrm"
-            :is-open="$sectionCrm"
-            title="CRM & Marketing"
-            subtitle="Customer insights"
-            icon="chart-bar"
-        >
+        <x-contacts.collapsible-section wire-model="sectionCrm" :is-open="$sectionCrm" title="CRM & Marketing"
+            subtitle="Customer insights" icon="chart-bar">
             <form class="space-y-4">
                 <flux:field>
                     <flux:label>Source</flux:label>
@@ -216,7 +206,8 @@
 
                     <flux:field>
                         <flux:label>Engagement Score (0-100)</flux:label>
-                        <flux:input type="number" wire:model="engagement_score" placeholder="0" min="0" max="100" />
+                        <flux:input type="number" wire:model="engagement_score" placeholder="0" min="0"
+                            max="100" />
                         <flux:error name="engagement_score" />
                     </flux:field>
                 </div>
@@ -230,12 +221,14 @@
         </x-contacts.collapsible-section>
 
         {{-- Action Buttons (Sticky Footer) --}}
-        <div class="sticky bottom-0 z-10 rounded-xl border border-zinc-200 bg-white p-4 shadow-lg dark:border-zinc-800 dark:bg-zinc-900">
+        <div
+            class="sticky bottom-0 z-10 rounded-xl border border-zinc-200 bg-white p-4 shadow-lg dark:border-zinc-800 dark:bg-zinc-900">
             <div class="flex justify-end gap-3">
                 <flux:button variant="ghost" wire:click="cancel">
                     Cancel
                 </flux:button>
-                <flux:button variant="primary" wire:click="save" icon="check" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0">
+                <flux:button variant="primary" wire:click="save" icon="check"
+                    class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0">
                     Save Contact
                 </flux:button>
             </div>

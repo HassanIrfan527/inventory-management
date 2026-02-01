@@ -16,7 +16,7 @@
 
     <div class="mx-auto max-w-7xl">
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            
+
             {{-- LEFT COLUMN: Contact Profile & Quick Info --}}
             <div class="lg:col-span-1 space-y-6">
                 {{-- Profile Card --}}
@@ -50,7 +50,7 @@
                                 </span>
                             @endif
                             @if ($contact->status)
-                                <span class="inline-flex items-center rounded-full 
+                                <span class="inline-flex items-center rounded-full
                                     {{ $contact->status->value === 'active' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : '' }}
                                     {{ $contact->status->value === 'inactive' ? 'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400' : '' }}
                                     {{ $contact->status->value === 'blocked' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' : '' }}
@@ -63,7 +63,7 @@
 
                     {{-- Quick Actions --}}
                     <div class="border-t border-zinc-200 p-4 dark:border-zinc-800">
-                        <div class="grid grid-cols-2 gap-3">
+                        {{-- <div class="grid grid-cols-2 gap-3">
                             @if ($contact->phone)
                                 <a href="tel:{{ $contact->phone }}" class="flex items-center justify-center gap-2 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700">
                                     <flux:icon name="phone" class="h-4 w-4" />
@@ -76,7 +76,7 @@
                                     Email
                                 </a>
                             @endif
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -99,7 +99,7 @@
 
             {{-- RIGHT COLUMN: Details & Timeline --}}
             <div class="lg:col-span-2 space-y-6">
-                
+
                 {{-- ESSENTIAL INFORMATION --}}
                 <x-contacts.collapsible-section
                     wire-model="sectionEssential"
@@ -109,47 +109,47 @@
                     icon="user"
                 >
                     <div class="space-y-1">
-                        <x-contacts.field-row 
-                            label="First Name" 
-                            :value="$first_name" 
-                            wire-model="first_name"
+                        <x-contacts.field-row
+                            label="First Name"
+                            :value="$form->first_name"
+                            wire-model="form.first_name"
                             icon="user"
                             placeholder="Enter first name"
                         />
-                        <x-contacts.field-row 
-                            label="Last Name" 
-                            :value="$last_name" 
-                            wire-model="last_name"
+                        <x-contacts.field-row
+                            label="Last Name"
+                            :value="$form->last_name"
+                            wire-model="form.last_name"
                             icon="user"
                             placeholder="Enter last name"
                         />
-                        <x-contacts.field-row 
-                            label="Email Address" 
-                            :value="$email" 
-                            wire-model="email"
+                        <x-contacts.field-row
+                            label="Email Address"
+                            :value="$form->email"
+                            wire-model="form.email"
                             input-type="email"
                             icon="envelope"
                             placeholder="email@example.com"
                         />
-                        <x-contacts.field-row 
-                            label="Phone Number" 
-                            :value="$phone" 
-                            wire-model="phone"
+                        <x-contacts.field-row
+                            label="Phone Number"
+                            :value="$form->phone"
+                            wire-model="form.phone"
                             icon="phone"
                             placeholder="+1234567890"
                         />
-                        <x-contacts.field-row 
-                            label="Contact Type" 
-                            :value="$type ? ucfirst($type) : null" 
-                            wire-model="type"
+                        <x-contacts.field-row
+                            label="Contact Type"
+                            :value="ucfirst($form->type)"
+                            wire-model="form.type"
                             input-type="select"
                             :options="$this->typeOptions"
                             icon="tag"
                         />
-                        <x-contacts.field-row 
-                            label="Status" 
-                            :value="$status ? ucfirst($status) : null" 
-                            wire-model="status"
+                        <x-contacts.field-row
+                            label="Status"
+                            :value="ucfirst($form->status)"
+                            wire-model="form.status"
                             input-type="select"
                             :options="$this->statusOptions"
                             icon="clipboard-document-check"
@@ -166,17 +166,17 @@
                     icon="building-office"
                 >
                     <div class="space-y-1">
-                        <x-contacts.field-row 
-                            label="Company Name" 
-                            :value="$company_name" 
-                            wire-model="company_name"
+                        <x-contacts.field-row
+                            label="Company Name"
+                            :value="$form->company_name"
+                            wire-model="form.company_name"
                             icon="building-office"
                             placeholder="Acme Corporation"
                         />
-                        <x-contacts.field-row 
-                            label="Job Title" 
-                            :value="$job_title" 
-                            wire-model="job_title"
+                        <x-contacts.field-row
+                            label="Job Title"
+                            :value="$form->job_title"
+                            wire-model="form.job_title"
                             icon="briefcase"
                             placeholder="Software Engineer"
                         />
@@ -192,10 +192,10 @@
                     icon="chat-bubble-left-right"
                 >
                     <div class="space-y-1">
-                        <x-contacts.field-row 
-                            label="Preferred Contact Method" 
-                            :value="$preferred_contact_method" 
-                            wire-model="preferred_contact_method"
+                        <x-contacts.field-row
+                            label="Preferred Contact Method"
+                            :value="$form->preferred_contact_method"
+                            wire-model="form.preferred_contact_method"
                             input-type="select"
                             :options="$this->preferredContactMethodOptions"
                             icon="chat-bubble-left-right"
@@ -212,48 +212,48 @@
                     icon="map-pin"
                 >
                     <div class="space-y-1">
-                        <x-contacts.field-row 
-                            label="Street Address" 
-                            :value="$address" 
-                            wire-model="address"
+                        <x-contacts.field-row
+                            label="Street Address"
+                            :value="$form->address"
+                            wire-model="form.address"
                             icon="map-pin"
                             placeholder="123 Main Street"
                         />
-                        <x-contacts.field-row 
-                            label="Landmark" 
-                            :value="$landmark" 
-                            wire-model="landmark"
+                        <x-contacts.field-row
+                            label="Landmark"
+                            :value="$form->landmark"
+                            wire-model="form.landmark"
                             icon="map-pin-house"
                             placeholder="Near Central Park"
                         />
                         <div class="grid gap-1 md:grid-cols-2">
-                            <x-contacts.field-row 
-                                label="City" 
-                                :value="$city" 
-                                wire-model="city"
+                            <x-contacts.field-row
+                                label="City"
+                                :value="$form->city"
+                                wire-model="form.city"
                                 icon="building-office-2"
                                 placeholder="New York"
                             />
-                            <x-contacts.field-row 
-                                label="State / Province" 
-                                :value="$state" 
-                                wire-model="state"
+                            <x-contacts.field-row
+                                label="State / Province"
+                                :value="$form->state"
+                                wire-model="form.state"
                                 icon="map"
                                 placeholder="NY"
                             />
                         </div>
                         <div class="grid gap-1 md:grid-cols-2">
-                            <x-contacts.field-row 
-                                label="Country" 
-                                :value="$country" 
-                                wire-model="country"
+                            <x-contacts.field-row
+                                label="Country"
+                                :value="$form->country"
+                                wire-model="form.country"
                                 icon="globe-alt"
                                 placeholder="United States"
                             />
-                            <x-contacts.field-row 
-                                label="ZIP / Postal Code" 
-                                :value="$zip_code" 
-                                wire-model="zip_code"
+                            <x-contacts.field-row
+                                label="ZIP / Postal Code"
+                                :value="$form->zip_code"
+                                wire-model="form.zip_code"
                                 icon="hashtag"
                                 placeholder="10001"
                             />
@@ -270,33 +270,33 @@
                     icon="chart-bar"
                 >
                     <div class="space-y-1">
-                        <x-contacts.field-row 
-                            label="Source" 
-                            :value="$source" 
-                            wire-model="source"
+                        <x-contacts.field-row
+                            label="Source"
+                            :value="$form->source"
+                            wire-model="form.source"
                             input-type="select"
                             :options="$this->sourceOptions"
                             icon="arrow-down-on-square"
                         />
-                        <x-contacts.field-row 
-                            label="Date of Birth" 
-                            :value="$date_of_birth" 
-                            wire-model="date_of_birth"
+                        <x-contacts.field-row
+                            label="Date of Birth"
+                            :value="$form->date_of_birth"
+                            wire-model="form.date_of_birth"
                             input-type="date"
                             icon="cake"
                         />
-                        <x-contacts.field-row 
-                            label="Engagement Score (0-100)" 
-                            :value="$engagement_score" 
-                            wire-model="engagement_score"
+                        <x-contacts.field-row
+                            label="Engagement Score (0-100)"
+                            :value="$form->engagement_score"
+                            wire-model="form.engagement_score"
                             input-type="number"
                             icon="chart-bar"
                             placeholder="0"
                         />
-                        <x-contacts.field-row 
-                            label="Notes" 
-                            :value="$notes" 
-                            wire-model="notes"
+                        <x-contacts.field-row
+                            label="Notes"
+                            :value="$form->notes"
+                            wire-model="form.notes"
                             input-type="textarea"
                             icon="document-text"
                             placeholder="Additional notes..."
