@@ -16,6 +16,8 @@ use Livewire\Component;
 #[Layout('layouts.app')]
 class Dashboard extends Component
 {
+    public string $viewMode = 'static';
+
     #[Computed]
     public function stats()
     {
