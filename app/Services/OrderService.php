@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Events\OrderCreated;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
@@ -25,24 +26,36 @@ class OrderService
     public function createOrder(int $contactId, string $status, array $items, int $deliveryCharge = 0, ?string $address = null, bool $generateInvoice = false): Order
     {
         return DB::transaction(function () use ($contactId, $status, $items, $deliveryCharge, $address, $generateInvoice): Order {
-            $total = 0;
+            $subtotal = 0;
+            $totalTax = 0;
+            $totalDiscount = 0;
 
             foreach ($items as $item) {
-                $total += (int) $item['quantity'] * (int) $item['price'];
+                $subtotal += (float) $item['quantity'] * (float) $item['price'];
             }
 
             $order = Order::create([
                 'contact_id' => $contactId,
                 'status' => $status,
-                'total_amount' => $total + $deliveryCharge,
+                'subtotal_amount' => $subtotal,
+                'tax_amount' => $totalTax,
+                'discount_amount' => $totalDiscount,
+                'total_amount' => $subtotal + $totalTax - $totalDiscount + $deliveryCharge,
                 'delivery_charge' => $deliveryCharge,
                 'address' => $address,
             ]);
 
             foreach ($items as $item) {
+                $product = Product::find($item['product_id']);
+                $lineSubtotal = (float) $item['quantity'] * (float) $item['price'];
+                
                 $order->products()->attach($item['product_id'], [
                     'quantity' => $item['quantity'],
+                    'unit_cost' => $product?->purchase_price ?? 0,
                     'sale_price' => $item['price'],
+                    'tax_amount' => 0, // Default for now
+                    'discount_amount' => 0, // Default for now
+                    'subtotal' => $lineSubtotal,
                 ]);
             }
 
