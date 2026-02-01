@@ -73,14 +73,6 @@ class Contact extends Model
         );
     }
 
-    protected function whatsappNo(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => $value ? preg_replace('/[^0-9+]/', '', $value) : null,
-            get: fn ($value) => $value,
-        );
-    }
-
     // The DB queries will work according to the 'contact_id' instead of 'id'
     public function getRouteKeyName()
     {

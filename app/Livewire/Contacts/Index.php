@@ -36,9 +36,9 @@ class Index extends Component
     }
 
     #[\Livewire\Attributes\Computed]
-    public function contacts(ContactService $contactService)
+    public function contacts()
     {
-        return $contactService->listContacts(
+        return app(ContactService::class)->listContacts(
             search: $this->search,
             sortBy: $this->sortBy,
             perPage: 100 // Using a large number to match previous get() behavior or I can update to pagination later
