@@ -9,14 +9,20 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 
+
+#[Title('Inventory')]
+#[Layout('layouts.app')]
 class Index extends Component
 {
     use WithPagination;
 
-    #[On('product-added')]
+    #[On('product-updated')]
     public function refresh()
     {
+        $this->calculateStats();
         $this->render();
     }
 
@@ -34,6 +40,25 @@ class Index extends Component
     public $selectedProducts = [];
 
     public $targetCategory = '';
+
+    public $totalProducts = 0;
+    public $totalInventoryValue = 0;
+    public $avg_margin = 0;
+
+    public function mount()
+    {
+        $this->calculateStats();
+    }
+
+    public function calculateStats()
+    {
+        $this->totalProducts = Product::count();
+        $this->totalInventoryValue = Product::totalInventoryValue();
+
+        $totalRetail = Product::sum('retail_price');
+        $totalPurchase = Product::sum('purchase_price');
+        $this->avg_margin = $totalRetail > 0 ? (($totalRetail - $totalPurchase) / $totalRetail) * 100 : 0;
+    }
 
     public function updatingSearch()
     {

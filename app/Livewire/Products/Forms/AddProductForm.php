@@ -22,11 +22,21 @@ class AddProductForm extends Form
     #[Validate('required|numeric|min:0')]
     public $delivery_charges = '';
 
+    #[Validate('nullable|string|unique:products,sku')]
+    public $sku = '';
+
+    #[Validate('nullable|integer|min:0')]
+    public $stock_quantity = null;
+
+    #[Validate('required|string|in:active,inactive,archived')]
+    public $status = 'active';
+
+    #[Validate('nullable|string')]
+    public $internal_notes = '';
+
     #[Validate(['product_images.*' => 'image|max:10240'])]
     public $product_images = [];
 
     #[Validate('nullable|array')]
-    public $categories = []; // Changed to array for possible multiple selection, or single.
-    // Plan said "option al field", but pivot table exists. I'll make it multiple select in UI to be safe/powerful
-    // User asked "show the category as an option al field", I will use a Flux Select which supports multiple
+    public $categories = [];
 }

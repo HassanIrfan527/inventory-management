@@ -19,13 +19,24 @@ class Product extends Model
         'purchase_price',
         'retail_price',
         'delivery_charges',
+        'sku',
+        'stock_quantity',
+        'status',
+        'internal_notes',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'stock_quantity' => 'integer',
+        ];
+    }
 
     public static function totalInventoryValue()
     {
-        $total = number_format(static::sum('retail_price') ?? 0, 0);
+        $total = static::sum('retail_price') ?? 0;
 
-        return $total;
+        return (float) $total;
 
     }
 

@@ -29,17 +29,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/contact/create', \App\Livewire\Contacts\Create::class)
         ->name('contact.create');
 
-    Route::livewire('/invoices/{invoice}', 'livewire::invoices.show')
-        ->name('invoices.show');
     Route::get('/contact/{contact}', ContactShow::class)
         ->middleware('can:view,contact')
         ->name('contact.show');
+    Route::view('contacts', 'contacts')
+        ->name('contacts.all');
 
-    Route::livewire('inventory', 'products.inventory')
+    Route::get('/inventory', App\Livewire\Products\Index::class)
         ->name('inventory');
+    Route::get('/inventory/create', App\Livewire\Products\Create::class)
+        ->name('products.create');
+    Route::get('/inventory/{product}', App\Livewire\Products\Show::class)
+        ->name('products.show');
 
     Route::get('/invoices', InvoicesIndex::class)
         ->name('invoices');
+
+    Route::livewire('/invoices/{invoice}', 'livewire::invoices.show')
+        ->name('invoices.show');
 
     Route::get('/orders', OrdersIndex::class)
         ->name('orders');
@@ -52,8 +59,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', Dashboard::class)
         ->name('dashboard');
 
-    Route::view('contacts', 'contacts')
-        ->name('contacts.all');
 });
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

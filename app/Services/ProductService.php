@@ -17,7 +17,8 @@ class ProductService
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('name', 'like', '%'.$search.'%')
-                        ->orWhere('product_id', 'like', '%'.$search.'%');
+                        ->orWhere('product_id', 'like', '%'.$search.'%')
+                        ->orWhere('sku', 'like', '%'.$search.'%');
                 });
             })
             ->when($categoryId, function ($query, $categoryId) {
@@ -39,9 +40,13 @@ class ProductService
             $payload = [
                 'name' => $data['name'],
                 'description' => $data['description'] ?? '',
-                'purchase_price' => $data['purchase_price'] ?? $data['cost_price'],
+                'purchase_price' => $data['purchase_price'] ?? ($data['cost_price'] ?? 0),
                 'retail_price' => $data['retail_price'],
                 'delivery_charges' => $data['delivery_charges'] ?? 0,
+                'sku' => $data['sku'] ?? null,
+                'stock_quantity' => $data['stock_quantity'] ?? null,
+                'status' => $data['status'] ?? 'active',
+                'internal_notes' => $data['internal_notes'] ?? null,
             ];
 
             $product = Product::create($payload);
@@ -68,6 +73,10 @@ class ProductService
                 'purchase_price' => $data['purchase_price'] ?? ($data['cost_price'] ?? $product->purchase_price),
                 'retail_price' => $data['retail_price'] ?? $product->retail_price,
                 'delivery_charges' => $data['delivery_charges'] ?? $product->delivery_charges,
+                'sku' => $data['sku'] ?? $product->sku,
+                'stock_quantity' => $data['stock_quantity'] ?? $product->stock_quantity,
+                'status' => $data['status'] ?? $product->status,
+                'internal_notes' => $data['internal_notes'] ?? $product->internal_notes,
             ];
 
             $product->update($payload);
