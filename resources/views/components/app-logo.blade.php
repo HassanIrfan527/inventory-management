@@ -1,8 +1,8 @@
-<div class="flex items-center gap-2 group">
-    <div class="flex aspect-square size-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
-        <x-app-logo-icon class="size-5 fill-current" />
+<div {{ $attributes->merge(['class' => 'flex items-center gap-3 group']) }}>
+    <div class="flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+        <x-app-logo-icon class="size-10 fill-blue-600 dark:fill-blue-500" />
     </div>
-    <div class="grid flex-1 text-start leading-tight">
-        <span class="truncate font-bold text-zinc-900 dark:text-white text-lg tracking-tight">{{ config('app.name') }}</span>
-    </div>
+    <span class="text-3xl font-black tracking-tighter text-zinc-950 dark:text-white leading-none">
+        {{ config('app.name') }}
+    </span>
 </div>

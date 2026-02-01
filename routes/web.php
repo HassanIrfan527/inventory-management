@@ -17,12 +17,20 @@ use Laravel\Fortify\Features;
 
 Route::livewire('/', 'welcome')->name('home');
 Route::get('/blog', \App\Livewire\Blog\Index::class)->name('blog.index');
+Route::livewire('/pricing', 'pages::pricing')->name('pricing');
+Route::livewire('/privacy', 'pages::privacy')->name('privacy');
+Route::livewire('/terms', 'pages::terms')->name('terms');
 
 Route::livewire('/contact-us', 'pages::contact-us')->name('contact.us');
 Route::get('/documentation', \App\Livewire\Docs::class)->name('docs');
 Route::get('/help', \App\Livewire\Help::class)->name('help');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/contact/create', \App\Livewire\Contacts\Create::class)
+        ->name('contact.create');
+
+    Route::livewire('/invoices/{invoice}', 'livewire::invoices.show')
+        ->name('invoices.show');
     Route::get('/contact/{contact}', ContactShow::class)
         ->middleware('can:view,contact')
         ->name('contact.show');
@@ -36,8 +44,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/orders', OrdersIndex::class)
         ->name('orders');
 
-    Route::get('/order/{order:order_number}', \App\Livewire\Orders\Show::class)
-        ->name('orders.show');
+    Route::get('/orders/create', App\Livewire\Orders\Create::class)->name('orders.create');
+    Route::get('/orders/{order}', App\Livewire\Orders\Show::class)->name('orders.show');
 
     Route::get('/vector', App\Livewire\Vector::class)
         ->name('vector');
