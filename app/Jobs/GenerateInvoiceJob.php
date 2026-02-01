@@ -27,9 +27,26 @@ class GenerateInvoiceJob implements ShouldQueue
      */
     public function handle(): void
     {
+        $order = $this->order->load(['contact', 'products']);
+
         $invoice = Invoice::create([
-            'order_id' => $this->order->id,
-            'due_date' => now()->addDays(30)->toDateString(),
+            'order_id' => $order->id,
+            'subtotal_amount' => $order->subtotal_amount,
+            'tax_amount' => $order->tax_amount,
+            'discount_amount' => $order->discount_amount,
+            'delivery_charge' => $order->delivery_charge,
+            'total_amount' => $order->total_amount,
+            'currency' => 'PKR',
+            'billing_name' => $order->contact?->name,
+            'billing_email' => $order->contact?->email,
+            'billing_phone' => $order->contact?->phone,
+            'billing_address' => $order->address ?: $order->contact?->address,
+            'shipping_name' => $order->contact?->name,
+            'shipping_address' => $order->address ?: $order->contact?->address,
+            'status' => \App\Enums\InvoiceStatus::PENDING->value,
+            'type' => \App\Enums\InvoiceType::CUSTOMER->value,
+            'due_date' => now()->addDays(30),
+            'issued_at' => now(),
         ]);
 
         $this->finalizeInvoice($invoice->id);
