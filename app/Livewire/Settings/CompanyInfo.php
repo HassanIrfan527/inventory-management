@@ -19,7 +19,7 @@ class CompanyInfo extends Component
     #[Validate('required|string|max:255')]
     public ?string $companyName = null;
 
-    #[Validate('nullable|string|max:255')]
+    #[Validate(['nullable', 'string', 'max:255', 'regex:/^\+[1-9]\d{1,14}$/'])]
     public ?string $companyPhone = null;
 
     #[Validate('nullable|string|email|max:255')]
@@ -36,6 +36,7 @@ class CompanyInfo extends Component
     protected function messages()
     {
         return [
+            'companyPhone.regex' => 'Please enter a valid phone number in E.164 format (e.g., +923001234567).',
             'temporaryUploadedFile.image' => 'The file must be an image.',
             'temporaryUploadedFile.max' => 'The logo must be smaller than 2MB.',
             'temporaryUploadedFile.mimes' => 'Only JPG, JPEG, PNG, and WebP formats are allowed.',
