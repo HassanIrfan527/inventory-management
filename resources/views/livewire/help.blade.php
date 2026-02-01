@@ -3,7 +3,7 @@
     <div class="relative bg-zinc-900 py-24 sm:py-32 overflow-hidden">
         {{-- Decorative Gradients --}}
         <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-            <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-blue-600 to-indigo-800 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
+            <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-emerald-600 to-teal-800 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
         </div>
 
         <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center relative z-10 py-12 sm:py-20">
@@ -16,13 +16,13 @@
 
             <div class="max-w-xl mx-auto relative group px-4 sm:px-0">
                 <div class="absolute inset-y-0 left-4 sm:left-0 pl-4 flex items-center pointer-events-none">
-                    <flux:icon.magnifying-glass class="size-5 text-zinc-500 group-focus-within:text-blue-500 transition-colors" />
+                    <flux:icon.magnifying-glass class="size-5 text-zinc-500 group-focus-within:text-emerald-500 transition-colors" />
                 </div>
                 <input
                     type="text"
                     wire:model.live="search"
                     placeholder="Describe your issue..."
-                    class="block w-full rounded-2xl border-0 py-4 pl-12 pr-4 text-zinc-900 ring-1 ring-inset ring-zinc-800 placeholder:text-zinc-500 focus:ring-2 focus:ring-inset focus:ring-blue-500 text-sm sm:leading-6 bg-white dark:bg-zinc-950 dark:text-white dark:ring-zinc-800"
+                    class="block w-full rounded-2xl border-0 py-4 pl-12 pr-4 text-zinc-900 ring-1 ring-inset ring-zinc-800 placeholder:text-zinc-500 focus:ring-2 focus:ring-inset focus:ring-emerald-500 text-sm sm:leading-6 bg-white dark:bg-zinc-950 dark:text-white dark:ring-zinc-800"
                 >
             </div>
         </div>
@@ -35,7 +35,7 @@
             <div class="lg:col-span-1">
                 <h2 class="text-2xl font-bold text-zinc-900 dark:text-white mb-8">Categories</h2>
                 <nav class="space-y-2">
-                    <a href="#" class="group flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-700 dark:bg-blue-900/10 dark:text-blue-400 font-semibold border border-blue-100 dark:border-blue-900/20 transition-all">
+                    <a href="#" class="group flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-900/10 dark:text-emerald-400 font-semibold border border-emerald-100 dark:border-emerald-900/20 transition-all">
                         <flux:icon.question-mark-circle class="size-5" />
                         Common Questions
                     </a>
@@ -56,7 +56,7 @@
                 <div class="mt-12 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/50">
                     <h3 class="font-bold text-zinc-900 dark:text-white mb-2">Still need support?</h3>
                     <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-4">Our dedicated team is here to help you solve any technical issues.</p>
-                    <flux:button variant="primary" class="w-full" href="{{ route('contact.us') }}">Contact Support</flux:button>
+                    <flux:button variant="primary" class="w-full bg-emerald-600 hover:bg-emerald-500" href="{{ route('contact.us') }}">Contact Support</flux:button>
                 </div>
             </div>
 

@@ -4,8 +4,8 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Layout('layouts.public')] #[Title('Welcome to Kinetic Hub')] class extends Component {
-    //
+new #[Layout('layouts.public')] #[Title('Nexus Flow - Inventory Management System')] class extends Component {
+    public string $app_name = "Nexus Flow";
 };
 ?>
 
@@ -15,7 +15,7 @@ new #[Layout('layouts.public')] #[Title('Welcome to Kinetic Hub')] class extends
         {{-- Background Gradients --}}
         <div class="absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl" aria-hidden="true">
             <div
-                class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-blue-600 to-indigo-800 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]">
+                class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-emerald-600 to-teal-800 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]">
             </div>
         </div>
 
@@ -27,7 +27,7 @@ new #[Layout('layouts.public')] #[Title('Welcome to Kinetic Hub')] class extends
                         <div
                             class="relative rounded-full px-3 py-1 text-sm leading-6 text-zinc-600 dark:text-zinc-400 ring-1 ring-zinc-900/10 dark:ring-zinc-100/10 hover:ring-zinc-900/20 transition-all">
                             Announcing our new Intelligent Analytics.
-                            <a href="#" class="font-semibold text-blue-600 dark:text-blue-500">
+                            <a href="#" class="font-semibold text-emerald-600 dark:text-emerald-500">
                                 <span class="absolute inset-0" aria-hidden="true"></span>Read more <span
                                     aria-hidden="true">&rarr;</span>
                             </a>
@@ -36,17 +36,17 @@ new #[Layout('layouts.public')] #[Title('Welcome to Kinetic Hub')] class extends
 
                     <h1 class="text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white sm:text-7xl mb-6">
                         Inventory Intelligence <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Perfected.</span>
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">Perfected.</span>
                     </h1>
 
                     <p class="text-lg leading-8 text-zinc-600 dark:text-zinc-400 mb-8 max-w-lg">
-                        Kinetic Hub is the all-in-one business operating system designed to give you total control over
+                        {{ $app_name }} is the all-in-one business operating system designed to give you total control over
                         your inventory, orders, and growth. Fast, intuitive, and remarkably powerful.
                     </p>
 
                     <div class="flex flex-wrap items-center gap-4">
                         <flux:button href="{{ route('register') }}" variant="primary"
-                            class="shadow-lg shadow-blue-500/20 px-8 py-3 h-auto text-base">
+                            class="shadow-lg shadow-emerald-500/20 px-8 py-3 h-auto text-base bg-emerald-600 hover:bg-emerald-500">
                             Get Started for Free
                         </flux:button>
                         <flux:button href="#features" variant="ghost" icon-trailing="chevron-down"
@@ -61,10 +61,9 @@ new #[Layout('layouts.public')] #[Title('Welcome to Kinetic Hub')] class extends
                     {{-- Hero Integrations Placeholder (Removed as per request, moved to dedicated section) --}}
                 </div>
 
-                {{-- Right Column: Live Snapshot (From original welcome) --}}
                 <div class="mt-16 sm:mt-24 lg:mt-0 lg:col-span-5 relative">
                     {{-- Blob behind card --}}
-                    <div class="absolute -top-12 -right-12 -z-10 size-64 rounded-full bg-blue-500/30 blur-3xl"></div>
+                    <div class="absolute -top-12 -right-12 -z-10 size-64 rounded-full bg-emerald-500/30 blur-3xl"></div>
 
                     <flux:card
                         class="space-y-6 border border-zinc-200/50 dark:border-zinc-800/50 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md shadow-2xl shadow-zinc-200/50 dark:shadow-black/50 ring-1 ring-zinc-900/5 dark:ring-white/10">
@@ -111,7 +110,7 @@ new #[Layout('layouts.public')] #[Title('Welcome to Kinetic Hub')] class extends
                                 class="rounded-xl border border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/50 p-4">
                                 <span class="text-zinc-500 text-xs font-medium uppercase tracking-wide">Low Stock</span>
                                 <div class="mt-1 text-xl font-bold text-zinc-900 dark:text-white">12</div>
-                                <span class="text-xs text-blue-600 dark:text-blue-400 mt-1 block">Alerts on</span>
+                                <span class="text-xs text-emerald-600 dark:text-emerald-400 mt-1 block">Alerts on</span>
                             </div>
                         </div>
 
@@ -139,13 +138,13 @@ new #[Layout('layouts.public')] #[Title('Welcome to Kinetic Hub')] class extends
     <div class="py-24 sm:py-32 bg-white dark:bg-zinc-950">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="mx-auto max-w-2xl text-center mb-16">
-                <h2 class="text-base font-semibold leading-7 text-blue-600 uppercase tracking-wide">Unlimited
+                <h2 class="text-base font-semibold leading-7 text-emerald-600 uppercase tracking-wide">Unlimited
                     Connectivity</h2>
                 <p class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
                     Connect with everything you use.
                 </p>
                 <p class="mt-6 text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-                    Kinetic Hub seamlessly integrates with your favorite platforms, allowing you to sync data, automate
+                    {{ $app_name }} seamlessly integrates with your favorite platforms, allowing you to sync data, automate
                     workflows, and manage your entire ecosystem from one place.
                 </p>
             </div>
@@ -207,11 +206,11 @@ new #[Layout('layouts.public')] #[Title('Welcome to Kinetic Hub')] class extends
             <div class="mt-20 flex justify-center">
                 <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-all group cursor-default">
                     <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
                     <p class="text-sm font-semibold tracking-wide text-zinc-600 dark:text-zinc-400">
-                        <span class="bg-gradient-to-r from-zinc-600 via-blue-500 to-zinc-600 dark:from-zinc-400 dark:via-blue-400 dark:to-zinc-400 bg-[length:200%_auto] bg-clip-text text-transparent group-hover:animate-shimmer transition-all">
+                        <span class="bg-gradient-to-r from-zinc-600 via-emerald-500 to-zinc-600 dark:from-zinc-400 dark:via-emerald-400 dark:to-zinc-400 bg-[length:200%_auto] bg-clip-text text-transparent group-hover:animate-shimmer transition-all">
                             More integrations coming soon
                         </span>
                     </p>
@@ -224,13 +223,13 @@ new #[Layout('layouts.public')] #[Title('Welcome to Kinetic Hub')] class extends
     <div id="features" class="py-24 sm:py-32 bg-zinc-50 dark:bg-zinc-900/30">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="mx-auto max-w-2xl text-center">
-                <h2 class="text-base font-semibold leading-7 text-blue-600 uppercase tracking-wide">Everything you need
+                <h2 class="text-base font-semibold leading-7 text-emerald-600 uppercase tracking-wide">Everything you need
                 </h2>
                 <p class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
                     Powerful tools for every scale.
                 </p>
                 <p class="mt-6 text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-                    Stop juggling spreadhseets. Kinetic Hub brings all your business data into one beautiful,
+                    Stop juggling spreadhseets. {{ $app_name }} brings all your business data into one beautiful,
                     intelligent
                     interface.
                 </p>
@@ -241,7 +240,7 @@ new #[Layout('layouts.public')] #[Title('Welcome to Kinetic Hub')] class extends
                     {{-- Feature 1 --}}
                     <div class="flex flex-col group">
                         <div
-                            class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
                             <flux:icon.queue-list class="size-8" />
                         </div>
                         <dt class="flex flex-col gap-y-3 text-xl font-bold leading-7 text-zinc-900 dark:text-white">
@@ -252,7 +251,7 @@ new #[Layout('layouts.public')] #[Title('Welcome to Kinetic Hub')] class extends
                                 reordering alerts and batch tracking.</p>
                             <p class="mt-6">
                                 <a href="#"
-                                    class="text-sm font-semibold leading-6 text-blue-600 hover:text-blue-500">Learn
+                                    class="text-sm font-semibold leading-6 text-emerald-600 hover:text-emerald-500">Learn
                                     more <span aria-hidden="true">→</span></a>
                             </p>
                         </dd>
@@ -307,11 +306,11 @@ new #[Layout('layouts.public')] #[Title('Welcome to Kinetic Hub')] class extends
     <div class="py-24 sm:py-32 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
             <div
-                class="bg-zinc-900 dark:bg-blue-950 rounded-[3rem] px-8 py-16 sm:px-24 sm:py-24 shadow-2xl relative overflow-hidden text-center">
+                class="bg-zinc-900 dark:bg-emerald-950 rounded-[3rem] px-8 py-16 sm:px-24 sm:py-24 shadow-2xl relative overflow-hidden text-center">
                 {{-- Decorative background --}}
-                <div class="absolute inset-0 bg-gradient-to-br from-blue-600/30 to-transparent pointer-events-none">
+                <div class="absolute inset-0 bg-gradient-to-br from-emerald-600/30 to-transparent pointer-events-none">
                 </div>
-                <div class="absolute -top-24 -left-24 size-96 bg-blue-500/20 rounded-full blur-3xl"></div>
+                <div class="absolute -top-24 -left-24 size-96 bg-emerald-500/20 rounded-full blur-3xl"></div>
 
                 <h2
                     class="text-3xl font-extrabold tracking-tight text-white sm:text-5xl max-w-2xl mx-auto relative z-10">
@@ -326,7 +325,7 @@ new #[Layout('layouts.public')] #[Title('Welcome to Kinetic Hub')] class extends
                         Get Started Now
                     </flux:button>
                     <a href="{{ route('contact.us') }}"
-                        class="text-sm font-semibold leading-6 text-white hover:text-blue-200 transition-colors">
+                        class="text-sm font-semibold leading-6 text-white hover:text-emerald-200 transition-colors">
                         Contact Sales <span aria-hidden="true">→</span>
                     </a>
                 </div>

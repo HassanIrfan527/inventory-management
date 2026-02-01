@@ -1,7 +1,7 @@
 <div class="relative isolate overflow-hidden">
     {{-- Decorative Background --}}
     <div class="absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl" aria-hidden="true">
-        <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-blue-600 to-indigo-800 opacity-10 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
+        <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-emerald-600 to-teal-800 opacity-10 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
     </div>
 
     <div class="max-w-7xl mx-auto px-6 lg:px-8 py-24 sm:py-32">
@@ -35,9 +35,9 @@
                 </p>
 
                 <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2">
-                    <flux:card class="p-6 transition-all hover:ring-2 hover:ring-blue-500/20">
+                    <flux:card class="p-6 transition-all hover:ring-2 hover:ring-emerald-500/20">
                         <div class="flex items-center gap-4 mb-4">
-                            <div class="p-3 rounded-lg bg-blue-600/10 text-blue-600">
+                            <div class="p-3 rounded-lg bg-emerald-600/10 text-emerald-600">
                                 <flux:icon.rocket-launch class="size-6" />
                             </div>
                             <flux:heading size="lg">Getting Started</flux:heading>
@@ -46,9 +46,9 @@
                         <flux:button variant="ghost" size="sm" class="mt-4" icon-trailing="arrow-right">Read Guide</flux:button>
                     </flux:card>
 
-                    <flux:card class="p-6 transition-all hover:ring-2 hover:ring-indigo-500/20">
+                    <flux:card class="p-6 transition-all hover:ring-2 hover:ring-teal-500/20">
                         <div class="flex items-center gap-4 mb-4">
-                            <div class="p-3 rounded-lg bg-indigo-600/10 text-indigo-600">
+                            <div class="p-3 rounded-lg bg-teal-600/10 text-teal-600">
                                 <flux:icon.queue-list class="size-6" />
                             </div>
                             <flux:heading size="lg">Inventory Management</flux:heading>

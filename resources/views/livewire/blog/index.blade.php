@@ -1,7 +1,7 @@
 <div class="py-12 sm:py-20 bg-zinc-50/50 dark:bg-zinc-950">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
         <div class="max-w-2xl mx-auto text-center mb-12 sm:mb-16">
-            <h2 class="text-base font-semibold leading-7 text-blue-600 uppercase tracking-wide">The Kinetic Blog</h2>
+            <h2 class="text-base font-semibold leading-7 text-emerald-600 uppercase tracking-wide">The Kinetic Blog</h2>
             <p class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
                 Insights for modern business.
             </p>
@@ -25,12 +25,12 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
                     <div class="absolute bottom-0 left-0 p-6 sm:p-8">
                         <div class="flex items-center gap-2 mb-3">
-                            <span class="inline-flex items-center rounded-full bg-blue-600/90 px-3 py-1 text-[10px] sm:text-xs font-medium text-white backdrop-blur-md">
+                            <span class="inline-flex items-center rounded-full bg-emerald-600/90 px-3 py-1 text-[10px] sm:text-xs font-medium text-white backdrop-blur-md">
                                 {{ $featured['category'] }}
                             </span>
                             <span class="text-zinc-300 text-[10px] sm:text-xs">{{ $featured['read_time'] }}</span>
                         </div>
-                        <h3 class="text-xl sm:text-3xl font-bold text-white mb-2 leading-tight group-hover:underline decoration-blue-500 underline-offset-4 decoration-2">
+                        <h3 class="text-xl sm:text-3xl font-bold text-white mb-2 leading-tight group-hover:underline decoration-emerald-500 underline-offset-4 decoration-2">
                             {{ $featured['title'] }}
                         </h3>
                          <p class="text-zinc-300 line-clamp-2 max-w-xl text-sm hidden sm:block">
@@ -51,13 +51,13 @@
 
             {{-- Sidebar / Top stories --}}
             <div class="space-y-8 flex flex-col justify-between">
-                <div class="bg-blue-600 rounded-3xl p-8 text-white relative overflow-hidden">
+                <div class="bg-emerald-600 rounded-3xl p-8 text-white relative overflow-hidden">
                     <div class="absolute top-0 right-0 -mt-4 -mr-4 h-32 w-32 rounded-full bg-white/10 blur-2xl"></div>
                     <h3 class="font-bold text-2xl mb-2 relative z-10">Subscribe to our newsletter</h3>
-                    <p class="text-blue-100 mb-6 relative z-10">Get the latest insights delivered straight to your inbox.</p>
+                    <p class="text-emerald-100 mb-6 relative z-10">Get the latest insights delivered straight to your inbox.</p>
                     <div class="flex gap-2 relative z-10">
-                        <input type="email" placeholder="you@example.com" class="bg-white/10 border-white/20 text-white placeholder-blue-200 rounded-xl w-full px-4 py-2 focus:ring-2 focus:ring-white/50 focus:border-transparent outline-none">
-                        <button class="bg-white text-blue-600 rounded-xl px-4 font-bold hover:bg-blue-50 transition-colors">
+                        <input type="email" placeholder="you@example.com" class="bg-white/10 border-white/20 text-white placeholder-emerald-200 rounded-xl w-full px-4 py-2 focus:ring-2 focus:ring-white/50 focus:border-transparent outline-none">
+                        <button class="bg-white text-emerald-600 rounded-xl px-4 font-bold hover:bg-emerald-50 transition-colors">
                             <flux:icon.paper-airplane class="size-5" />
                         </button>
                     </div>
@@ -79,7 +79,7 @@
         {{-- Standard Grid for other posts --}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
             @foreach($others as $post)
-            <flux:card class="group cursor-pointer hover:shadow-xl transition-all duration-300 !bg-white dark:!bg-zinc-900 !border-zinc-200 dark:!border-zinc-800 hover:!border-blue-500/30 overflow-hidden flex flex-col p-0">
+            <flux:card class="group cursor-pointer hover:shadow-xl transition-all duration-300 !bg-white dark:!bg-zinc-900 !border-zinc-200 dark:!border-zinc-800 hover:!border-emerald-500/30 overflow-hidden flex flex-col p-0">
                 <div class="h-48 w-full overflow-hidden relative">
                     <img src="{{ $post['image'] }}" alt="{{ $post['title'] }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute top-4 left-4">
@@ -95,7 +95,7 @@
                         <span>{{ $post['read_time'] }}</span>
                     </div>
                     
-                    <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-2 line-clamp-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                         {{ $post['title'] }}
                     </h3>
                     
