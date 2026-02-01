@@ -22,4 +22,15 @@ class OrderProduct extends Pivot
     {
         return $this->belongsTo(Order::class);
     }
+
+    protected function casts(): array
+    {
+        return [
+            'unit_cost' => 'decimal:2',
+            'sale_price' => 'decimal:2',
+            'tax_amount' => 'decimal:2',
+            'discount_amount' => 'decimal:2',
+            'subtotal' => 'decimal:2',
+        ];
+    }
 }

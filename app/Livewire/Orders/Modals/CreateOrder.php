@@ -41,7 +41,7 @@ class CreateOrder extends Component
     #[Computed]
     public function contacts()
     {
-        return Contact::orderBy('name')->get();
+        return Contact::orderBy('first_name')->get();
     }
 
     #[Computed]
@@ -120,10 +120,13 @@ class CreateOrder extends Component
             ]);
         } else {
             $this->validate([
-                'newContact.name' => 'required|string|max:255',
+                'newContact.first_name' => 'required|string|max:255',
+                'newContact.last_name' => 'nullable|string|max:255',
                 'newContact.email' => 'nullable|email|max:255|unique:contacts,email',
-                'newContact.phone' => 'nullable|string|max:20',
+                'newContact.phone' => ['nullable', 'regex:/^\+[1-9]\d{1,14}$/'],
                 'newContact.address' => 'nullable|string',
+            ], [
+                'newContact.phone.regex' => 'Please enter a valid phone number in E.164 format (e.g., +923001234567).',
             ]);
         }
     }
@@ -147,12 +150,12 @@ class CreateOrder extends Component
             $contactService = app(ContactService::class);
 
             $contact = $contactService->createContact([
-                'name' => $this->newContact->name,
+                'first_name' => $this->newContact->first_name,
+                'last_name' => $this->newContact->last_name,
                 'email' => $this->newContact->email,
                 'phone' => $this->newContact->phone,
                 'address' => $this->newContact->address,
                 'landmark' => $this->newContact->landmark,
-                'whatsapp_no' => $this->newContact->whatsapp_no,
             ]);
 
             $this->contact_id = $contact->id;

@@ -1,358 +1,460 @@
-<div class="flex h-full w-full flex-1 flex-col gap-6">
+<div class="flex h-full w-full flex-1 flex-col gap-8">
     <!-- Page Header -->
-    <div class="flex flex-col gap-2">
-        <flux:heading size="xl" level="1">Orders</flux:heading>
-        <flux:text size="sm" class="text-neutral-600 dark:text-neutral-400">
-            View and track customer orders efficiently.
-        </flux:text>
+    @php
+        $breadcrumbItem = [
+            [
+                'name' => 'Orders',
+                'href' => route('orders'),
+                'icon' => 'handbag',
+            ],
+        ];
+    @endphp
+    <!-- Breadcrumbs -->
+    <x-custom-breadcrumb :items="$breadcrumbItem"></x-custom-breadcrumb>
+
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-col gap-1">
+            <flux:heading size="xl" level="1" class="text-emerald-950 dark:text-emerald-50">Orders Management
+            </flux:heading>
+            <flux:text size="sm" class="text-zinc-500 dark:text-zinc-400">
+                Oversee customer orders, monitor revenue, and manage fulfillment workflows.
+            </flux:text>
+        </div>
+        <div class="flex items-center gap-3">
+            <flux:button variant="primary" href="{{ route('orders.create') }}" icon="plus" wire:navigate
+                class="bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white shadow-sm transition-all duration-200">
+                Create New Order
+            </flux:button>
+        </div>
     </div>
 
     <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <!-- Total Orders -->
         <div
-            class="group relative overflow-hidden rounded-xl border border-neutral-200 bg-white p-6 transition-all hover:shadow-md dark:border-neutral-700 dark:bg-neutral-900">
+            class="group relative overflow-hidden rounded-2xl border border-emerald-100 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-emerald-900/30 dark:bg-zinc-900">
             <div class="flex items-center justify-between">
                 <div class="flex flex-col gap-1">
-                    <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Total Orders</p>
-                    <p class="text-2xl font-bold text-neutral-900 dark:text-white">{{ $totalOrders }}</p>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Total
+                        Orders</p>
+                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($totalOrders) }}
+                    </p>
                 </div>
-                <div class="rounded-lg bg-blue-50 p-3 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400">
-                    <flux:icon.handbag />
+                <div
+                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400 ring-4 ring-emerald-50/50 dark:ring-emerald-900/10 transition-transform group-hover:scale-110">
+                    <flux:icon.handbag class="h-6 w-6" />
                 </div>
+            </div>
+            <div
+                class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-emerald-50 dark:border-emerald-900/10">
+                <span
+                    class="flex items-center gap-1 font-medium text-emerald-600 dark:text-emerald-400 shrink-0 whitespace-nowrap">
+                    <flux:icon.arrow-up-right class="h-4 w-4" />
+                    <span>Global</span>
+                </span>
+                <span class="text-zinc-400 truncate">Orders placed</span>
             </div>
         </div>
 
         <!-- Revenue -->
         <div
-            class="group relative overflow-hidden rounded-xl border border-neutral-200 bg-white p-6 transition-all hover:shadow-md dark:border-neutral-700 dark:bg-neutral-900">
+            class="group relative overflow-hidden rounded-2xl border border-teal-100 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-teal-900/30 dark:bg-zinc-900">
             <div class="flex items-center justify-between">
                 <div class="flex flex-col gap-1">
-                    <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Total Revenue</p>
-                    <p class="text-2xl font-bold text-neutral-900 dark:text-white">Rs.
+                    <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Total
+                        Revenue</p>
+                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">Rs.
                         {{ number_format($totalRevenue) }}</p>
                 </div>
-                <div class="rounded-lg bg-green-50 p-3 text-green-600 dark:bg-green-900/20 dark:text-green-400">
-                    <flux:icon.circle-dollar-sign />
+                <div
+                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-600 dark:bg-teal-900/20 dark:text-teal-400 ring-4 ring-teal-50/50 dark:ring-teal-900/10 transition-transform group-hover:scale-110">
+                    <flux:icon.circle-dollar-sign class="h-6 w-6" />
                 </div>
+            </div>
+            <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-teal-50 dark:border-teal-900/10">
+                <span
+                    class="flex items-center gap-1 font-medium text-teal-600 dark:text-teal-400 shrink-0 whitespace-nowrap">
+                    <flux:icon.banknotes class="h-4 w-4" />
+                    <span>Net Sales</span>
+                </span>
+                <span class="text-zinc-400 truncate">Total earnings</span>
             </div>
         </div>
 
         <!-- Pending -->
         <div
-            class="group relative overflow-hidden rounded-xl border border-neutral-200 bg-white p-6 transition-all hover:shadow-md dark:border-neutral-700 dark:bg-neutral-900">
+            class="group relative overflow-hidden rounded-2xl border border-amber-100 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-amber-900/30 dark:bg-zinc-900">
             <div class="flex items-center justify-between">
                 <div class="flex flex-col gap-1">
-                    <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Pending</p>
-                    <p class="text-2xl font-bold text-neutral-900 dark:text-white">{{ $pendingOrders }}</p>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Pending
+                    </p>
+                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($pendingOrders) }}
+                    </p>
                 </div>
-                <div class="rounded-lg bg-yellow-50 p-3 text-yellow-600 dark:bg-yellow-900/20 dark:text-yellow-400">
-                    <flux:icon.clock />
+                <div
+                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400 ring-4 ring-amber-50/50 dark:ring-amber-900/10 transition-transform group-hover:scale-110">
+                    <flux:icon.clock class="h-6 w-6" />
                 </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 h-1 bg-yellow-500/20"></div>
+            <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-amber-50 dark:border-amber-900/10">
+                <span
+                    class="flex items-center gap-1 font-medium text-amber-600 dark:text-amber-400 shrink-0 whitespace-nowrap">
+                    <flux:icon.layers class="h-4 w-4" />
+                    <span>In Queue</span>
+                </span>
+                <span class="text-zinc-400 truncate">Awaiting processing</span>
+            </div>
         </div>
 
         <!-- Completed -->
         <div
-            class="group relative overflow-hidden rounded-xl border border-neutral-200 bg-white p-6 transition-all hover:shadow-md dark:border-neutral-700 dark:bg-neutral-900">
+            class="group relative overflow-hidden rounded-2xl border border-sky-100 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-sky-900/30 dark:bg-zinc-900">
             <div class="flex items-center justify-between">
                 <div class="flex flex-col gap-1">
-                    <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">Completed</p>
-                    <p class="text-2xl font-bold text-neutral-900 dark:text-white">{{ $completedOrders }}</p>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Completed
+                    </p>
+                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">
+                        {{ number_format($completedOrders) }}</p>
                 </div>
-                <div class="rounded-lg bg-purple-50 p-3 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400">
-                    <flux:icon.circle-check />
+                <div
+                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sky-600 dark:bg-sky-900/20 dark:text-sky-400 ring-4 ring-sky-50/50 dark:ring-sky-900/10 transition-transform group-hover:scale-110">
+                    <flux:icon.check-circle class="h-6 w-6" />
                 </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 h-1 bg-purple-500/20"></div>
+            <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-sky-50 dark:border-sky-900/10">
+                <span
+                    class="flex items-center gap-1 font-medium text-sky-600 dark:text-sky-400 shrink-0 whitespace-nowrap">
+                    <flux:icon.check-circle class="h-4 w-4" />
+                    <span>Delivered</span>
+                </span>
+                <span class="text-zinc-400 truncate">Successful completions</span>
+            </div>
         </div>
     </div>
 
-    <!-- Orders Section -->
-
+    <!-- Orders Filter & Table Section -->
     <div
-        class="flex flex-col gap-4 rounded-xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-900">
-        <!-- Table Header / Toolbar -->
+        class="flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-700 dark:bg-zinc-900 transition-all">
+        <!-- Toolbar -->
         <div
-            class="flex flex-col justify-between gap-4 border-b border-neutral-200 p-5 md:flex-row md:items-center dark:border-neutral-700">
-            <h2 class="text-lg font-semibold text-neutral-900 dark:text-white">Recent Orders</h2>
-            <div class="flex flex-wrap gap-2">
-                <div class="w-full sm:w-72">
-                    <flux:input
-                        icon="magnifying-glass"
-                        size="sm"
-                        placeholder="Search orders by ID, customer, or status..."
-                    />
+            class="flex flex-col items-center justify-between gap-4 border-b border-zinc-100 p-6 md:flex-row dark:border-zinc-800">
+            <div class="flex items-center gap-4">
+                <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Recent Orders</h2>
+                <flux:badge color="emerald" size="sm" inset="top bottom">{{ $orders->total() }} Total</flux:badge>
+            </div>
+
+            <div class="flex w-full flex-col gap-3 sm:flex-row sm:w-auto">
+                {{-- Search Bar --}}
+                <div class="relative w-full sm:w-80">
+                    <flux:input wire:model.live.debounce.300ms="search" icon="magnifying-glass" size="sm"
+                        placeholder="Search order #, customer..." class="pl-10" />
                 </div>
 
-                <flux:button
-                    variant="subtle"
-                    size="sm"
-                    icon="funnel"
-                    class="border border-neutral-200 dark:border-neutral-700"
-                >
-                    Filter
-                </flux:button>
+                {{-- Status Filter --}}
+                <div class="w-full sm:w-44">
+                    <flux:select wire:model.live="statusFilter" size="sm" placeholder="All Statuses">
+                        <flux:select.option value="">All Statuses</flux:select.option>
+                        <flux:select.option value="Pending">Pending</flux:select.option>
+                        <flux:select.option value="Processing">Processing</flux:select.option>
+                        <flux:select.option value="Completed">Completed</flux:select.option>
+                        <flux:select.option value="Cancelled">Cancelled</flux:select.option>
+                    </flux:select>
+                </div>
 
-                <flux:modal.trigger name="create-order">
-                    <flux:button
-                        variant="primary"
-                        color="indigo"
-                        size="sm"
-                        icon="plus"
-                    >
-                        Create order
-                    </flux:button>
-                </flux:modal.trigger>
+                <flux:button variant="subtle" size="sm" icon="arrow-path" wire:click="refreshOrders"
+                    class="hidden sm:flex" title="Refresh list" />
             </div>
         </div>
 
-        <!-- Table -->
-        <div x-data="{ expandedRow: null }" class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
-                <thead class="bg-neutral-50 dark:bg-neutral-800/50">
-                    <tr>
-                        <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+        <!-- Professional Table -->
+        <div x-data="{ expandedRow: null }" class="relative overflow-x-auto">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="bg-zinc-50 border-b border-zinc-100 dark:bg-zinc-800/50 dark:border-zinc-800">
+                        <th
+                            class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                             Order ID</th>
-                        <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-                            Customer</th>
-                        <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+                        <th
+                            class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                            Customer Details</th>
+                        <th
+                            class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-center">
+                            Payment</th>
+                        <th
+                            class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-center">
                             Status</th>
-                        <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-                            Total</th>
-                        <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-                            Date</th>
-                        <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+                        <th
+                            class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-right">
+                            Amount</th>
+                        <th
+                            class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-right">
                             Actions</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-neutral-200 bg-white dark:divide-neutral-700 dark:bg-neutral-900">
-                    @if ($orders)
-
-                        @foreach ($orders as $order)
-                            <!-- Main Row -->
-                            <tr @click="expandedRow = expandedRow === {{ $order->id }} ? null : {{ $order->id }}"
-                                class="cursor-pointer transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
-                                :class="{ 'bg-neutral-50 dark:bg-neutral-800/50': expandedRow === {{ $order->id }} }">
-                                <td
-                                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900 dark:text-white">
-                                    <div class="flex items-center gap-2">
-                                        <svg class="h-4 w-4 text-neutral-400 transition-transform duration-200"
-                                            :class="{ 'rotate-90': expandedRow === {{ $order->id }} }" fill="none"
-                                            stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M9 5l7 7-7 7" />
-                                        </svg>
-                                        {{ $order->order_number }}
+                <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
+                    @forelse ($orders as $order)
+                        <tr class="group transition-all hover:bg-emerald-50/30 dark:hover:bg-emerald-900/10 cursor-pointer"
+                            @click="expandedRow = expandedRow === {{ $order->id }} ? null : {{ $order->id }}"
+                            :class="{ 'bg-emerald-50/50 dark:bg-emerald-900/20': expandedRow === {{ $order->id }} }">
+                            {{-- Order ID --}}
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center gap-3">
+                                    <div class="flex h-6 w-6 items-center justify-center transition-transform duration-200"
+                                        :class="{ 'rotate-180': expandedRow === {{ $order->id }} }">
+                                        <flux:icon.chevron-down class="h-4 w-4 text-zinc-400" />
                                     </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-500 dark:text-neutral-400">
-                                    <div class="flex items-center gap-2">
-                                        @if ($order->contact)
-                                            <div
-                                                class="h-6 w-6 rounded-full bg-neutral-200 flex items-center justify-center text-xs font-bold text-neutral-600 dark:bg-neutral-700 dark:text-neutral-300">
-                                                {{ substr($order->contact->name, 0, 1) }}
-                                            </div>
-                                            <a href="{{ route('contact.show', $order->contact) }}"
-                                                class="text-blue-600 underline hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
+                                    <span
+                                        class="font-bold text-zinc-900 dark:text-white">{{ $order->order_number }}</span>
+                                </div>
+                                <div
+                                    class="mt-1 flex items-center gap-1 text-[10px] text-zinc-400 uppercase tracking-tighter ml-9">
+                                    <flux:icon.calendar class="h-3 w-3" />
+                                    {{ $order->created_at->format('M d, Y') }}
+                                </div>
+                            </td>
+
+                            {{-- Customer --}}
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center gap-3">
+                                    @if ($order->contact)
+                                        <div
+                                            class="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs ring-2 ring-white dark:bg-emerald-900/50 dark:text-emerald-300 dark:ring-zinc-800 transition-transform group-hover:scale-105">
+                                            {{ substr($order->contact->name, 0, 1) }}
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <a href="{{ route('contact.show', $order->contact) }}" wire:click.stop
+                                                class="font-semibold text-zinc-900 hover:text-emerald-600 dark:text-zinc-100 dark:hover:text-emerald-400 transition-colors">
                                                 {{ $order->contact->name }}
                                             </a>
-                                        @else
-                                            <div
-                                                class="h-6 w-6 rounded-full bg-neutral-100 flex items-center justify-center text-xs font-bold text-neutral-400 dark:bg-neutral-800 dark:text-neutral-500">
-                                                ?
-                                            </div>
-                                            <span class="text-neutral-400 italic">Unknown Customer</span>
-                                        @endif
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium
-                                        {{ $order->status === 'Completed' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : '' }}
-                                        {{ $order->status === 'Pending' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' : '' }}
-                                        {{ $order->status === 'Processing' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : '' }}
-                                    ">
-                                        <span
-                                            class="h-1.5 w-1.5 rounded-full {{ $order->status === 'Completed' ? 'bg-green-500' : ($order->status === 'Pending' ? 'bg-yellow-500' : 'bg-blue-500') }}"></span>
-                                        {{ $order->status }}
-                                    </span>
-                                </td>
-                                <td
-                                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900 dark:text-white">
-                                    Rs. {{ number_format($order->total_amount) }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-500 dark:text-neutral-400">
-                                    {{ $order->created_at }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    <div class="flex items-center gap-3">
-                                        <!-- View Details (Eye) -->
-                                        <div class="group relative">
-                                            <a href="{{ route('orders.show', $order) }}" wire:navigate
-                                                class="flex items-center text-neutral-500 hover:text-blue-600 dark:text-neutral-400 dark:hover:text-blue-400">
-                                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                                </svg>
-                                            </a>
                                             <span
-                                                class="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded bg-neutral-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-white dark:text-neutral-900 pointer-events-none">View
-                                                Details</span>
+                                                class="text-xs text-zinc-500">{{ $order->contact->email ?? $order->contact->phone }}</span>
                                         </div>
-
-                                        <!-- Generate Invoice (Document) -->
-                                        <button wire:click.stop="$dispatch('open-generate-invoice-modal', { orderId: {{ $order->id }} })"
-                                            class="group relative text-neutral-500 hover:text-purple-600 dark:text-neutral-400 dark:hover:text-purple-400 cursor-pointer">
-                                            <svg class="h-5 w-5" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                            </svg>
-                                            <span
-                                                class="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded bg-neutral-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-white dark:text-neutral-900">Generate
-                                                Invoice</span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Expanded Details Row -->
-
-                            <tr x-show="expandedRow === {{ $order->id }}" x-cloak
-                                class="bg-neutral-50 dark:bg-neutral-800/30">
-                                <td colspan="6" class="px-0 py-0">
-                                    <div class="px-6 py-4">
-                                        <div class="mb-3 flex items-center gap-2">
-                                            <svg class="h-4 w-4 text-neutral-500" fill="none"
-                                                stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                            </svg>
-                                            <h3 class="text-sm font-semibold text-neutral-900 dark:text-white">
-                                                Order Items</h3>
-                                        </div>
+                                    @else
                                         <div
-                                            class="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-900">
-                                            <table
-                                                class="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
-                                                <thead class="bg-neutral-50 dark:bg-neutral-800">
-                                                    <tr>
-                                                        <th
-                                                            class="px-4 py-2 text-left text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-                                                            Product</th>
-                                                        <th
-                                                            class="px-4 py-2 text-right text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-                                                            Price</th>
-                                                        <th
-                                                            class="px-4 py-2 text-center text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-                                                            Qty</th>
-                                                        <th
-                                                            class="px-4 py-2 text-right text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-                                                            Subtotal</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
-                                                    @foreach ($order->products as $product)
-                                                        <tr>
-                                                            <td
-                                                                class="px-4 py-2.5 text-sm text-neutral-900 dark:text-white">
-                                                                <div class="font-medium">{{ $product->name }}
-                                                                </div>
-                                                            </td>
-                                                            <td
-                                                                class="px-4 py-2.5 text-right text-sm text-neutral-600 dark:text-neutral-400">
-                                                                Rs. {{ number_format($product->pivot->sale_price) }}
-                                                            </td>
-                                                            <td
-                                                                class="px-4 py-2.5 text-center text-sm text-neutral-600 dark:text-neutral-400">
-                                                                {{ $product->pivot->quantity }}</td>
-                                                            <td
-                                                                class="px-4 py-2.5 text-right text-sm font-medium text-neutral-900 dark:text-white">
-                                                                Rs.
-                                                                {{ number_format($product->pivot->quantity * $product->pivot->sale_price) }}
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                                <tfoot class="bg-neutral-50 dark:bg-neutral-800/50">
-                                                    @if ($order->delivery_charge > 0)
-                                                        <tr>
-                                                            <td colspan="3"
-                                                                class="px-4 py-2 text-right text-xs font-medium uppercase text-neutral-500 dark:text-neutral-400">
-                                                                Delivery Charge</td>
-                                                            <td
-                                                                class="px-4 py-2 text-right text-sm text-neutral-900 dark:text-white">
-                                                                Rs. {{ number_format($order->delivery_charge) }}</td>
-                                                        </tr>
-                                                    @endif
-                                                    <tr>
-                                                        <td colspan="3"
-                                                            class="px-4 py-2 text-right text-xs font-medium uppercase text-neutral-500 dark:text-neutral-400">
-                                                            Total Amount</td>
-                                                        <td
-                                                            class="px-4 py-2 text-right text-sm font-bold text-neutral-900 dark:text-white">
-                                                            Rs. {{ number_format($order['total_amount']) }}</td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
+                                            class="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-100 text-zinc-400 dark:bg-zinc-800">
+                                            <flux:icon.user class="h-4 w-4" />
+                                        </div>
+                                        <span class="text-zinc-400 italic text-sm">Guest Customer</span>
+                                    @endif
+                                </div>
+                            </td>
+
+                            {{-- Payment Status --}}
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
+                                @php
+                                    $paymentColor = match ($order->payment_status?->value ?? 'unpaid') {
+                                        'paid' => 'green',
+                                        'partially_paid' => 'yellow',
+                                        'refunded' => 'red',
+                                        default => 'zinc',
+                                    };
+                                @endphp
+                                <flux:badge :color="$paymentColor" size="sm" class="capitalize">
+                                    {{ str_replace('_', ' ', $order->payment_status?->value ?? 'Unpaid') }}
+                                </flux:badge>
+                            </td>
+
+                            {{-- Order Status --}}
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
+                                @php
+                                    $statusColor = match ($order->status) {
+                                        'Completed' => 'emerald',
+                                        'Processing' => 'sky',
+                                        'Pending' => 'amber',
+                                        'Cancelled' => 'red',
+                                        default => 'zinc',
+                                    };
+                                @endphp
+                                <flux:badge :color="$statusColor" variant="solid" size="sm" class="capitalize">
+                                    {{ $order->status }}
+                                </flux:badge>
+                            </td>
+
+                            {{-- Total Amount --}}
+                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                <div class="font-bold text-zinc-900 dark:text-white">Rs.
+                                    {{ number_format($order->total_amount, 2) }}</div>
+                                @if ($order->source)
+                                    <div class="mt-0.5 text-[10px] text-zinc-400 uppercase tracking-widest">
+                                        {{ $order->source->value }}</div>
+                                @endif
+                            </td>
+
+                            {{-- Actions --}}
+                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                <div class="flex items-center justify-end gap-2" @click.stop>
+                                    <flux:button icon="eye" variant="ghost" size="sm"
+                                        href="{{ route('orders.show', $order) }}" wire:navigate
+                                        class="text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400"
+                                        title="View Details" />
+
+                                    <flux:button icon="document-text" variant="ghost" size="sm"
+                                        wire:click="$dispatch('open-generate-invoice-modal', { orderId: {{ $order->id }} })"
+                                        class="text-zinc-400 hover:text-teal-600 dark:hover:text-teal-400"
+                                        title="Invoice" />
+
+                                    <flux:dropdown>
+                                        <flux:button variant="ghost" icon="ellipsis-vertical" size="sm"
+                                            class="text-zinc-400" />
+                                        <flux:menu>
+                                            <flux:menu.item icon="pencil-square"
+                                                href="{{ route('orders.show', $order) }}" wire:navigate>Edit Order
+                                            </flux:menu.item>
+                                            <flux:menu.item icon="printer">Print Packing Slip</flux:menu.item>
+                                            <flux:menu.separator />
+                                            <flux:menu.item icon="trash" variant="danger">Archive Order
+                                            </flux:menu.item>
+                                        </flux:menu>
+                                    </flux:dropdown>
+                                </div>
+                            </td>
+                        </tr>
+
+                        {{-- Expanded Row with Item Details --}}
+                        <tr x-show="expandedRow === {{ $order->id }}" x-cloak
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 -translate-y-2"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            class="bg-zinc-50/50 dark:bg-zinc-800/30">
+                            <td colspan="6" class="px-8 py-6">
+                                <div class="flex flex-col gap-6">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2">
+                                            <div class="h-2 w-8 rounded-full bg-emerald-500"></div>
+                                            <h3
+                                                class="text-sm font-bold uppercase tracking-wider text-zinc-900 dark:text-white">
+                                                Order Inventory Breakdown</h3>
+                                        </div>
+                                        <div class="flex items-center gap-4 text-xs font-medium text-zinc-500">
+                                            <div class="flex items-center gap-1.5">
+                                                <flux:icon.map-pin class="h-3.5 w-3.5" />
+                                                <span>{{ $order->address ?? 'No shipping address' }}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="6" class="px-6 py-12">
-                                <div class="flex flex-col items-center justify-center gap-4">
-                                    <div class="rounded-full bg-neutral-100 p-4 dark:bg-neutral-800">
-                                        <flux:icon.package name="outline/clipboard-list"
-                                            class="h-8 w-8 text-neutral-400" />
-                                    </div>
-                                    <div class="text-center">
-                                        <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">
-                                            No orders yet
-                                        </h3>
-                                        <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-                                            There are no orders to display. Orders will appear here once customers place
-                                            them.
-                                        </p>
+
+                                    <div
+                                        class="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+                                        <table class="w-full text-left text-sm">
+                                            <thead
+                                                class="bg-zinc-50 border-b border-zinc-100 dark:bg-zinc-800 dark:border-zinc-800/50">
+                                                <tr>
+                                                    <th
+                                                        class="px-6 py-3 font-semibold text-zinc-600 dark:text-zinc-400">
+                                                        Product SKU / Name</th>
+                                                    <th
+                                                        class="px-6 py-3 text-right font-semibold text-zinc-600 dark:text-zinc-400">
+                                                        Unit Price</th>
+                                                    <th
+                                                        class="px-6 py-3 text-center font-semibold text-zinc-600 dark:text-zinc-400">
+                                                        Qty</th>
+                                                    <th
+                                                        class="px-6 py-3 text-right font-semibold text-zinc-600 dark:text-zinc-400">
+                                                        Tax</th>
+                                                    <th
+                                                        class="px-6 py-3 text-right font-semibold text-zinc-600 dark:text-zinc-400">
+                                                        Subtotal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
+                                                @foreach ($order->products as $product)
+                                                    <tr
+                                                        class="hover:bg-zinc-50/50 dark:hover:bg-zinc-800/50 transition-colors">
+                                                        <td class="px-6 py-3.5">
+                                                            <div class="font-bold text-zinc-900 dark:text-zinc-100">
+                                                                {{ $product->name }}</div>
+                                                            <div
+                                                                class="text-[10px] text-zinc-400 font-mono tracking-tight">
+                                                                {{ $product->product_id }}</div>
+                                                        </td>
+                                                        <td
+                                                            class="px-6 py-3.5 text-right font-medium text-zinc-600 dark:text-zinc-400">
+                                                            Rs. {{ number_format($product->pivot->sale_price, 2) }}
+                                                        </td>
+                                                        <td class="px-6 py-3.5 text-center">
+                                                            <span
+                                                                class="inline-flex h-6 w-8 items-center justify-center rounded bg-emerald-50 text-emerald-700 font-bold text-xs dark:bg-emerald-900/30 dark:text-emerald-400">
+                                                                {{ $product->pivot->quantity }}
+                                                            </span>
+                                                        </td>
+                                                        <td class="px-6 py-3.5 text-right text-zinc-500 font-medium">
+                                                            Rs.
+                                                            {{ number_format($product->pivot->tax_amount ?? 0, 2) }}
+                                                        </td>
+                                                        <td
+                                                            class="px-6 py-3.5 text-right font-bold text-zinc-900 dark:text-zinc-100">
+                                                            Rs.
+                                                            {{ number_format($product->pivot->subtotal ?? $product->pivot->quantity * $product->pivot->sale_price, 2) }}
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                            <tfoot class="bg-emerald-50/20 dark:bg-emerald-900/5">
+                                                @if ($order->delivery_charge > 0)
+                                                    <tr>
+                                                        <td colspan="4"
+                                                            class="px-6 py-2 text-right text-xs font-bold uppercase tracking-wider text-zinc-500">
+                                                            Delivery Charge</td>
+                                                        <td
+                                                            class="px-6 py-2 text-right text-sm font-bold text-zinc-900 dark:text-zinc-100">
+                                                            Rs. {{ number_format($order->delivery_charge, 2) }}</td>
+                                                    </tr>
+                                                @endif
+                                                <tr>
+                                                    <td colspan="4" class="px-6 py-4 text-right">
+                                                        <span
+                                                            class="text-sm font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Grand
+                                                            Total</span>
+                                                    </td>
+                                                    <td class="px-6 py-4 text-right">
+                                                        <span
+                                                            class="text-lg font-black text-emerald-700 dark:text-emerald-400">Rs.
+                                                            {{ number_format($order->total_amount, 2) }}</span>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
                                     </div>
                                 </div>
                             </td>
                         </tr>
-                    @endif
+                    @empty
+                        <tr>
+                            <td colspan="6" class="px-6 py-20 text-center">
+                                <div class="flex flex-col items-center justify-center gap-4">
+                                    <div class="relative">
+                                        <div
+                                            class="absolute -inset-4 rounded-full bg-emerald-50 blur-xl dark:bg-emerald-900/20">
+                                        </div>
+                                        <flux:icon.handbag
+                                            class="relative h-16 w-16 text-emerald-200 dark:text-emerald-800" />
+                                    </div>
+                                    <div class="max-w-xs mx-auto">
+                                        <h3 class="text-xl font-bold text-zinc-900 dark:text-white">No orders recorded
+                                        </h3>
+                                        <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+                                            Start by creating your first order to begin tracking orders and inventory
+                                            flow.
+                                        </p>
+                                    </div>
+                                    <flux:button href="{{ route('orders.create') }}" wire:navigate variant="primary"
+                                        color="emerald" size="base" class="mt-4">
+                                        Create First Order
+                                    </flux:button>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
 
-        <!-- Pagination -->
-        @if ($orders instanceof \Illuminate\Contracts\Pagination\Paginator)
-            <div
-                class="flex flex-col gap-3 border-t border-neutral-200 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 dark:border-neutral-700">
-                <p class="text-sm text-neutral-700 dark:text-neutral-300">
-                    {{ __('Showing') }}
-                    <span class="font-medium">{{ $orders->firstItem() }}</span>
-                    {{ __('to') }}
-                    <span class="font-medium">{{ $orders->lastItem() }}</span>
-                    {{ __('of') }}
-                    <span class="font-medium">{{ $orders->total() }}</span>
-                    {{ __('results') }}
-                </p>
-
-                <div class="flex justify-end">
-                    {{ $orders->onEachSide(1)->links() }}
-                </div>
-            </div>
-        @endif
+        <!-- Professional Pagination -->
+        <div class="border-t border-zinc-100 bg-zinc-50/30 px-6 py-4 dark:border-zinc-800 dark:bg-zinc-800/10">
+            {{ $orders->links() }}
+        </div>
     </div>
-    <livewire:orders.modals.create-order />
+
+    <!-- Modals -->
     <livewire:invoices.modals.generate-invoice />
 </div>

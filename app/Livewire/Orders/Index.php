@@ -23,9 +23,23 @@ class Index extends Component
 
     public ?int $totalRevenue = null;
 
+    public string $search = '';
+
+    public string $statusFilter = '';
+
     public function mount(): void
     {
         $this->hydrateMetrics();
+    }
+
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatedStatusFilter(): void
+    {
+        $this->resetPage();
     }
 
     protected function hydrateMetrics(): void
@@ -45,7 +59,17 @@ class Index extends Component
 
     public function render()
     {
-        $orders = Order::with(['contact', 'products'])
+        $orders = Order::query()
+            ->with(['contact', 'products'])
+            ->when($this->search, function ($query) {
+                $query->where('order_number', 'like', '%'.$this->search.'%')
+                    ->orWhereHas('contact', function ($q) {
+                        $q->where('name', 'like', '%'.$this->search.'%');
+                    });
+            })
+            ->when($this->statusFilter, function ($query) {
+                $query->where('status', $this->statusFilter);
+            })
             ->latest()
             ->paginate(10);
 

@@ -62,7 +62,9 @@ class Show extends Component
         // Add to pivot with default quantity 1 and current sale price
         $this->order->products()->attach($product->id, [
             'quantity' => 1,
-            'sale_price' => $product->sale_price,
+            'unit_cost' => $product->purchase_price ?? 0,
+            'sale_price' => $product->retail_price ?? $product->sale_price,
+            'subtotal' => $product->retail_price ?? $product->sale_price,
         ]);
 
         $this->recalculateTotal();
@@ -100,13 +102,30 @@ class Show extends Component
     public function recalculateTotal()
     {
         $this->order->refresh();
-        $total = 0;
+        $subtotal = 0;
         foreach ($this->order->products as $product) {
-            $total += $product->pivot->quantity * $product->pivot->sale_price;
-        }
-        $total += $this->order->delivery_charge;
+            $lineSubtotal = $product->pivot->quantity * $product->pivot->sale_price;
 
-        $this->order->update(['total_amount' => $total]);
+            // Update the pivot subtotal if it's not already correct
+            if ($product->pivot->subtotal != $lineSubtotal) {
+                $this->order->products()->updateExistingPivot($product->id, [
+                    'subtotal' => $lineSubtotal,
+                ]);
+            }
+
+            $subtotal += $lineSubtotal;
+        }
+
+        $deliveryCharge = $this->order->delivery_charge;
+        $taxAmount = $this->order->tax_amount ?? 0;
+        $discountAmount = $this->order->discount_amount ?? 0;
+
+        $total = $subtotal + $deliveryCharge + $taxAmount - $discountAmount;
+
+        $this->order->update([
+            'subtotal_amount' => $subtotal,
+            'total_amount' => $total,
+        ]);
     }
 
     public function render()
