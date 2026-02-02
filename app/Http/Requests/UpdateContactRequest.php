@@ -24,10 +24,16 @@ class UpdateContactRequest extends FormRequest
                 'email',
                 Rule::unique('contacts', 'email')->ignore($contactId),
             ],
-            'phone' => ['sometimes', 'nullable', 'regex:/^\d{4}-\d{7}$/'],
-            'whatsapp_no' => ['sometimes', 'nullable', 'regex:/^\d{4}-\d{7}$/'],
+            'phone' => ['sometimes', 'nullable', 'regex:/^\+[1-9]\d{1,14}$/'],
             'address' => ['sometimes', 'nullable', 'string', 'max:255'],
             'landmark' => ['sometimes', 'nullable', 'string', 'max:255'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'phone.regex' => 'Please enter a valid phone number in E.164 format (e.g., +923001234567).',
         ];
     }
 }

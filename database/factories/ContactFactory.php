@@ -17,12 +17,26 @@ class ContactFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
-            'phone' => '03001234567',
-            'whatsapp_no' => '03007654321',
-            'address' => $this->faker->address(),
+            'phone' => $this->faker->e164PhoneNumber(),
+            'address' => $this->faker->streetAddress(),
             'landmark' => $this->faker->word(),
+            'type' => \App\Enums\Contacts\Type::CUSTOMER,
+            'status' => \App\Enums\Contacts\Status::ACTIVE,
+            'source' => \App\Enums\Contacts\Source::WEB,
+            'company_name' => $this->faker->company(),
+            'job_title' => $this->faker->jobTitle(),
+            'city' => $this->faker->city(),
+            'state' => $this->faker->state(),
+            'country' => $this->faker->country(),
+            'zip_code' => $this->faker->postcode(),
+            'notes' => $this->faker->paragraph(),
+            'date_of_birth' => $this->faker->date(),
+            'preferred_contact_method' => \App\Enums\Contacts\PreferredContactMethod::EMAIL,
+            'engagement_score' => $this->faker->numberBetween(0, 100),
+            'custom_fields' => [],
         ];
     }
 }

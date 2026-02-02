@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade');
             $table->foreignId('contact_id')->constrained()->onDelete('cascade'); // The "Who"
             $table->string('description'); // e.g., "Order #101 was placed"
 

@@ -16,8 +16,7 @@ class StoreContactRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['nullable', 'email', 'unique:contacts,email'],
-            'phone' => ['nullable', 'regex:/^\d{4}-\d{7}$/'],
-            'whatsapp_no' => ['nullable', 'regex:/^\d{4}-\d{7}$/'],
+            'phone' => ['nullable', 'regex:/^\+[1-9]\d{1,14}$/'],
             'address' => ['nullable', 'string', 'max:255'],
             'landmark' => ['nullable', 'string', 'max:255'],
         ];
@@ -26,8 +25,7 @@ class StoreContactRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'phone.regex' => 'Please enter a valid format (03xx-xxxxxxx).',
-            'whatsapp_no.regex' => 'Please enter a valid format (03xx-xxxxxxx).',
+            'phone.regex' => 'Please enter a valid phone number in E.164 format (e.g., +923001234567).',
         ];
     }
 }

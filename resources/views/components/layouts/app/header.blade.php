@@ -8,8 +8,8 @@
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
             <flux:brand :href="route('dashboard')" :name="config('app.name')" wire:navigate>
-                <x-slot name="logo" class="size-8 rounded-md bg-accent-content text-accent-foreground flex items-center justify-center">
-                    <x-app-logo-icon class="size-5 fill-current text-white dark:text-black" />
+                <x-slot name="logo" class="flex items-center justify-center">
+                    <x-app-logo-icon class="size-7 fill-blue-600 dark:fill-blue-500" />
                 </x-slot>
             </flux:brand>
 

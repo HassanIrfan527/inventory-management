@@ -66,3 +66,17 @@ select:focus[data-flux-control] {
 } */
 
 @import './main.css';
+
+[x-cloak] {
+    display: none !important;
+}
+
+@keyframes shimmer {
+    to {
+        background-position: 200% center;
+    }
+}
+
+.animate-shimmer {
+    animation: shimmer 2s linear infinite;
+}

@@ -5,12 +5,31 @@ namespace App\Models;
 use App\Enums\InvoiceType;
 use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Enums\Payment\{PaymentMethod, PaymentStatus};
+use App\Enums\Order\OrderSource;
 
 class Order extends Model
 {
-    use BelongsToUser;
+    use BelongsToUser, SoftDeletes;
 
     protected $guarded = [];
+
+    protected function casts(): array
+    {
+        return [
+            'subtotal_amount' => 'decimal:2',
+            'tax_amount' => 'decimal:2',
+            'discount_amount' => 'decimal:2',
+            'total_amount' => 'decimal:2',
+            'delivery_charge' => 'decimal:2',
+            'payment_status' => PaymentStatus::class,
+            'payment_method' => PaymentMethod::class,
+            'source'=> OrderSource::class,
+            'shipped_at' => 'datetime',
+            'delivered_at' => 'datetime',
+        ];
+    }
 
     public function contact()
     {
@@ -42,8 +61,15 @@ class Order extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class)
-            ->using(OrderProduct::class) // Using pivot model
-            ->withPivot('quantity', 'sale_price') // List extra columns
+            ->using(OrderProduct::class)
+            ->withPivot([
+                'quantity',
+                'unit_cost',
+                'sale_price',
+                'tax_amount',
+                'discount_amount',
+                'subtotal'
+            ])
             ->withTimestamps();
     }
 

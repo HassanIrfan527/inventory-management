@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade');
             $table->string('invoice_number')->unique();
             $table->foreignId('order_id')->constrained(); // Link it to the order
             $table->timestamp('due_date');
