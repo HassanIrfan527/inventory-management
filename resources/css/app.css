@@ -23,6 +23,36 @@
     --color-zinc-900: #171717;
     --color-zinc-950: #0a0a0a;
 
+    /* ========================================
+       BRAND COLORS - Change these to rebrand!
+       ======================================== */
+
+    /* Primary Brand (currently Emerald) */
+    --color-brand-50: #ecfdf5;
+    --color-brand-100: #d1fae5;
+    --color-brand-200: #a7f3d0;
+    --color-brand-300: #6ee7b7;
+    --color-brand-400: #34d399;
+    --color-brand-500: #10b981;
+    --color-brand-600: #059669;
+    --color-brand-700: #047857;
+    --color-brand-800: #065f46;
+    --color-brand-900: #064e3b;
+    --color-brand-950: #022c22;
+
+    /* Secondary Brand (currently Teal) */
+    --color-brand-alt-50: #f0fdfa;
+    --color-brand-alt-100: #ccfbf1;
+    --color-brand-alt-200: #99f6e4;
+    --color-brand-alt-300: #5eead4;
+    --color-brand-alt-400: #2dd4bf;
+    --color-brand-alt-500: #14b8a6;
+    --color-brand-alt-600: #0d9488;
+    --color-brand-alt-700: #0f766e;
+    --color-brand-alt-800: #115e59;
+    --color-brand-alt-900: #134e4a;
+    --color-brand-alt-950: #042f2e;
+
     --color-accent: var(--color-neutral-800);
     --color-accent-content: var(--color-neutral-800);
     --color-accent-foreground: var(--color-white);
@@ -66,6 +96,53 @@ select:focus[data-flux-control] {
 } */
 
 @import './main.css';
+
+/* ========================================
+   BRAND UTILITY CLASSES
+   Use these for consistent branding
+   ======================================== */
+
+/* Background colors */
+.bg-brand { background-color: var(--color-brand-600); }
+.bg-brand-light { background-color: var(--color-brand-50); }
+.bg-brand-dark { background-color: var(--color-brand-700); }
+.bg-brand-alt { background-color: var(--color-brand-alt-600); }
+
+/* Text colors */
+.text-brand { color: var(--color-brand-600); }
+.text-brand-light { color: var(--color-brand-400); }
+.text-brand-dark { color: var(--color-brand-700); }
+.text-brand-alt { color: var(--color-brand-alt-600); }
+
+/* Border colors */
+.border-brand { border-color: var(--color-brand-600); }
+.border-brand-light { border-color: var(--color-brand-200); }
+
+/* Ring colors */
+.ring-brand { --tw-ring-color: var(--color-brand-600); }
+.ring-brand-light { --tw-ring-color: var(--color-brand-200); }
+
+/* Gradient shortcuts */
+.bg-gradient-brand {
+    background-image: linear-gradient(to right, var(--color-brand-600), var(--color-brand-alt-600));
+}
+
+.bg-gradient-brand-vertical {
+    background-image: linear-gradient(to bottom, var(--color-brand-600), var(--color-brand-alt-700));
+}
+
+.text-gradient-brand {
+    background-image: linear-gradient(to right, var(--color-brand-600), var(--color-brand-alt-600));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Dark mode adjustments */
+.dark .bg-brand-light { background-color: color-mix(in srgb, var(--color-brand-900) 30%, transparent); }
+.dark .text-brand { color: var(--color-brand-400); }
+.dark .text-brand-alt { color: var(--color-brand-alt-400); }
+.dark .border-brand-light { border-color: color-mix(in srgb, var(--color-brand-800) 50%, transparent); }
 
 [x-cloak] {
     display: none !important;
