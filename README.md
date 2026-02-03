@@ -1,8 +1,8 @@
-# Nexus Flow
+# Folio
 
 Modern invoicing and client management for freelancers and small teams.
 
-Nexus Flow is an all-in-one business operating system that helps you manage clients, track projects, generate professional invoices, and gain insights into your business—all from a clean, intuitive interface.
+Folio is an all-in-one business operating system that helps you manage clients, track projects, generate professional invoices, and gain insights into your business—all from a clean, intuitive interface.
 
 ## Features
 
@@ -82,8 +82,8 @@ Nexus Flow is an all-in-one business operating system that helps you manage clie
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/nexus-flow.git
-cd nexus-flow
+git clone https://github.com/yourusername/folio.git
+cd folio
 
 # Run the setup script (installs dependencies, generates key, runs migrations)
 composer setup
@@ -135,14 +135,14 @@ Key variables to configure in your `.env` file:
 
 ```env
 # Application
-APP_NAME="Nexus Flow"
+APP_NAME="Folio"
 APP_URL=http://localhost:8000
 
 # Database
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=nexus_flow
+DB_DATABASE=folio
 DB_USERNAME=root
 DB_PASSWORD=
 
@@ -240,7 +240,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Documentation: [/documentation](/documentation)
 - Help Center: [/help](/help)
-- Report Issues: [GitHub Issues](https://github.com/yourusername/nexus-flow/issues)
+- Report Issues: [GitHub Issues](https://github.com/yourusername/folio/issues)
 
 ---
 

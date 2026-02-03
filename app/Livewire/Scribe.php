@@ -2,14 +2,14 @@
 
 namespace App\Livewire;
 
-use App\AiAgents\Vector as VectorAIAgent;
+use App\AiAgents\Scribe as ScribeAIAgent;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('components.layouts.app')]
-#[Title('Vector - Your Personal Inventory Assistant')]
-class Vector extends Component
+#[Title('Scribe - Your AI Business Assistant')]
+class Scribe extends Component
 {
     public $input = '';
 
@@ -20,7 +20,7 @@ class Vector extends Component
     public function mount()
     {
         // Use a unique but persistent ID for this user's session
-        $this->chatId = 'vector_chat_'.auth()->id();
+        $this->chatId = 'scribe_chat_'.auth()->id();
     }
 
     public function sendMessage()
@@ -30,7 +30,7 @@ class Vector extends Component
         }
 
         // Use the standardized LarAgent 'for' method to maintain session
-        VectorAIAgent::for($this->chatId)->respond($this->userInput);
+        ScribeAIAgent::for($this->chatId)->respond($this->userInput);
 
         // Clear input
         $this->userInput = '';
@@ -39,7 +39,7 @@ class Vector extends Component
     public function render()
     {
         // Fetch history using the agent's history driver (session by default)
-        $rawHistory = VectorAIAgent::for($this->chatId)->chatHistory()->toArray();
+        $rawHistory = ScribeAIAgent::for($this->chatId)->chatHistory()->toArray();
 
         // Normalize history to ensure 'content' is always a string for the blade view
         $history = array_map(function ($chat) {
@@ -60,7 +60,7 @@ class Vector extends Component
             return $chat;
         }, $rawHistory);
 
-        return view('livewire.vector', [
+        return view('livewire.scribe', [
             'history' => $history ?: [],
         ]);
     }
