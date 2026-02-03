@@ -46,6 +46,10 @@ new #[Title('Contact Us | Kinetic Hub')] #[Layout('layouts.public')] class exten
             --}}
 
             <div>
+                <div class="inline-flex items-center gap-2 rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 mb-6">
+                    <flux:icon.chat-bubble-left-right class="size-4" />
+                    Get in touch
+                </div>
                 <h2 class="text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-white sm:text-5xl">
                     Let's talk about <span class="text-emerald-600">your growth.</span>
                 </h2>

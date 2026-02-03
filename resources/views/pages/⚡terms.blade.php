@@ -1,12 +1,14 @@
 <?php
 
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Layout('layouts.public')] #[Title('Terms of Service | Nexus Flow')] class extends Component
+new #[Layout('layouts.public')] class extends Component
 {
-    //
+    public function title(): string
+    {
+        return 'Terms of Service | ' . config('app.name');
+    }
 };
 ?>
 
@@ -24,7 +26,7 @@ new #[Layout('layouts.public')] #[Title('Terms of Service | Nexus Flow')] class 
             <section class="space-y-6">
                 <h2 class="text-2xl font-bold text-emerald-600">1. Agreement to Terms</h2>
                 <p>
-                    By accessing or using Nexus Flow, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.
+                    By accessing or using {{ config('app.name') }}, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.
                 </p>
 
                 <h2 class="text-2xl font-bold text-emerald-600">2. User Accounts</h2>
@@ -39,12 +41,12 @@ new #[Layout('layouts.public')] #[Title('Terms of Service | Nexus Flow')] class 
 
                 <h2 class="text-2xl font-bold text-emerald-600">4. Prohibited Uses</h2>
                 <p>
-                    You agree not to use Nexus Flow for any illegal purpose or in a way that violates the rights of others. You may not attempt to gain unauthorized access to our systems.
+                    You agree not to use {{ config('app.name') }} for any illegal purpose or in a way that violates the rights of others. You may not attempt to gain unauthorized access to our systems.
                 </p>
 
                 <h2 class="text-2xl font-bold text-emerald-600">5. Limitation of Liability</h2>
                 <p>
-                    To the maximum extent permitted by law, Nexus Flow shall not be liable for any indirect, incidental, or consequential damages arising out of your use of the service.
+                    To the maximum extent permitted by law, {{ config('app.name') }} shall not be liable for any indirect, incidental, or consequential damages arising out of your use of the service.
                 </p>
             </section>
         </div>

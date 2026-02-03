@@ -9,7 +9,7 @@
 
             <flux:brand :href="route('dashboard')" :name="config('app.name')" wire:navigate>
                 <x-slot name="logo" class="flex items-center justify-center">
-                    <x-app-logo-icon class="size-7 fill-blue-600 dark:fill-blue-500" />
+                    <x-app-logo-icon class="size-7 fill-emerald-600 dark:fill-emerald-500" />
                 </x-slot>
             </flux:brand>
 

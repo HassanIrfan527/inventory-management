@@ -25,6 +25,10 @@
                 </ol>
             </nav>
 
+            <div class="inline-flex items-center gap-2 rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 mb-6">
+                <flux:icon.book-open class="size-4" />
+                User guide
+            </div>
             <h1 class="text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white sm:text-5xl mb-8">
                 User Documentation
             </h1>

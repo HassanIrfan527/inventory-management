@@ -7,6 +7,10 @@
         </div>
 
         <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center relative z-10 py-12 sm:py-20">
+            <div class="inline-flex items-center gap-2 rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 mb-6">
+                <flux:icon.lifebuoy class="size-4" />
+                Help center
+            </div>
             <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-6xl mb-6">
                 How can we help you?
             </h1>

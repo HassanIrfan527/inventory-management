@@ -12,7 +12,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @fluxAppearance
 </head>
-<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased font-sans min-h-screen flex flex-col selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100">
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased font-sans min-h-screen flex flex-col selection:bg-emerald-100 selection:text-emerald-900 dark:selection:bg-emerald-900 dark:selection:text-emerald-100">
 
     <!-- Header / Navbar -->
     <header class="w-full border-b border-zinc-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-zinc-950/70 backdrop-blur-xl sticky top-0 z-50">
@@ -28,10 +28,10 @@
                 <!-- Desktop Menu -->
                 <nav class="hidden md:flex items-center space-x-1">
                     <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">Home</x-nav-link>
+                    <x-nav-link href="{{ route('solutions') }}" :active="request()->routeIs('solutions')">Solutions</x-nav-link>
                     <x-nav-link href="{{ route('pricing') }}" :active="request()->routeIs('pricing')">Pricing</x-nav-link>
+                    <x-nav-link href="{{ route('ai.features') }}" :active="request()->routeIs('ai.features')">AI</x-nav-link>
                     <x-nav-link href="{{ route('docs') }}" :active="request()->routeIs('docs')">Docs</x-nav-link>
-                    <x-nav-link href="{{ route('help') }}" :active="request()->routeIs('help')">Help</x-nav-link>
-                    <x-nav-link href="{{ route('blog.index') }}" :active="request()->routeIs('blog.index')">Blog</x-nav-link>
                     <x-nav-link href="{{ route('contact.us') }}" :active="request()->routeIs('contact.us')">Contact</x-nav-link>
                 </nav>
 
@@ -78,10 +78,10 @@
 
                         <flux:menu class="min-w-48">
                             <flux:menu.item href="{{ route('home') }}" icon="home">Home</flux:menu.item>
+                            <flux:menu.item href="{{ route('solutions') }}" icon="light-bulb">Solutions</flux:menu.item>
                             <flux:menu.item href="{{ route('pricing') }}" icon="credit-card">Pricing</flux:menu.item>
+                            <flux:menu.item href="{{ route('ai.features') }}" icon="sparkles">AI</flux:menu.item>
                             <flux:menu.item href="{{ route('docs') }}" icon="document-text">Docs</flux:menu.item>
-                            <flux:menu.item href="{{ route('help') }}" icon="question-mark-circle">Help</flux:menu.item>
-                            <flux:menu.item href="{{ route('blog.index') }}" icon="newspaper">Blog</flux:menu.item>
                             <flux:menu.item href="{{ route('contact.us') }}" icon="envelope">Contact</flux:menu.item>
                             <flux:menu.separator />
                             <flux:menu.submenu icon="paint-brush" label="Appearance">
@@ -114,7 +114,7 @@
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8">
                 <div class="col-span-1 md:col-span-5">
                     <div class="flex items-center gap-2.5 font-bold text-2xl tracking-tight text-zinc-900 dark:text-white mb-6">
-                        <x-app-logo class="h-8 w-auto fill-blue-600 dark:fill-blue-500" />
+                        <x-app-logo class="h-8 w-auto fill-emerald-600 dark:fill-emerald-500" />
                     </div>
                     <p class="text-zinc-600 dark:text-zinc-400 text-base leading-relaxed max-w-sm">
                         The all-in-one intelligent business operating system designed for clarity, efficiency, and exponential growth.
@@ -141,7 +141,7 @@
                 </div>
             </div>
             <div class="mt-20 pt-8 border-t border-zinc-200 dark:border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-6">
-                <p class="text-zinc-500 dark:text-zinc-500 text-sm">&copy; {{ date('Y') }} Nexus Flow. Crafted with precision.</p>
+                <p class="text-zinc-500 dark:text-zinc-500 text-sm">&copy; {{ date('Y') }} {{ config('app.name') }}. Crafted with precision.</p>
                 <div class="flex items-center gap-6">
                     <!-- Appearance switcher -->
                     <flux:dropdown x-data align="end">
@@ -166,8 +166,8 @@
                     </flux:dropdown>
 
                     <div class="flex gap-4">
-                        <a href="#" class="text-zinc-400 hover:text-blue-600 transition-colors"><flux:icon.magnifying-glass class="size-5" /></a>
-                        <a href="#" class="text-zinc-400 hover:text-blue-600 transition-colors"><flux:icon.magnifying-glass class="size-5" /></a>
+                        <a href="#" class="text-zinc-400 hover:text-emerald-600 transition-colors"><flux:icon.magnifying-glass class="size-5" /></a>
+                        <a href="#" class="text-zinc-400 hover:text-emerald-600 transition-colors"><flux:icon.magnifying-glass class="size-5" /></a>
                     </div>
                 </div>
             </div>

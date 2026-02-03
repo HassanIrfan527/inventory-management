@@ -1,11 +1,18 @@
 <?php
 
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Layout('layouts.public')] #[Title('Nexus Flow - Inventory Management System')] class extends Component {
-    public string $app_name = "Nexus Flow";
+new #[Layout('layouts.public')] class extends Component {
+    public function app_name(): string
+    {
+        return config('app.name');
+    }
+
+    public function title(): string
+    {
+        return config('app.name') . ' - Inventory, Invoices & Insights for Small Business';
+    }
 };
 ?>
 
@@ -23,35 +30,30 @@ new #[Layout('layouts.public')] #[Title('Nexus Flow - Inventory Management Syste
             <div class="lg:grid lg:grid-cols-12 lg:gap-x-12 lg:gap-y-20 items-center">
                 {{-- Left Column: Copy --}}
                 <div class="relative z-10 mx-auto max-w-2xl lg:col-span-7 lg:mx-0 lg:pt-4">
-                    <div class="hidden sm:mb-8 sm:flex">
-                        <div
-                            class="relative rounded-full px-3 py-1 text-sm leading-6 text-zinc-600 dark:text-zinc-400 ring-1 ring-zinc-900/10 dark:ring-zinc-100/10 hover:ring-zinc-900/20 transition-all">
-                            Announcing our new Intelligent Analytics.
-                            <a href="#" class="font-semibold text-emerald-600 dark:text-emerald-500">
-                                <span class="absolute inset-0" aria-hidden="true"></span>Read more <span
-                                    aria-hidden="true">&rarr;</span>
-                            </a>
+                    <div class="mb-8">
+                        <div class="inline-flex items-center gap-2 rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                            <flux:icon.sparkles class="size-4" />
+                            All-in-one business platform
                         </div>
                     </div>
 
                     <h1 class="text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white sm:text-7xl mb-6">
-                        Inventory Intelligence <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">Perfected.</span>
+                        Inventory. Invoices. <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">Insights.</span>
                     </h1>
 
                     <p class="text-lg leading-8 text-zinc-600 dark:text-zinc-400 mb-8 max-w-lg">
-                        {{ $app_name }} is the all-in-one business operating system designed to give you total control over
-                        your inventory, orders, and growth. Fast, intuitive, and remarkably powerful.
+                        The all-in-one platform for small businesses to manage products, track inventory, and get paid on time. Simple, powerful, and built for the way you work.
                     </p>
 
                     <div class="flex flex-wrap items-center gap-4">
-                        <flux:button href="{{ route('register') }}" variant="primary"
+                        <flux:button href="{{ route('register') }}" wire:navigate variant="primary"
                             class="shadow-lg shadow-emerald-500/20 px-8 py-3 h-auto text-base bg-emerald-600 hover:bg-emerald-500">
                             Get Started for Free
                         </flux:button>
-                        <flux:button href="#features" variant="ghost" icon-trailing="chevron-down"
+                        <flux:button href="#how-it-works" variant="ghost" icon-trailing="chevron-down"
                             class="px-6 py-3 h-auto text-base">
-                            Explore Features
+                            See How It Works
                         </flux:button>
                     </div>
                     <p class="mt-4 text-sm text-zinc-500 dark:text-zinc-500 italic">
@@ -70,9 +72,8 @@ new #[Layout('layouts.public')] #[Title('Nexus Flow - Inventory Management Syste
                         <div
                             class="flex items-center justify-between gap-3 border-b border-zinc-100 dark:border-zinc-800 pb-4">
                             <div>
-                                <flux:heading size="md" class="text-zinc-900 dark:text-zinc-100 font-bold">Live
-                                    Operations</flux:heading>
-                                <flux:text size="sm" class="text-zinc-500">Real-time revenue & stock</flux:text>
+                                <flux:heading size="md" class="text-zinc-900 dark:text-zinc-100 font-bold">Business Dashboard</flux:heading>
+                                <flux:text size="sm" class="text-zinc-500">Products, orders & revenue</flux:text>
                             </div>
                             <div
                                 class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 border border-emerald-500/20">
@@ -87,41 +88,42 @@ new #[Layout('layouts.public')] #[Title('Nexus Flow - Inventory Management Syste
 
                         <div class="grid grid-cols-2 gap-4">
                             <div
-                                class="col-span-2 rounded-xl border border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/50 p-4">
-                                <span class="text-zinc-500 text-xs font-medium uppercase tracking-wide">Today's
-                                    Revenue</span>
-                                <div class="mt-1 flex items-baseline gap-2">
-                                    <div class="text-2xl font-bold text-zinc-900 dark:text-white">Rs. 84,920</div>
-                                    <span
-                                        class="text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded">+18.3%</span>
-                                </div>
+                                class="rounded-xl border border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/50 p-4">
+                                <span class="text-zinc-500 text-xs font-medium uppercase tracking-wide">Products</span>
+                                <div class="mt-1 text-xl font-bold text-zinc-900 dark:text-white">127</div>
+                                <span class="text-xs text-emerald-600 dark:text-emerald-400 mt-1 block">8 low stock</span>
                             </div>
 
                             <div
                                 class="rounded-xl border border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/50 p-4">
-                                <span class="text-zinc-500 text-xs font-medium uppercase tracking-wide">Open
-                                    Orders</span>
-                                <div class="mt-1 text-xl font-bold text-zinc-900 dark:text-white">32</div>
-                                <span class="text-xs text-amber-600 dark:text-amber-400 mt-1 block">7 pending
-                                    ship</span>
+                                <span class="text-zinc-500 text-xs font-medium uppercase tracking-wide">Orders</span>
+                                <div class="mt-1 text-xl font-bold text-zinc-900 dark:text-white">24</div>
+                                <span class="text-xs text-teal-600 dark:text-teal-400 mt-1 block">5 pending</span>
                             </div>
 
                             <div
                                 class="rounded-xl border border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/50 p-4">
-                                <span class="text-zinc-500 text-xs font-medium uppercase tracking-wide">Low Stock</span>
-                                <div class="mt-1 text-xl font-bold text-zinc-900 dark:text-white">12</div>
-                                <span class="text-xs text-emerald-600 dark:text-emerald-400 mt-1 block">Alerts on</span>
+                                <span class="text-zinc-500 text-xs font-medium uppercase tracking-wide">Revenue</span>
+                                <div class="mt-1 text-xl font-bold text-zinc-900 dark:text-white">$12,450</div>
+                                <span class="text-xs text-emerald-600 dark:text-emerald-400 mt-1 block">+24.5%</span>
+                            </div>
+
+                            <div
+                                class="rounded-xl border border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/50 p-4">
+                                <span class="text-zinc-500 text-xs font-medium uppercase tracking-wide">Clients</span>
+                                <div class="mt-1 text-xl font-bold text-zinc-900 dark:text-white">48</div>
+                                <span class="text-xs text-emerald-600 dark:text-emerald-400 mt-1 block">+6 this month</span>
                             </div>
                         </div>
 
                         <div class="space-y-3 pt-2">
                             <div class="flex items-center justify-between text-xs">
-                                <span class="text-zinc-500">System Health</span>
-                                <span class="font-medium text-emerald-600 dark:text-emerald-400">99.9% Uptime</span>
+                                <span class="text-zinc-500">Invoice Collection</span>
+                                <span class="font-medium text-emerald-600 dark:text-emerald-400">94% On-Time</span>
                             </div>
                             <div class="h-1.5 w-full rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
                                 <div
-                                    class="h-full w-full rounded-full bg-gradient-to-r from-emerald-500 via-blue-500 to-indigo-500 animate-pulse">
+                                    class="h-full w-[94%] rounded-full bg-gradient-to-r from-emerald-500 to-teal-500">
                                 </div>
                             </div>
                         </div>
@@ -134,44 +136,96 @@ new #[Layout('layouts.public')] #[Title('Nexus Flow - Inventory Management Syste
         </div>
     </div>
 
+    {{-- How It Works Section --}}
+    <div id="how-it-works" class="py-24 sm:py-32 bg-white dark:bg-zinc-950">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl text-center mb-16">
+                <h2 class="text-base font-semibold leading-7 text-emerald-600 uppercase tracking-wide">Simple Workflow</h2>
+                <p class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
+                    From client to cash in four easy steps.
+                </p>
+                <p class="mt-6 text-lg leading-8 text-zinc-600 dark:text-zinc-400">
+                    {{ $this->app_name() }} streamlines your entire invoicing workflow so you can focus on what matters most - your work.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+                {{-- Step 1 --}}
+                <div class="relative group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <flux:icon.user-plus class="size-8" />
+                        </div>
+                        <div class="absolute top-8 left-[calc(50%+2rem)] hidden lg:block w-[calc(100%-4rem)] h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 opacity-30"></div>
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-2">Step 1</span>
+                        <h3 class="text-xl font-bold text-zinc-900 dark:text-white">Add Your Clients</h3>
+                        <p class="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                            Import contacts or add them manually. Store all client details in one organized place.
+                        </p>
+                    </div>
+                </div>
+
+                {{-- Step 2 --}}
+                <div class="relative group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-teal-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <flux:icon.clipboard-document-list class="size-8" />
+                        </div>
+                        <div class="absolute top-8 left-[calc(50%+2rem)] hidden lg:block w-[calc(100%-4rem)] h-0.5 bg-gradient-to-r from-teal-500 to-emerald-500 opacity-30"></div>
+                        <span class="text-xs font-bold text-teal-600 uppercase tracking-widest mb-2">Step 2</span>
+                        <h3 class="text-xl font-bold text-zinc-900 dark:text-white">Add Your Products</h3>
+                        <p class="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                            Build your catalog with products, images, and pricing. Track inventory with real-time stock levels.
+                        </p>
+                    </div>
+                </div>
+
+                {{-- Step 3 --}}
+                <div class="relative group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <flux:icon.paper-airplane class="size-8" />
+                        </div>
+                        <div class="absolute top-8 left-[calc(50%+2rem)] hidden lg:block w-[calc(100%-4rem)] h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 opacity-30"></div>
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-2">Step 3</span>
+                        <h3 class="text-xl font-bold text-zinc-900 dark:text-white">Send Invoices</h3>
+                        <p class="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                            Generate professional PDF invoices in seconds. Send via email with one click.
+                        </p>
+                    </div>
+                </div>
+
+                {{-- Step 4 --}}
+                <div class="relative group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300 ring-4 ring-emerald-500/20">
+                            <flux:icon.banknotes class="size-8" />
+                        </div>
+                        <span class="text-xs font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600 uppercase tracking-widest mb-2">Step 4</span>
+                        <h3 class="text-xl font-bold text-zinc-900 dark:text-white">Get Paid</h3>
+                        <p class="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                            Track payments automatically and never miss a payment again.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- Integrations Section --}}
     <div class="py-24 sm:py-32 bg-white dark:bg-zinc-950">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="mx-auto max-w-2xl text-center mb-16">
-                <h2 class="text-base font-semibold leading-7 text-emerald-600 uppercase tracking-wide">Unlimited
-                    Connectivity</h2>
+                <h2 class="text-base font-semibold leading-7 text-emerald-600 uppercase tracking-wide">Works With Your Tools</h2>
                 <p class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
-                    Connect with everything you use.
+                    Sync with your favorite apps.
                 </p>
                 <p class="mt-6 text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-                    {{ $app_name }} seamlessly integrates with your favorite platforms, allowing you to sync data, automate
-                    workflows, and manage your entire ecosystem from one place.
+                    {{ $this->app_name() }} integrates with the tools small businesses rely on - sync products, accept payments, and stay organized.
                 </p>
             </div>
 
             <div class="grid grid-cols-2 gap-4 sm:gap-8 md:grid-cols-3 lg:grid-cols-5 items-center">
-                {{-- Google Contacts --}}
-                <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-2">
-                    <div
-                        class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:bg-blue-50 dark:group-hover:bg-blue-900/10 transition-all border border-zinc-100 dark:border-zinc-800">
-                        <img src="https://www.gstatic.com/images/branding/product/1x/contacts_2022_48dp.png"
-                            alt="Google Contacts" class="size-10 grayscale group-hover:grayscale-0 transition-all">
-                    </div>
-                    <span
-                        class="text-xs sm:text-sm font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors text-center">Google
-                        Contacts</span>
-                </div>
-
-                {{-- HubSpot --}}
-                <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-2">
-                    <div
-                        class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:bg-orange-50 dark:group-hover:bg-orange-900/10 transition-all border border-zinc-100 dark:border-zinc-800">
-                        <flux:icon.hubspot class="size-10 grayscale group-hover:grayscale-0 transition-all" />
-                    </div>
-                    <span
-                        class="text-xs sm:text-sm font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors text-center">HubSpot</span>
-                </div>
-
                 {{-- Shopify --}}
                 <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-2">
                     <div
@@ -182,6 +236,37 @@ new #[Layout('layouts.public')] #[Title('Nexus Flow - Inventory Management Syste
                         class="text-xs sm:text-sm font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors text-center">Shopify</span>
                 </div>
 
+                {{-- WooCommerce --}}
+                <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-2">
+                    <div
+                        class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:bg-teal-50 dark:group-hover:bg-teal-900/10 transition-all border border-zinc-100 dark:border-zinc-800">
+                        <flux:icon.woocommerce class="size-12 grayscale group-hover:grayscale-0 transition-all" />
+                    </div>
+                    <span
+                        class="text-xs sm:text-sm font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors text-center">WooCommerce</span>
+                </div>
+
+                {{-- Stripe --}}
+                <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-2">
+                    <div
+                        class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/10 transition-all border border-zinc-100 dark:border-zinc-800">
+                        <flux:icon.stripe class="size-10 grayscale group-hover:grayscale-0 transition-all" />
+                    </div>
+                    <span
+                        class="text-xs sm:text-sm font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors text-center">Stripe</span>
+                </div>
+
+                {{-- Google Contacts --}}
+                <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-2">
+                    <div
+                        class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/10 transition-all border border-zinc-100 dark:border-zinc-800">
+                        <img src="https://www.gstatic.com/images/branding/product/1x/contacts_2022_48dp.png"
+                            alt="Google Contacts" class="size-10 grayscale group-hover:grayscale-0 transition-all">
+                    </div>
+                    <span
+                        class="text-xs sm:text-sm font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors text-center">Google Contacts</span>
+                </div>
+
                 {{-- Gmail --}}
                 <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-2">
                     <div
@@ -190,16 +275,6 @@ new #[Layout('layouts.public')] #[Title('Nexus Flow - Inventory Management Syste
                     </div>
                     <span
                         class="text-xs sm:text-sm font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors text-center">Gmail</span>
-                </div>
-
-                {{-- WooCommerce --}}
-                <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-2">
-                    <div
-                        class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:bg-purple-50 dark:group-hover:bg-purple-900/10 transition-all border border-zinc-100 dark:border-zinc-800">
-                        <flux:icon.woocommerce class="size-12 grayscale group-hover:grayscale-0 transition-all" />
-                    </div>
-                    <span
-                        class="text-xs sm:text-sm font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors text-center">WooCommerce</span>
                 </div>
             </div>
 
@@ -219,78 +294,177 @@ new #[Layout('layouts.public')] #[Title('Nexus Flow - Inventory Management Syste
         </div>
     </div>
 
+    {{-- AI Assistant Section --}}
+    <div class="py-24 sm:py-32 bg-zinc-50 dark:bg-zinc-900/30">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+                {{-- Left: Content --}}
+                <div class="max-w-xl">
+                    <div class="inline-flex items-center gap-2 rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-3 py-1 text-xs font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400 mb-6">
+                        <flux:icon.sparkles class="size-4" />
+                        AI-Powered
+                    </div>
+
+                    <h2 class="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
+                        Meet Scribe, your AI business assistant.
+                    </h2>
+
+                    <p class="mt-6 text-lg leading-8 text-zinc-600 dark:text-zinc-400">
+                        Ask questions in plain English. Get instant answers about your clients, invoices, and business performance. Scribe understands your data and helps you make smarter decisions.
+                    </p>
+
+                    <div class="mt-8 space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-600/10 text-emerald-600">
+                                <flux:icon.chat-bubble-left-right class="size-5" />
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-zinc-900 dark:text-white">"Show me unpaid invoices"</h4>
+                                <p class="text-sm text-zinc-600 dark:text-zinc-400">Instantly see all outstanding payments with client details.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-600/10 text-teal-600">
+                                <flux:icon.chart-bar class="size-5" />
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-zinc-900 dark:text-white">"What's my revenue this quarter?"</h4>
+                                <p class="text-sm text-zinc-600 dark:text-zinc-400">Get instant financial summaries and trends.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-600/10 text-emerald-600">
+                                <flux:icon.user-group class="size-5" />
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-zinc-900 dark:text-white">"Who are my top clients?"</h4>
+                                <p class="text-sm text-zinc-600 dark:text-zinc-400">Identify your most valuable relationships at a glance.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <flux:button href="{{ route('ai.features') }}" wire:navigate variant="primary" class="shadow-lg shadow-emerald-500/20 bg-emerald-600 hover:bg-emerald-500">
+                            Learn More About AI
+                        </flux:button>
+                    </div>
+                </div>
+
+                {{-- Right: Chat Preview --}}
+                <div class="mt-16 lg:mt-0">
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-[2rem] blur-xl opacity-50"></div>
+
+                        <flux:card class="relative overflow-hidden border border-zinc-200/50 dark:border-zinc-800/50 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md shadow-2xl">
+                            {{-- Chat Header --}}
+                            <div class="flex items-center gap-3 p-4 border-b border-zinc-100 dark:border-zinc-800">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center">
+                                    <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6 text-white" stroke="currentColor" stroke-width="1.5">
+                                        <path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08" />
+                                        <path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-zinc-900 dark:text-white">Scribe</h4>
+                                    <p class="text-xs text-emerald-600">Online</p>
+                                </div>
+                            </div>
+
+                            {{-- Sample Conversation --}}
+                            <div class="p-4 space-y-4 min-h-[200px]">
+                                <div class="flex justify-end">
+                                    <div class="bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 px-4 py-2 rounded-2xl rounded-tr-none max-w-[80%] text-sm">
+                                        Show me pending invoices
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-start">
+                                    <div class="bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 px-4 py-2 rounded-2xl rounded-tl-none max-w-[80%]">
+                                        <p class="text-sm text-zinc-800 dark:text-zinc-200">You have <strong>4 pending invoices</strong> totaling <strong>$3,200</strong>:</p>
+                                        <ul class="mt-2 text-xs text-zinc-600 dark:text-zinc-400 space-y-1">
+                                            <li class="flex items-center gap-1"><span class="text-amber-500">&#8226;</span> Acme Corp - $1,200 (due in 3 days)</li>
+                                            <li class="flex items-center gap-1"><span class="text-zinc-400">&#8226;</span> TechStart Inc - $850</li>
+                                            <li class="flex items-center gap-1"><span class="text-zinc-400">&#8226;</span> Design Co - $650</li>
+                                            <li class="flex items-center gap-1"><span class="text-zinc-400">&#8226;</span> Smith & Associates - $500</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </flux:card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- Features Section --}}
-    <div id="features" class="py-24 sm:py-32 bg-zinc-50 dark:bg-zinc-900/30">
+    <div id="features" class="py-24 sm:py-32 bg-white dark:bg-zinc-950">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="mx-auto max-w-2xl text-center">
-                <h2 class="text-base font-semibold leading-7 text-emerald-600 uppercase tracking-wide">Everything you need
-                </h2>
+                <h2 class="text-base font-semibold leading-7 text-emerald-600 uppercase tracking-wide">Everything you need</h2>
                 <p class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
-                    Powerful tools for every scale.
+                    Powerful tools for growing businesses.
                 </p>
                 <p class="mt-6 text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-                    Stop juggling spreadhseets. {{ $app_name }} brings all your business data into one beautiful,
-                    intelligent
-                    interface.
+                    From inventory tracking to invoicing - {{ $this->app_name() }} brings everything into one beautiful, intelligent interface.
                 </p>
             </div>
 
             <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
                 <div class="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-3">
-                    {{-- Feature 1 --}}
+                    {{-- Feature 1: Product & Inventory --}}
                     <div class="flex flex-col group">
                         <div
                             class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
-                            <flux:icon.queue-list class="size-8" />
+                            <flux:icon.cube class="size-8" />
                         </div>
                         <dt class="flex flex-col gap-y-3 text-xl font-bold leading-7 text-zinc-900 dark:text-white">
-                            Smart Inventory
+                            Product & Inventory
                         </dt>
                         <dd class="mt-1 flex flex-auto flex-col text-base leading-7 text-zinc-600 dark:text-zinc-400">
-                            <p class="flex-auto">Track stock levels across multiple warehouses with automated
-                                reordering alerts and batch tracking.</p>
+                            <p class="flex-auto">Manage your product catalog with real-time stock tracking. Get low-stock alerts, track SKUs, and organize with categories.</p>
                             <p class="mt-6">
-                                <a href="#"
+                                <a href="{{ route('solutions') }}#product-sellers" wire:navigate
                                     class="text-sm font-semibold leading-6 text-emerald-600 hover:text-emerald-500">Learn
                                     more <span aria-hidden="true">→</span></a>
                             </p>
                         </dd>
                     </div>
 
-                    {{-- Feature 2 --}}
+                    {{-- Feature 2: Orders & Invoicing --}}
                     <div class="flex flex-col group">
                         <div
-                            class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
-                            <flux:icon.chart-bar-square class="size-8" />
+                            class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-teal-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <flux:icon.document-text class="size-8" />
                         </div>
                         <dt class="flex flex-col gap-y-3 text-xl font-bold leading-7 text-zinc-900 dark:text-white">
-                            Predictive Analytics
+                            Orders & Invoicing
                         </dt>
                         <dd class="mt-1 flex flex-auto flex-col text-base leading-7 text-zinc-600 dark:text-zinc-400">
-                            <p class="flex-auto">Our AI-driven insights help you forecast demand, optimize procurement,
-                                and identify top performers.</p>
+                            <p class="flex-auto">Create orders, generate professional PDF invoices, and track payments. Automatic stock updates when orders are placed.</p>
                             <p class="mt-6">
-                                <a href="#"
-                                    class="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Learn
+                                <a href="{{ route('solutions') }}#product-sellers" wire:navigate
+                                    class="text-sm font-semibold leading-6 text-teal-600 hover:text-teal-500">Learn
                                     more <span aria-hidden="true">→</span></a>
                             </p>
                         </dd>
                     </div>
 
-                    {{-- Feature 3 --}}
+                    {{-- Feature 3: Client CRM --}}
                     <div class="flex flex-col group">
                         <div
                             class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
-                            <flux:icon.arrow-path class="size-8" />
+                            <flux:icon.users class="size-8" />
                         </div>
                         <dt class="flex flex-col gap-y-3 text-xl font-bold leading-7 text-zinc-900 dark:text-white">
-                            Seamless Sync
+                            Client CRM
                         </dt>
                         <dd class="mt-1 flex flex-auto flex-col text-base leading-7 text-zinc-600 dark:text-zinc-400">
-                            <p class="flex-auto">Integrate with your favorite marketplaces (Shopify, Amazon) and
-                                shipping carriers effortlessly.</p>
+                            <p class="flex-auto">Keep all your contacts organized - customers, suppliers, and leads. Track orders, invoices, and full interaction history.</p>
                             <p class="mt-6">
-                                <a href="#"
+                                <a href="{{ route('solutions') }}#use-cases" wire:navigate
                                     class="text-sm font-semibold leading-6 text-emerald-600 hover:text-emerald-500">Learn
                                     more <span aria-hidden="true">→</span></a>
                             </p>
@@ -300,7 +474,6 @@ new #[Layout('layouts.public')] #[Title('Nexus Flow - Inventory Management Syste
             </div>
         </div>
     </div>
-
 
     {{-- CTA Section --}}
     <div class="py-24 sm:py-32 relative overflow-hidden">
@@ -314,19 +487,19 @@ new #[Layout('layouts.public')] #[Title('Nexus Flow - Inventory Management Syste
 
                 <h2
                     class="text-3xl font-extrabold tracking-tight text-white sm:text-5xl max-w-2xl mx-auto relative z-10">
-                    Ready to take back your time?
+                    Ready to simplify your business?
                 </h2>
                 <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-zinc-300 relative z-10">
-                    Start your 14-day free trial today. No contracts, cancel anytime.
+                    Join thousands of small businesses managing products, orders, and clients in one place. Start your 14-day free trial today.
                 </p>
                 <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6 relative z-10">
-                    <flux:button href="{{ route('register') }}"
+                    <flux:button href="{{ route('register') }}" wire:navigate
                         class="w-full sm:w-auto bg-white text-zinc-900 hover:bg-zinc-100 px-10 py-4 text-base font-bold rounded-xl border-none">
                         Get Started Now
                     </flux:button>
-                    <a href="{{ route('contact.us') }}"
+                    <a href="{{ route('pricing') }}" wire:navigate
                         class="text-sm font-semibold leading-6 text-white hover:text-emerald-200 transition-colors">
-                        Contact Sales <span aria-hidden="true">→</span>
+                        View Pricing <span aria-hidden="true">→</span>
                     </a>
                 </div>
             </div>

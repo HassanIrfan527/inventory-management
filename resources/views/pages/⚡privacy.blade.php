@@ -1,12 +1,14 @@
 <?php
 
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Layout('layouts.public')] #[Title('Privacy Policy | Nexus Flow')] class extends Component
+new #[Layout('layouts.public')] class extends Component
 {
-    //
+    public function title(): string
+    {
+        return 'Privacy Policy | ' . config('app.name');
+    }
 };
 ?>
 
