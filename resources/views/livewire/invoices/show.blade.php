@@ -100,7 +100,7 @@ new #[Layout('layouts.app')] #[Title('Invoice Details')] class extends Component
                         <p class="font-bold text-zinc-900 dark:text-white">{{ $invoice->due_date ? $invoice->due_date->format('M d, Y') : 'Immediate' }}</p>
                     </div>
                     <div class="mt-4 sm:mt-0 text-sm sm:text-right space-y-2">
-                         <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Current Status</p>
+                         <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Status</p>
                          <div>
                              <span @class([
                                  'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase',
@@ -250,7 +250,7 @@ new #[Layout('layouts.app')] #[Title('Invoice Details')] class extends Component
                 <flux:heading size="lg" class="mb-4">Linked Order</flux:heading>
                 <div class="space-y-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-sm text-zinc-500">Order Ref:</span>
+                        <span class="text-sm text-zinc-500">Order #:</span>
                         <span class="text-sm font-bold text-zinc-900 dark:text-white">#{{ $invoice->order->order_number }}</span>
                     </div>
                     <div class="flex items-center justify-between">

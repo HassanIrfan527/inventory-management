@@ -2,12 +2,12 @@
     @php
         $breadcrumbItem = [
             [
-                'name' => 'Inventory',
+                'name' => 'Products',
                 'href' => route('inventory'),
                 'icon' => 'box',
             ],
             [
-                'name' => 'Initialize Asset',
+                'name' => 'Add Product',
                 'href' => route('products.create'),
                 'icon' => 'plus',
             ],
@@ -19,14 +19,13 @@
     {{-- Page Header --}}
     <div class="mb-8 mt-4 flex items-center justify-between">
         <div>
-            <flux:heading size="xl" level="1" class="text-emerald-950 dark:text-emerald-50 mb-2">Initialize New
-                Asset</flux:heading>
-            <flux:text class="text-zinc-500">Generate a professional entry for your product catalog with full ERP
-                compliance.</flux:text>
+            <flux:heading size="xl" level="1" class="text-emerald-950 dark:text-emerald-50 mb-2">Add New
+                Product</flux:heading>
+            <flux:text class="text-zinc-500">Add a new product to your inventory.</flux:text>
         </div>
         <div class="hidden md:flex gap-3">
             <flux:button variant="subtle" wire:click="cancel">Cancel</flux:button>
-            <flux:button variant="primary" wire:click="save" class="bg-emerald-600 hover:bg-emerald-700">Initialize
+            <flux:button variant="primary" wire:click="save" class="bg-emerald-600 hover:bg-emerald-700">Save
                 Product</flux:button>
         </div>
     </div>
@@ -43,26 +42,22 @@
                         <flux:icon.identification class="size-5" />
                     </div>
                     <div>
-                        <h3 class="text-sm font-black uppercase tracking-widest text-zinc-900 dark:text-white">Essential
-                            Identity</h3>
-                        <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-tighter">Primary catalog
-                            details</p>
+                        <h3 class="text-sm font-bold text-zinc-900 dark:text-white">Basic Information</h3>
+                        <p class="text-xs text-zinc-400">Product details</p>
                     </div>
                 </div>
 
                 <div class="space-y-4">
                     <flux:field>
-                        <flux:label class="text-[10px] font-black uppercase tracking-widest text-zinc-400">Product Name
-                        </flux:label>
-                        <flux:input wire:model="form.name" placeholder="Enter professional product name..." />
+                        <flux:label>Product Name</flux:label>
+                        <flux:input wire:model="form.name" placeholder="Product name" />
                         <flux:error name="form.name" />
                     </flux:field>
 
                     <flux:field>
-                        <flux:label class="text-[10px] font-black uppercase tracking-widest text-zinc-400">Description
-                        </flux:label>
+                        <flux:label>Description</flux:label>
                         <flux:textarea wire:model="form.description" rows="4"
-                            placeholder="Detailed product specifications..." />
+                            placeholder="Product description..." />
                         <flux:error name="form.description" />
                     </flux:field>
                 </div>
@@ -77,17 +72,15 @@
                         <flux:icon.tag class="size-5" />
                     </div>
                     <div>
-                        <h3 class="text-sm font-black uppercase tracking-widest text-zinc-900 dark:text-white">
-                            Classification & Media</h3>
-                        <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-tighter">Organizational tagging
-                            and visuals</p>
+                        <h3 class="text-sm font-bold text-zinc-900 dark:text-white">
+                            Category & Images</h3>
+                        <p class="text-xs text-zinc-400">Organize and add photos</p>
                     </div>
                 </div>
 
                 <div class="space-y-6">
                     <flux:field>
-                        <flux:label class="text-[10px] font-black uppercase tracking-widest text-zinc-400">Operational
-                            Categories</flux:label>
+                        <flux:label>Categories</flux:label>
                         <flux:select wire:model="form.categories" multiple searchable
                             placeholder="Select categories...">
                             @foreach ($categories as $category)
@@ -99,11 +92,10 @@
                     </flux:field>
 
                     <flux:field>
-                        <flux:label class="text-[10px] font-black uppercase tracking-widest text-zinc-400">Visual Assets
-                        </flux:label>
+                        <flux:label>Product Images</flux:label>
                         <div class="mt-2">
                             <input type="file" wire:model="form.product_images" multiple
-                                class="block w-full text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition-all cursor-pointer">
+                                class="block w-full text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition-all cursor-pointer">
                         </div>
                         <flux:error name="form.product_images" />
 
@@ -125,40 +117,35 @@
 
         {{-- Right Column: Pricing & Logistics --}}
         <div class="space-y-6">
-            {{-- Financial Engine --}}
+            {{-- Pricing --}}
             <section
                 class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
                 <div class="flex items-center gap-3 mb-6">
                     <div
-                        class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+                        class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400">
                         <flux:icon.banknote class="size-5" />
                     </div>
                     <div>
-                        <h3 class="text-sm font-black uppercase tracking-widest text-zinc-900 dark:text-white">Price
-                            Engine</h3>
-                        <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-tighter">Profitability metrics
-                        </p>
+                        <h3 class="text-sm font-bold text-zinc-900 dark:text-white">Pricing</h3>
+                        <p class="text-xs text-zinc-400">Set your prices</p>
                     </div>
                 </div>
 
                 <div class="space-y-4">
                     <flux:field>
-                        <flux:label class="text-[10px] font-black uppercase tracking-widest text-zinc-400">Unit Cost
-                            (Purchase)</flux:label>
+                        <flux:label>Cost Price</flux:label>
                         <flux:input type="number" wire:model="form.cost_price" placeholder="0.00" leading="Rs." />
                         <flux:error name="form.cost_price" />
                     </flux:field>
 
                     <flux:field>
-                        <flux:label class="text-[10px] font-black uppercase tracking-widest text-zinc-400">Retail Value
-                        </flux:label>
+                        <flux:label>Selling Price</flux:label>
                         <flux:input type="number" wire:model="form.retail_price" placeholder="0.00" leading="Rs." />
                         <flux:error name="form.retail_price" />
                     </flux:field>
 
                     <flux:field>
-                        <flux:label class="text-[10px] font-black uppercase tracking-widest text-zinc-400">Delivery
-                            Charge (Est.)</flux:label>
+                        <flux:label>Delivery Charge</flux:label>
                         <flux:input type="number" wire:model="form.delivery_charges" placeholder="0.00"
                             leading="Rs." />
                         <flux:error name="form.delivery_charges" />
@@ -166,45 +153,38 @@
                 </div>
             </section>
 
-            {{-- ERP Inventory Control --}}
+            {{-- Inventory --}}
             <section
                 class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
                 <div class="flex items-center gap-3 mb-6">
                     <div
-                        class="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-950 text-white dark:bg-zinc-800">
-                        <flux:icon.command-line class="size-5" />
+                        class="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
+                        <flux:icon.box class="size-5" />
                     </div>
                     <div>
-                        <h3 class="text-sm font-black uppercase tracking-widest text-zinc-900 dark:text-white">ERP
-                            Control</h3>
-                        <p class="text-[10px] font-bold text-zinc-400 uppercase tracking-tighter">Stock & SKU management
-                        </p>
+                        <h3 class="text-sm font-bold text-zinc-900 dark:text-white">Inventory</h3>
+                        <p class="text-xs text-zinc-400">Stock and tracking</p>
                     </div>
                 </div>
 
                 <div class="space-y-4">
                     <flux:field>
-                        <flux:label class="text-[10px] font-black uppercase tracking-widest text-zinc-400">Internal SKU
-                        </flux:label>
-                        <flux:input wire:model="form.sku" placeholder="TECH-PROD-001" />
+                        <flux:label>SKU</flux:label>
+                        <flux:input wire:model="form.sku" placeholder="e.g. PROD-001" />
                         <flux:error name="form.sku" />
-                        <flux:description class="text-[9px] uppercase font-bold text-zinc-400">Unique identifier for
-                            internal tracking</flux:description>
+                        <flux:description>Unique product code</flux:description>
                     </flux:field>
 
                     <flux:field>
-                        <flux:label class="text-[10px] font-black uppercase tracking-widest text-zinc-400">Current Stock
-                        </flux:label>
+                        <flux:label>Stock Quantity</flux:label>
                         <flux:input type="number" wire:model="form.stock_quantity"
-                            placeholder="Leave empty for infinite" />
+                            placeholder="Leave empty for unlimited" />
                         <flux:error name="form.stock_quantity" />
-                        <flux:description class="text-[9px] uppercase font-bold text-zinc-400">Current available
-                            quantity in warehouse</flux:description>
+                        <flux:description>Available quantity</flux:description>
                     </flux:field>
 
                     <flux:field>
-                        <flux:label class="text-[10px] font-black uppercase tracking-widest text-zinc-400">Operational
-                            Status</flux:label>
+                        <flux:label>Status</flux:label>
                         <flux:select wire:model="form.status">
                             @foreach ($statusOptions as $key => $label)
                                 <flux:select.option value="{{ $key }}">{{ $label }}</flux:select.option>
@@ -215,15 +195,14 @@
                 </div>
             </section>
 
-            {{-- Staff Intelligence --}}
+            {{-- Internal Notes --}}
             <section
                 class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
                 <div class="flex items-center gap-3 mb-4">
-                    <h3 class="text-sm font-black uppercase tracking-widest text-zinc-900 dark:text-white">Internal
-                        Feedback</h3>
+                    <h3 class="text-sm font-bold text-zinc-900 dark:text-white">Internal Notes</h3>
                 </div>
                 <flux:textarea wire:model="form.internal_notes" rows="3"
-                    placeholder="Operations only notes..." />
+                    placeholder="Notes for your team..." />
                 <flux:error name="form.internal_notes" />
             </section>
         </div>
@@ -231,7 +210,7 @@
 
     {{-- Mobile Bottom Bar --}}
     <div class="mt-8 flex md:hidden flex-col gap-3">
-        <flux:button variant="primary" wire:click="save" class="bg-emerald-600 w-full">Initialize Product
+        <flux:button variant="primary" wire:click="save" class="bg-emerald-600 w-full">Save Product
         </flux:button>
         <flux:button variant="subtle" wire:click="cancel" class="w-full">Cancel</flux:button>
     </div>

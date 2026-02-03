@@ -45,7 +45,7 @@
                         {{-- Status Badges --}}
                         <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
                             @if ($contact->type)
-                                <span class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                                <span class="inline-flex items-center rounded-full bg-teal-100 px-3 py-1 text-xs font-medium text-teal-700 dark:bg-teal-900/30 dark:text-teal-400">
                                     {{ ucfirst($contact->type->value) }}
                                 </span>
                             @endif
@@ -344,7 +344,7 @@
                                         {{-- Icon --}}
                                         <div class="relative z-10 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full ring-4 ring-white dark:ring-zinc-900
                                             {{ str_contains($activity->description, 'Order')
-                                                ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400'
+                                                ? 'bg-teal-100 text-teal-600 dark:bg-teal-900/40 dark:text-teal-400'
                                                 : (str_contains($activity->description, 'Note')
                                                     ? 'bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-400'
                                                     : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400') }}">

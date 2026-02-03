@@ -60,7 +60,7 @@
         <flux:separator class="my-2" />
 
         <flux:navlist variant="outline" class="[&_svg]:transition-all [&_svg]:duration-300" x-bind:class="collapsed ? '[&_svg]:!size-6' : ''">
-            <flux:navlist.item icon="sparkles" :href="route('vector')" :current="request()->routeIs('vector')" wire:navigate>
+            <flux:navlist.item icon="sparkles" :href="route('scribe')" :current="request()->routeIs('scribe')" wire:navigate>
                 <span x-show="!collapsed" x-transition.opacity.duration.200ms class="truncate">Omnis AI</span>
             </flux:navlist.item>
         </flux:navlist>

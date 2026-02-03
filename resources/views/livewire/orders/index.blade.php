@@ -45,9 +45,8 @@
             <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-emerald-50 dark:border-emerald-900/10">
                 <span class="flex items-center gap-1 font-medium text-emerald-600 dark:text-emerald-400 shrink-0 whitespace-nowrap">
                     <flux:icon.arrow-up-right class="h-4 w-4" />
-                    <span>Global</span>
+                    All orders
                 </span>
-                <span class="text-zinc-400 truncate text-[10px] font-bold uppercase tracking-widest">Orders placed</span>
             </div>
         </div>
 
@@ -63,9 +62,9 @@
                         <flux:icon.circle-dollar-sign class="h-7 w-7" />
                     </div>
                 </div>
-                <div class="flex items-center gap-2 text-white/70 pt-4 border-t border-white/10 mt-3 text-[10px] font-black uppercase tracking-widest leading-none">
+                <div class="flex items-center gap-2 text-white/70 pt-4 border-t border-white/10 mt-3">
                      <flux:icon.banknotes class="h-4 w-4" />
-                     Net Sales
+                     Net sales
                 </div>
             </div>
         </div>
@@ -82,31 +81,29 @@
                 </div>
             </div>
             <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-amber-50 dark:border-amber-900/10">
-                <span class="flex items-center gap-1 font-medium text-amber-600 dark:text-amber-400 shrink-0 whitespace-nowrap text-[10px] font-black uppercase tracking-widest">
+                <span class="flex items-center gap-1 font-medium text-amber-600 dark:text-amber-400 shrink-0 whitespace-nowrap">
                     <flux:icon.layers class="h-4 w-4" />
-                    In Queue
+                    Awaiting fulfillment
                 </span>
-                <span class="text-zinc-400 truncate">Awaiting processing</span>
             </div>
         </div>
 
         <!-- Completed -->
-        <div class="group relative overflow-hidden rounded-2xl border border-sky-100 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-sky-900/30 dark:bg-zinc-900">
+        <div class="group relative overflow-hidden rounded-2xl border border-teal-100 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-teal-900/30 dark:bg-zinc-900">
             <div class="flex items-center justify-between">
                 <div class="flex flex-col gap-1">
                     <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Completed</p>
                     <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($completedOrders) }}</p>
                 </div>
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sky-600 dark:bg-sky-900/20 dark:text-sky-400 ring-4 ring-sky-50/50 dark:ring-sky-900/10 transition-transform group-hover:scale-110">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-600 dark:bg-teal-900/20 dark:text-teal-400 ring-4 ring-teal-50/50 dark:ring-teal-900/10 transition-transform group-hover:scale-110">
                     <flux:icon.check-circle class="h-6 w-6" />
                 </div>
             </div>
-            <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-sky-50 dark:border-sky-900/10">
-                <span class="flex items-center gap-1 font-medium text-sky-600 dark:text-sky-400 shrink-0 whitespace-nowrap text-[10px] font-black uppercase tracking-widest">
+            <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-teal-50 dark:border-teal-900/10">
+                <span class="flex items-center gap-1 font-medium text-teal-600 dark:text-teal-400 shrink-0 whitespace-nowrap">
                     <flux:icon.check-circle class="h-4 w-4" />
-                    Delivered
+                    Successfully delivered
                 </span>
-                <span class="text-zinc-400 truncate">Successful completions</span>
             </div>
         </div>
     </div>

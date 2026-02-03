@@ -26,7 +26,7 @@
                     @php
                         $statusColor = match($order->status) {
                             'Completed' => 'emerald',
-                            'Processing' => 'sky',
+                            'Processing' => 'teal',
                             'Pending' => 'amber',
                             'Cancelled' => 'red',
                             default => 'zinc'
@@ -86,7 +86,7 @@
                 <div class="flex flex-col gap-4 border-b border-zinc-100 px-6 py-5 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-800/30">
                     <div class="flex items-center gap-2">
                         <div class="h-4 w-1 rounded-full bg-emerald-500"></div>
-                        <h3 class="font-bold text-zinc-900 dark:text-zinc-100">Order Inventory</h3>
+                        <h3 class="font-bold text-zinc-900 dark:text-zinc-100">Order Items</h3>
                     </div>
 
                     {{-- Product Search --}}
@@ -188,8 +188,8 @@
                             <div class="h-20 w-20 rounded-full bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center mb-4">
                                 <flux:icon.shopping-bag class="h-10 w-10 text-zinc-200 dark:text-zinc-700" />
                             </div>
-                            <h4 class="text-lg font-bold text-zinc-900 dark:text-white">Order is currently empty</h4>
-                            <p class="text-sm text-zinc-500 max-w-xs mx-auto mt-1">Search and select products from the top toolbar to start adding them to this order.</p>
+                            <h4 class="text-lg font-bold text-zinc-900 dark:text-white">No Items Yet</h4>
+                            <p class="text-sm text-zinc-500 max-w-xs mx-auto mt-1">Use the search above to add products to this order.</p>
                         </div>
                     @endif
                 </div>
@@ -207,13 +207,13 @@
                         </div>
                         @if($order->tax_amount > 0)
                             <div class="flex justify-between items-center text-sm">
-                                <span class="text-zinc-500 dark:text-zinc-400 font-medium tracking-wide uppercase text-[10px]">Tax Estimate</span>
+                                <span class="text-zinc-500 dark:text-zinc-400 font-medium tracking-wide uppercase text-[10px]">Tax</span>
                                 <span class="font-bold text-zinc-900 dark:text-zinc-100">Rs. {{ number_format($order->tax_amount, 2) }}</span>
                             </div>
                         @endif
                         @if($order->discount_amount > 0)
                             <div class="flex justify-between items-center text-sm text-red-500">
-                                <span class="font-medium tracking-wide uppercase text-[10px]">Applied Discount</span>
+                                <span class="font-medium tracking-wide uppercase text-[10px]">Discount</span>
                                 <span class="font-bold">- Rs. {{ number_format($order->discount_amount, 2) }}</span>
                             </div>
                         @endif
@@ -224,7 +224,7 @@
                             <span class="text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Grand Total</span>
                             <div class="flex flex-col items-end">
                                 <span class="text-2xl font-black text-emerald-800 dark:text-emerald-400 leading-none">Rs. {{ number_format($order->total_amount, 2) }}</span>
-                                <span class="text-[10px] text-zinc-400 mt-1 uppercase font-bold tracking-tighter">Amount inclusive of VAT where applicable</span>
+                                <span class="text-[10px] text-zinc-400 mt-1 uppercase font-bold tracking-tighter">Including all charges</span>
                             </div>
                         </div>
                     </div>
@@ -297,7 +297,7 @@
                                 <flux:icon.user-plus class="h-8 w-8 text-zinc-200" />
                             </div>
                             <h4 class="font-bold text-zinc-900 dark:text-white">Walk-in Customer</h4>
-                            <p class="text-xs text-zinc-500 mt-1 uppercase tracking-widest">No contact record linked</p>
+                            <p class="text-xs text-zinc-500 mt-1">No customer profile linked</p>
                         </div>
                     @endif
                 </div>
@@ -306,13 +306,13 @@
             {{-- Logistics / Tracking Card --}}
             <div class="rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-700 dark:bg-zinc-900 overflow-hidden">
                 <div class="bg-zinc-50 dark:bg-zinc-800/50 px-6 py-4 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
-                    <span class="text-xs font-black uppercase tracking-widest text-zinc-400">Logistics Detail</span>
+                    <span class="text-xs font-black uppercase tracking-widest text-zinc-400">Shipping</span>
                     <flux:icon.truck class="h-4 w-4 text-zinc-300" />
                 </div>
 
                 <div class="p-6 space-y-5">
                     <div class="flex flex-col gap-1">
-                        <span class="text-[10px] font-black uppercase tracking-tighter text-zinc-400">Fulfillment Method</span>
+                        <span class="text-[10px] font-black uppercase tracking-tighter text-zinc-400">Shipping Method</span>
                         <div class="flex items-center gap-2">
                              <flux:badge size="sm" color="zinc" variant="subtle" class="font-bold capitalize">{{ $order->shipping_method ?? 'Not Set' }}</flux:badge>
                         </div>
@@ -321,7 +321,7 @@
                     <div class="flex flex-col gap-1">
                         <span class="text-[10px] font-black uppercase tracking-tighter text-zinc-400">Tracking Number</span>
                         <div class="font-mono text-xs font-bold text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 w-fit px-2 py-1 rounded">
-                            {{ $order->tracking_number ?? 'PENDING-LOGISTICS' }}
+                            {{ $order->tracking_number ?? 'Not available' }}
                         </div>
                     </div>
 
@@ -343,7 +343,7 @@
             {{-- Professional Footer Actions --}}
             <div class="flex flex-col gap-3">
                 <flux:button variant="outline" icon="share" class="w-full text-zinc-500 hover:text-emerald-600 transition-colors">Share Tracking Link</flux:button>
-                <flux:button variant="outline" icon="envelope" class="w-full text-zinc-500 hover:text-sky-600 transition-colors">Email Invoice</flux:button>
+                <flux:button variant="outline" icon="envelope" class="w-full text-zinc-500 hover:text-emerald-600 transition-colors">Email Invoice</flux:button>
             </div>
         </div>
     </div>
@@ -352,8 +352,8 @@
     <x-modals.delete-modal
         :itemId="$order->id"
         :itemName="$order->order_number"
-        title="Delete Order Permanently"
-        message="Are you sure you want to archive this order? This record will be soft-deleted but preserved for financial history."
+        title="Delete Order"
+        message="Are you sure you want to delete this order? This action cannot be undone."
         wire:confirm="deleteOrder"
     />
 

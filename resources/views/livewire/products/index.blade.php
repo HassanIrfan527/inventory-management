@@ -28,7 +28,7 @@
         <div
             class="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
             <div
-                class="absolute -right-2 -top-2 h-16 w-16 rounded-full bg-gradient-to-br from-blue-500/10 to-indigo-500/10 blur-2xl">
+                class="absolute -right-2 -top-2 h-16 w-16 rounded-full bg-gradient-to-br from-emerald-500/10 to-teal-500/10 blur-2xl">
             </div>
             <div class="relative flex items-center justify-between">
                 <div class="flex flex-col gap-1">
@@ -38,7 +38,7 @@
                     </p>
                 </div>
                 <div
-                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 ring-4 ring-blue-50/50 dark:ring-blue-900/10 transition-transform group-hover:scale-110">
+                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400 ring-4 ring-emerald-50/50 dark:ring-emerald-900/10 transition-transform group-hover:scale-110">
                     <flux:icon.box class="h-6 w-6" />
                 </div>
             </div>
@@ -46,10 +46,8 @@
                 <span
                     class="flex items-center gap-1 font-medium text-emerald-600 dark:text-emerald-400 shrink-0 whitespace-nowrap">
                     <flux:icon.activity class="h-4 w-4" />
-                    <span>Active</span>
+                    Active products
                 </span>
-                <span class="text-zinc-400 truncate text-[10px] font-bold uppercase tracking-widest">Global
-                    Catalog</span>
             </div>
         </div>
 
@@ -62,7 +60,7 @@
             <div class="relative flex items-center justify-between">
                 <div class="flex flex-col gap-1">
                     <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Avg.
-                        Profit Margin</p>
+                        Margin</p>
                     <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ round($avg_margin, 1) }}%</p>
                 </div>
                 <div
@@ -72,12 +70,10 @@
             </div>
             <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-amber-50 dark:border-amber-900/10">
                 <span
-                    class="flex items-center gap-1 font-medium text-amber-600 dark:text-amber-400 shrink-0 whitespace-nowrap text-[10px] font-black uppercase tracking-widest">
+                    class="flex items-center gap-1 font-medium text-amber-600 dark:text-amber-400 shrink-0 whitespace-nowrap">
                     <flux:icon.chart-bar-stacked class="h-4 w-4" />
-                    Optimized
+                    Profit margin
                 </span>
-                <span class="text-zinc-400 truncate text-[10px] font-bold uppercase tracking-widest leading-none">Yield
-                    metric</span>
             </div>
         </div>
 
@@ -87,7 +83,7 @@
             <div class="relative">
                 <div class="flex items-center justify-between mb-3 text-white">
                     <div class="flex flex-col gap-1">
-                        <p class="text-xs font-bold uppercase tracking-wider opacity-80">Inventory Valuation</p>
+                        <p class="text-xs font-bold uppercase tracking-wider opacity-80">Inventory Value</p>
                         <p class="text-2xl font-black tracking-tight mt-1">Rs. {{ number_format($totalInventoryValue) }}
                         </p>
                     </div>
@@ -97,9 +93,9 @@
                     </div>
                 </div>
                 <div
-                    class="flex items-center gap-2 text-white/70 pt-4 border-t border-white/10 mt-3 text-[10px] font-black uppercase tracking-widest leading-none">
+                    class="flex items-center gap-2 text-white/70 pt-4 border-t border-white/10 mt-3">
                     <flux:icon.shield-check class="h-4 w-4" />
-                    Total Asset Value
+                    Total value
                 </div>
             </div>
         </div>
@@ -202,21 +198,21 @@
                     <div class="overflow-x-auto no-scrollbar">
                         <table class="w-full text-left text-sm text-zinc-600 dark:text-zinc-400 border-collapse">
                             <thead
-                                class="bg-zinc-50/50 text-[10px] font-black uppercase tracking-widest text-zinc-500 dark:bg-zinc-950/50 dark:text-zinc-400">
+                                class="bg-zinc-50/50 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:bg-zinc-950/50 dark:text-zinc-400">
                                 <tr>
                                     <th class="px-6 py-4">
                                         <input type="checkbox" wire:click="toggleAll"
                                             class="size-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500/50 dark:border-zinc-700 dark:bg-zinc-800">
                                     </th>
-                                    <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest">Product Detail</th>
-                                    <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-center">Stock
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider">Product</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-center">SKU
                                     </th>
-                                    <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest">Classification</th>
-                                    <th class="px-6 py-4 text-right text-[10px] font-black uppercase tracking-widest">Pricing
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider">Category</th>
+                                    <th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-wider">Price
                                     </th>
-                                    <th class="px-6 py-4 text-center text-[10px] font-black uppercase tracking-widest">Incentive
+                                    <th class="px-6 py-4 text-center text-xs font-bold uppercase tracking-wider">Margin
                                     </th>
-                                    <th class="px-6 py-4 text-right text-[10px] font-black uppercase tracking-widest">Actions
+                                    <th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-wider">Actions
                                     </th>
                                 </tr>
                             </thead>
@@ -305,23 +301,23 @@
                     class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
                     <table class="w-full text-left text-xs text-zinc-600 dark:text-zinc-400 border-collapse">
                         <thead
-                            class="bg-zinc-50/50 text-[9px] font-black uppercase tracking-widest text-zinc-400 dark:bg-zinc-950/50">
+                            class="bg-zinc-50/50 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:bg-zinc-950/50 dark:text-zinc-400">
                             <tr>
-                                <th class="px-4 py-3 w-8 text-center text-[9px] font-black uppercase tracking-widest">Sel</th>
-                                <th class="px-4 py-3 text-[9px] font-black uppercase tracking-widest">Asset ID</th>
-                                <th class="px-4 py-3 text-[9px] font-black uppercase tracking-widest">Descriptor</th>
-                                <th class="px-4 py-3 text-[9px] font-black uppercase tracking-widest">Class</th>
-                                <th class="px-4 py-3 text-right text-[9px] font-black uppercase tracking-widest">Yield</th>
-                                <th class="px-4 py-3 text-right text-[9px] font-black uppercase tracking-widest">Market Value
+                                <th class="px-4 py-3 w-8 text-center"></th>
+                                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">SKU</th>
+                                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Name</th>
+                                <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Category</th>
+                                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-wider">Margin</th>
+                                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-wider">Price
                                 </th>
-                                <th class="px-4 py-3 text-right text-[9px] font-black uppercase tracking-widest">Actions</th>
+                                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-zinc-50 dark:divide-zinc-800">
                             @foreach ($products as $product)
                                 <tr wire:key="product-compact-{{ $product->id }}"
                                     class="hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">
-                                    <td class="px-4 py-2 text-center text-[9px] font-black uppercase tracking-widest">
+                                    <td class="px-4 py-2 text-center">
                                         <input type="checkbox" wire:model.live="selectedProducts"
                                             value="{{ $product->id }}"
                                             class="size-3.5 rounded border-zinc-300 text-emerald-500 focus:ring-emerald-500/40">
@@ -421,8 +417,7 @@
                                                 <div class="flex items-center gap-1">
                                                     <div class="size-2 rounded-full bg-emerald-500"></div>
                                                     <span
-                                                        class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">Active
-                                                        Asset</span>
+                                                        class="text-xs font-medium text-zinc-400">Active</span>
                                                 </div>
                                                 <button wire:click="$dispatch('edit-product', { id: {{ $product->id }} })"
                                                     class="opacity-0 group-hover:opacity-100 transition-opacity size-7 flex items-center justify-center rounded-lg bg-zinc-50 dark:bg-zinc-800 text-zinc-400 hover:text-emerald-600">
@@ -472,18 +467,18 @@
                                     <div class="flex flex-col items-end gap-1.5">
                                         @if ($product->stock_quantity === null)
                                             <span
-                                                class="inline-flex items-center gap-1 rounded-full bg-emerald-500 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-lg shadow-emerald-500/40">
-                                                <span class="text-xs">∞</span> Persistent
+                                                class="inline-flex items-center gap-1 rounded-full bg-emerald-500 px-2.5 py-1 text-xs font-bold text-white shadow-lg shadow-emerald-500/40">
+                                                <span class="text-xs">∞</span> Unlimited
                                             </span>
                                         @elseif($product->stock_quantity > 0)
                                             <span
-                                                class="inline-flex items-center gap-1 rounded-full bg-blue-500 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-lg shadow-blue-500/40">
+                                                class="inline-flex items-center gap-1 rounded-full bg-teal-500 px-2.5 py-1 text-xs font-bold text-white shadow-lg shadow-teal-500/40">
                                                 {{ $product->stock_quantity }} In Stock
                                             </span>
                                         @else
                                             <span
-                                                class="inline-flex items-center gap-1 rounded-full bg-rose-500 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-lg shadow-rose-500/40">
-                                                Depleted
+                                                class="inline-flex items-center gap-1 rounded-full bg-rose-500 px-2.5 py-1 text-xs font-bold text-white shadow-lg shadow-rose-500/40">
+                                                Out of Stock
                                             </span>
                                         @endif
                                         <span
@@ -499,11 +494,11 @@
                                     <div class="flex gap-2">
                                         <a href="{{ route('products.show', $product->id) }}" wire:navigate
                                             class="flex flex-1 items-center justify-center gap-2 rounded-xl bg-white py-2 text-xs font-bold text-zinc-900 shadow-xl transition-colors hover:bg-emerald-50">
-                                            <flux:icon.presentation-chart-line class="size-4" />
-                                            Intelligence
+                                            <flux:icon.eye class="size-4" />
+                                            View Details
                                         </a>
                                         <button wire:click="deleteProduct({{ $product->id }})"
-                                            wire:confirm="Decommission this asset permanently?"
+                                            wire:confirm="Delete this product?"
                                             class="flex size-9 items-center justify-center rounded-xl bg-rose-500 text-white shadow-xl transition-colors hover:bg-rose-600">
                                             <flux:icon.trash class="size-4" />
                                         </button>
@@ -534,8 +529,7 @@
                                     <div
                                         class="flex items-end justify-between border-b border-zinc-100 pb-3 dark:border-zinc-800">
                                         <div class="flex flex-col">
-                                            <span class="text-[10px] font-black uppercase tracking-widest text-zinc-400">Retail
-                                                Value</span>
+                                            <span class="text-xs font-medium text-zinc-400">Price</span>
                                             <span class="text-xl font-black text-zinc-950 dark:text-white">
                                                 Rs. {{ number_format($product->retail_price, 0) }}
                                             </span>
@@ -543,24 +537,22 @@
                                         <div
                                             class="flex h-10 w-16 flex-col items-center justify-center rounded-xl bg-emerald-50 px-2 dark:bg-emerald-900/20">
                                             <span
-                                                class="text-[8px] font-black uppercase tracking-widest text-emerald-600">Margin</span>
+                                                class="text-xs font-medium text-emerald-600">Margin</span>
                                             <span class="text-xs font-black text-emerald-700 dark:text-emerald-400">
                                                 {{ $product->retail_price > 0 ? round((($product->retail_price - $product->purchase_price) / $product->retail_price) * 100, 1) : 0 }}%
                                             </span>
                                         </div>
                                     </div>
 
-                                    <!-- Efficiency Metrics -->
+                                    <!-- Additional Details -->
                                     <div class="grid grid-cols-2 gap-4">
                                         <div class="flex flex-col">
-                                            <span class="text-[9px] font-black uppercase tracking-widest text-zinc-400">Cost
-                                                Basis</span>
+                                            <span class="text-xs font-medium text-zinc-400">Cost</span>
                                             <span class="text-xs font-bold text-zinc-600 dark:text-zinc-400">Rs.
                                                 {{ number_format($product->purchase_price, 0) }}</span>
                                         </div>
                                         <div class="flex flex-col text-right">
-                                            <span class="text-[9px] font-black uppercase tracking-widest text-zinc-400">Dlv.
-                                                Fee</span>
+                                            <span class="text-xs font-medium text-zinc-400">Delivery</span>
                                             <span class="text-xs font-bold text-zinc-600 dark:text-zinc-400">Rs.
                                                 {{ number_format($product->delivery_charges, 0) }}</span>
                                         </div>
@@ -588,14 +580,14 @@
                     </div>
                 </div>
                 <div class="text-center max-w-sm px-6">
-                    <h3 class="text-lg font-black text-zinc-900 dark:text-white uppercase tracking-tight">Vault is Empty
+                    <h3 class="text-lg font-bold text-zinc-900 dark:text-white">No Products Found
                     </h3>
-                    <p class="mt-2 text-sm font-medium text-zinc-500 leading-relaxed">
-                        We couldn't locate any items matching your parameters. Refine your search or initialize a new asset.
+                    <p class="mt-2 text-sm text-zinc-500 leading-relaxed">
+                        No products match your search. Try a different search or add a new product.
                     </p>
                     <div class="mt-8 flex justify-center">
                         <flux:button href="{{ route('products.create') }}" wire:navigate variant="primary"
-                            icon="plus" class="bg-emerald-600">Initialize Product</flux:button>
+                            icon="plus" class="bg-emerald-600">Add Product</flux:button>
                     </div>
                 </div>
             </div>
@@ -608,24 +600,24 @@
                     class="flex items-center gap-6 rounded-2xl border border-white/20 bg-zinc-950/90 py-3 px-5 shadow-2xl backdrop-blur-xl ring-1 ring-white/10">
                     <div class="flex items-center gap-3 border-r border-white/10 pr-6">
                         <div
-                            class="flex size-7 items-center justify-center rounded-full bg-emerald-500 text-[10px] font-black text-white shadow-lg shadow-emerald-500/40">
+                            class="flex size-7 items-center justify-center rounded-full bg-emerald-500 text-xs font-bold text-white shadow-lg shadow-emerald-500/40">
                             {{ count($selectedProducts) }}
                         </div>
-                        <span class="text-xs font-black uppercase tracking-widest text-white">Selection Active</span>
+                        <span class="text-sm font-medium text-white">Selected</span>
                     </div>
 
                     <div class="flex items-center gap-3">
                         <flux:modal.trigger name="bulk-change-category">
                             <button
-                                class="flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-widest text-white hover:bg-white/20 transition-all border border-white/5">
+                                class="flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/20 transition-all border border-white/5">
                                 <flux:icon.tag class="size-3.5 text-emerald-400" />
-                                Update Category
+                                Change Category
                             </button>
                         </flux:modal.trigger>
 
                         <button wire:click="clearSelection"
                             class="size-8 flex items-center justify-center rounded-xl bg-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white transition-all border border-rose-500/20"
-                            x-tooltip="Abort Selection">
+                            title="Clear selection">
                             <flux:icon.x class="size-4" />
                         </button>
                     </div>
@@ -642,23 +634,23 @@
                         <flux:icon.tag class="size-6 text-emerald-600 dark:text-emerald-400" />
                     </div>
                     <div class="space-y-1">
-                        <flux:heading size="lg" class="font-black uppercase tracking-tight">Recategorize Assets
+                        <flux:heading size="lg">Change Category
                         </flux:heading>
-                        <flux:text class="text-xs font-medium">
-                            You are about to reassign <strong
+                        <flux:text class="text-sm">
+                            Move <strong
                                 class="text-emerald-600">{{ count($selectedProducts) }}</strong>
-                            selected products to a new operational category.
+                            selected products to a new category.
                         </flux:text>
                     </div>
                 </div>
 
                 <div class="space-y-4">
                     <div class="space-y-2">
-                        <flux:label class="text-[10px] font-black uppercase tracking-widest text-zinc-400">Target Category
+                        <flux:label>Select Category
                         </flux:label>
                         <flux:dropdown>
                             <flux:button
-                                class="w-full justify-between bg-zinc-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded-xl font-bold"
+                                class="w-full justify-between bg-zinc-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded-xl"
                                 icon="tag" variant="subtle" right-icon="chevron-down">
                                 <span class="truncate">
                                     {{ $categories->firstWhere('id', $targetCategory)->name ?? 'Select category...' }}
@@ -668,7 +660,7 @@
                             <flux:menu class="max-h-60 overflow-y-auto min-w-[20rem]" anchor="bottom start">
                                 @foreach ($categories as $category)
                                     <flux:menu.item wire:click="$set('targetCategory', {{ $category->id }})"
-                                        class="font-bold text-xs uppercase tracking-widest">
+                                        class="font-medium">
                                         {{ $category->name }}
                                     </flux:menu.item>
                                 @endforeach
@@ -682,12 +674,12 @@
                     class="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-4 border-t border-zinc-100 dark:border-zinc-800">
                     <flux:modal.close>
                         <flux:button variant="ghost"
-                            class="w-full sm:w-auto font-bold uppercase tracking-widest text-[10px]">
+                            class="w-full sm:w-auto">
                             Cancel</flux:button>
                     </flux:modal.close>
                     <flux:button type="submit" variant="primary" wire:click="bulkChangeCategory"
-                        class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 font-bold uppercase tracking-widest text-[10px]">
-                        Confirm Reassignment
+                        class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700">
+                        Apply Changes
                     </flux:button>
                 </div>
             </div>

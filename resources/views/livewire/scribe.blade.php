@@ -1,9 +1,9 @@
-<div class="flex flex-col h-[calc(100vh-4rem)] relative bg-white dark:bg-zinc-950 overflow-hidden font-sans selection:bg-blue-100 dark:selection:bg-blue-900/30">
+<div class="flex flex-col h-[calc(100vh-4rem)] relative bg-white dark:bg-zinc-950 overflow-hidden font-sans selection:bg-emerald-100 dark:selection:bg-emerald-900/30">
     <!-- Full-Page Interactive Background Gradients -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-blue-500/10 dark:bg-blue-600/10 rounded-full blur-[120px] animate-pulse"></div>
-        <div class="absolute top-[20%] -right-[10%] w-[30%] h-[30%] bg-purple-500/10 dark:bg-purple-600/10 rounded-full blur-[100px] animation-delay-2000"></div>
-        <div class="absolute -bottom-[10%] left-[20%] w-[50%] h-[50%] bg-indigo-500/10 dark:bg-indigo-600/10 rounded-full blur-[150px] animate-pulse animation-delay-4000"></div>
+        <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-emerald-500/10 dark:bg-emerald-600/10 rounded-full blur-[120px] animate-pulse"></div>
+        <div class="absolute top-[20%] -right-[10%] w-[30%] h-[30%] bg-teal-500/10 dark:bg-teal-600/10 rounded-full blur-[100px] animation-delay-2000"></div>
+        <div class="absolute -bottom-[10%] left-[20%] w-[50%] h-[50%] bg-emerald-500/10 dark:bg-emerald-600/10 rounded-full blur-[150px] animate-pulse animation-delay-4000"></div>
     </div>
 
     <!-- Main Chat Interface -->
@@ -12,45 +12,41 @@
             <!-- Professional Empty State -->
             <div class="flex-1 flex flex-col items-center justify-center max-w-2xl text-center space-y-8 py-12">
                 <div class="relative group">
-                    <div class="absolute inset-0 bg-blue-500/20 dark:bg-blue-400/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                    <div class="absolute inset-0 bg-emerald-500/20 dark:bg-emerald-400/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
                     <div class="relative w-24 h-24 bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-2xl flex items-center justify-center transform transition-transform group-hover:scale-105 duration-500">
-                        <!-- Custom Robot Icon SVG -->
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 text-blue-600 dark:text-blue-400">
-                            <path d="M12 8V4H8" />
-                            <rect width="16" height="12" x="4" y="8" rx="2" />
-                            <path d="M2 14h2" />
-                            <path d="M20 14h2" />
-                            <path d="M15 13v2" />
-                            <path d="M9 13v2" />
+                        <!-- Quill/Scribe Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 text-emerald-600 dark:text-emerald-400">
+                            <path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08" />
+                            <path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z" />
                         </svg>
                     </div>
                 </div>
 
                 <h1
                     class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 to-zinc-600 dark:from-white dark:to-zinc-400">
-                    Vector
+                    Scribe
                 </h1>
                 <p class="mt-2 text-zinc-500 dark:text-zinc-400 text-lg">
-                    How can I help you manage your inventory today?
+                    How can I help you manage your business today?
                 </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl w-full px-4 mt-12">
                     <button wire:click="$set('userInput', 'Show me an inventory summary')"
                         class="p-4 rounded-xl text-left border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors group">
                         <div
-                            class="mb-2 w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            class="mb-2 w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
                             <flux:icon.chart-bar class="w-5 h-5" />
                         </div>
                         <h3 class="font-bold text-zinc-900 dark:text-zinc-100">Analytics</h3>
-                        <p class="text-xs text-zinc-500 dark:text-zinc-500 mt-1 line-clamp-2">Get real-time stock levels and valuation.</p>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-500 mt-1 line-clamp-2">Get real-time business insights and metrics.</p>
                     </button>
 
-                    <button wire:click="$set('userInput', 'Search for products named Shirt')" class="p-5 rounded-2xl text-left border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm hover:border-purple-500/50 hover:bg-white dark:hover:bg-zinc-800/80 transition-all group">
-                        <div class="mb-3 w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                    <button wire:click="$set('userInput', 'Search for products named Shirt')" class="p-5 rounded-2xl text-left border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm hover:border-teal-500/50 hover:bg-white dark:hover:bg-zinc-800/80 transition-all group">
+                        <div class="mb-3 w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors">
                             <flux:icon.magnifying-glass class="w-5 h-5" />
                         </div>
                         <h3 class="font-bold text-zinc-900 dark:text-zinc-100">Find Items</h3>
-                        <p class="text-xs text-zinc-500 dark:text-zinc-500 mt-1 line-clamp-2">Quickly locate products in the catalog.</p>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-500 mt-1 line-clamp-2">Quickly locate products and services.</p>
                     </button>
 
                     <button wire:click="$set('userInput', 'Create a new category named New Stock')" class="p-5 rounded-2xl text-left border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm hover:border-green-500/50 hover:bg-white dark:hover:bg-zinc-800/80 transition-all group">
@@ -58,7 +54,7 @@
                             <flux:icon.plus class="w-5 h-5" />
                         </div>
                         <h3 class="font-bold text-zinc-900 dark:text-zinc-100">Organize</h3>
-                        <p class="text-xs text-zinc-500 dark:text-zinc-500 mt-1 line-clamp-2">Efficiently categorize your inventory.</p>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-500 mt-1 line-clamp-2">Efficiently categorize your offerings.</p>
                     </button>
                 </div>
             </div>
@@ -68,20 +64,18 @@
                 @foreach ($history as $chat)
                     <div class="flex flex-col @if($chat['role'] === 'user') items-end @else items-start @endif space-y-2 animate-fade-in-up">
                         <div class="flex items-center gap-2 @if($chat['role'] === 'user') flex-row-reverse @endif">
-                            <div class="w-8 h-8 rounded-full flex items-center justify-center @if($chat['role'] === 'user') bg-zinc-200 dark:bg-zinc-800 @else bg-blue-600 @endif text-white shadow-sm overflow-hidden">
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center @if($chat['role'] === 'user') bg-zinc-200 dark:bg-zinc-800 @else bg-emerald-600 @endif text-white shadow-sm overflow-hidden">
                                 @if($chat['role'] === 'user')
                                     <flux:icon.user class="w-4 h-4 text-zinc-600 dark:text-zinc-400" />
                                 @else
                                     <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5 text-white" stroke="currentColor" stroke-width="2">
-                                        <rect width="16" height="12" x="4" y="8" rx="2" />
-                                        <path d="M12 8V4H8" />
-                                        <path d="M9 13v2" />
-                                        <path d="M15 13v2" />
+                                        <path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08" />
+                                        <path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z" />
                                     </svg>
                                 @endif
                             </div>
                             <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
-                                {{ $chat['role'] === 'user' ? 'YOU' : 'SCOUT' }}
+                                {{ $chat['role'] === 'user' ? 'YOU' : 'SCRIBE' }}
                             </span>
                         </div>
 
@@ -105,20 +99,18 @@
                 <!-- Enhanced Thinking State -->
                 <div wire:loading wire:target="sendMessage" class="flex flex-col items-start space-y-2">
                     <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center shadow-lg animate-bounce">
+                        <div class="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center shadow-lg animate-bounce">
                              <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5 text-white" stroke="currentColor" stroke-width="2">
-                                <rect width="16" height="12" x="4" y="8" rx="2" />
-                                <path d="M12 8V4H8" />
-                                <path d="M9 13v2" />
-                                <path d="M15 13v2" />
+                                <path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08" />
+                                <path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z" />
                             </svg>
                         </div>
-                         <span class="text-[10px] font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400">SCOUT IS THINKING...</span>
+                         <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">SCRIBE IS THINKING...</span>
                     </div>
                     <div class="px-5 py-4 bg-zinc-50/50 dark:bg-zinc-900/50 rounded-2xl rounded-tl-none border border-zinc-200/50 dark:border-zinc-800/50 flex gap-1.5">
-                        <div class="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-.3s]"></div>
-                        <div class="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce [animation-delay:-.15s]"></div>
-                        <div class="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce"></div>
+                        <div class="w-1.5 h-1.5 bg-emerald-600 rounded-full animate-bounce [animation-delay:-.3s]"></div>
+                        <div class="w-1.5 h-1.5 bg-emerald-600 rounded-full animate-bounce [animation-delay:-.15s]"></div>
+                        <div class="w-1.5 h-1.5 bg-emerald-600 rounded-full animate-bounce"></div>
                     </div>
                 </div>
             </div>
@@ -128,20 +120,20 @@
     <!-- Bottom Integrated Command Palette -->
     <div class="w-full max-w-4xl mx-auto p-4 md:p-8 z-20">
         <form wire:submit.prevent="sendMessage" class="relative group">
-            <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-[22px] blur opacity-15 group-focus-within:opacity-40 transition duration-500"></div>
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-[22px] blur opacity-15 group-focus-within:opacity-40 transition duration-500"></div>
 
             <div class="relative flex items-center bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl rounded-[20px] border border-zinc-200/50 dark:border-zinc-800/50 shadow-xl overflow-hidden p-1.5 ring-1 ring-zinc-900/5 dark:ring-white/5">
                 <div class="pl-4 flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
                         <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5 text-zinc-500 dark:text-zinc-400" stroke="currentColor" stroke-width="2">
-                            <rect width="16" height="12" x="4" y="8" rx="2" />
-                            <path d="M12 8V4H8" />
+                            <path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08" />
+                            <path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z" />
                         </svg>
                     </div>
                 </div>
 
                 <input type="text" wire:model.defer="userInput"
-                    placeholder="Ask Vector to manage inventory, find products, or create categories..."
+                    placeholder="Ask Scribe to manage clients, create invoices, or find products..."
                     class="w-full h-14 bg-transparent border-0 focus:ring-0 text-lg px-4 text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500"
                     autofocus required>
 
@@ -156,7 +148,7 @@
             </div>
             <div class="flex justify-between items-center mt-3 px-2">
                 <p class="text-xs text-zinc-400 dark:text-zinc-500">
-                    Vector is powered by **ollama / qwen2.5** and can create records in your database.
+                    Scribe is powered by AI and can create records in your database.
                 </p>
                 <div class="flex gap-4 text-xs font-medium text-zinc-400 dark:text-zinc-500">
                     <span>Press <kbd
@@ -220,4 +212,3 @@
         }
     });
 </script>
-

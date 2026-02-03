@@ -3,7 +3,7 @@
     <aside class="w-full max-w-full lg:max-w-xs">
         <div class="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm dark:border-neutral-700 dark:bg-neutral-900">
             <div class="mb-4 flex items-center gap-3">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-900/40 dark:text-blue-300">
+                <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-300">
                     <flux:icon.cog class="size-5" />
                 </div>
                 <div>

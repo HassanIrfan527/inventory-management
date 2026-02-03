@@ -28,7 +28,7 @@
                                 </span>
                                 <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <button @click="isEditing = true; $nextTick(() => $refs.input.focus())"
-                                            class="text-neutral-500 hover:text-blue-600 dark:hover:text-blue-400 p-1 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+                                            class="text-neutral-500 hover:text-emerald-600 dark:hover:text-emerald-400 p-1 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
                                         <flux:icon icon="pencil" class="w-4 h-4" />
                                     </button>
                                     <button wire:confirm="Are you sure you want to delete this category?"
@@ -45,7 +45,7 @@
                                        x-model="name"
                                        @keydown.enter="isEditing = false; $wire.updateCategory({{ $category->id }}, name)"
                                        @click.outside="isEditing = false; $wire.updateCategory({{ $category->id }}, name)"
-                                       class="w-full bg-transparent border-0 border-b-2 border-blue-500 focus:ring-0 px-0 py-1 text-neutral-900 dark:text-white font-medium placeholder-neutral-400" />
+                                       class="w-full bg-transparent border-0 border-b-2 border-emerald-500 focus:ring-0 px-0 py-1 text-neutral-900 dark:text-white font-medium placeholder-neutral-400" />
                             </div>
                         </div>
                     @endforeach

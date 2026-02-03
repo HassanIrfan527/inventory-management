@@ -38,9 +38,8 @@
             <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-zinc-50 dark:border-zinc-800/50">
                 <span class="flex items-center gap-1 font-medium text-emerald-600 dark:text-emerald-400 shrink-0 whitespace-nowrap">
                     <flux:icon.activity class="h-4 w-4" />
-                    <span>Global</span>
                 </span>
-                <span class="text-zinc-400 truncate text-xs font-medium uppercase tracking-tighter">Billed Documents</span>
+                <span class="text-zinc-400 truncate text-xs font-medium">All invoices</span>
             </div>
         </div>
 
@@ -57,11 +56,11 @@
                 </div>
             </div>
             <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-emerald-50 dark:border-emerald-900/10">
-                <span class="flex items-center gap-1 font-medium text-emerald-600 dark:text-emerald-400 shrink-0 whitespace-nowrap text-[10px] font-black uppercase tracking-widest">
+                <span class="flex items-center gap-1 font-medium text-emerald-600 dark:text-emerald-400 shrink-0 whitespace-nowrap text-xs">
                     <flux:icon.check-circle class="h-3.5 w-3.5" />
-                    Verified
+                    Collected
                 </span>
-                <span class="text-zinc-400 truncate">Total earnings</span>
+                <span class="text-zinc-400 truncate text-xs">From paid invoices</span>
             </div>
         </div>
 
@@ -77,11 +76,10 @@
                 </div>
             </div>
             <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-amber-50 dark:border-amber-900/10">
-                <span class="flex items-center gap-1 font-medium text-amber-600 dark:text-amber-400 shrink-0 whitespace-nowrap text-[10px] font-black uppercase tracking-widest">
-                    <flux:icon.layers class="h-3.5 w-3.5" />
-                    In Queue
+                <span class="flex items-center gap-1 font-medium text-amber-600 dark:text-amber-400 shrink-0 whitespace-nowrap text-xs">
+                    <flux:icon.clock class="h-3.5 w-3.5" />
                 </span>
-                <span class="text-zinc-400 truncate">Awaiting payment</span>
+                <span class="text-zinc-400 truncate text-xs">Awaiting payment</span>
             </div>
         </div>
 
@@ -97,11 +95,10 @@
                 </div>
             </div>
             <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-rose-50 dark:border-rose-900/10">
-                <span class="flex items-center gap-1 font-medium text-rose-600 dark:text-rose-400 shrink-0 whitespace-nowrap text-[10px] font-black uppercase tracking-widest">
+                <span class="flex items-center gap-1 font-medium text-rose-600 dark:text-rose-400 shrink-0 whitespace-nowrap text-xs">
                     <flux:icon.flag class="h-3.5 w-3.5" />
-                    Critical
                 </span>
-                <span class="text-zinc-400 truncate">Immediate follow-up</span>
+                <span class="text-zinc-400 truncate text-xs">Needs attention</span>
             </div>
         </div>
     </div>
@@ -115,8 +112,8 @@
                     <flux:icon.notepad-text class="size-5" />
                 </div>
                 <div class="flex flex-col">
-                    <h2 class="text-lg font-bold text-zinc-900 dark:text-white leading-none">Invoice Ledger</h2>
-                    <flux:text size="xs" class="mt-1">Historical billing and payment records</flux:text>
+                    <h2 class="text-lg font-bold text-zinc-900 dark:text-white leading-none">All Invoices</h2>
+                    <flux:text size="xs" class="mt-1">Your billing history</flux:text>
                 </div>
                 <flux:badge color="emerald" size="sm" class="ml-2" inset="top bottom">{{ $invoices->total() }} Total</flux:badge>
             </div>

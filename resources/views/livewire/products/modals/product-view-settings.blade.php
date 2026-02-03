@@ -31,14 +31,14 @@ new class extends Component
         @foreach (App\Enums\ProductView::cases() as $view)
             <button wire:click="changeView('{{ $view->value }}')"
                 class="flex flex-col items-center gap-3 p-4 rounded-xl border transition-all cursor-pointer group
-                {{ $viewType === $view ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-500' : 'border-neutral-200 hover:border-blue-300 hover:bg-neutral-50 dark:border-neutral-700 dark:hover:border-neutral-600 dark:hover:bg-neutral-800' }}">
+                {{ $viewType === $view ? 'border-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:border-emerald-500' : 'border-neutral-200 hover:border-emerald-300 hover:bg-neutral-50 dark:border-neutral-700 dark:hover:border-neutral-600 dark:hover:bg-neutral-800' }}">
 
-                <div class="p-3 rounded-full {{ $viewType === $view ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400' : 'bg-neutral-100 text-neutral-500 group-hover:bg-white group-hover:text-blue-500 dark:bg-neutral-800 dark:text-neutral-400 dark:group-hover:text-blue-400' }}">
+                <div class="p-3 rounded-full {{ $viewType === $view ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400' : 'bg-neutral-100 text-neutral-500 group-hover:bg-white group-hover:text-emerald-500 dark:bg-neutral-800 dark:text-neutral-400 dark:group-hover:text-emerald-400' }}">
                     <flux:icon :icon="$view->icon()" class="w-6 h-6" />
                 </div>
 
                 <div class="text-center">
-                    <span class="block font-medium {{ $viewType === $view ? 'text-blue-700 dark:text-blue-300' : 'text-neutral-900 dark:text-white' }}">
+                    <span class="block font-medium {{ $viewType === $view ? 'text-emerald-700 dark:text-emerald-300' : 'text-neutral-900 dark:text-white' }}">
                         {{ ucfirst($view->value) }} View
                     </span>
                     <span class="text-xs text-neutral-500 dark:text-neutral-400 mt-1 block">

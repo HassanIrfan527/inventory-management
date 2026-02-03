@@ -4,8 +4,8 @@
         <div class="flex flex-col gap-2">
             <div
                 class="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 w-fit ring-1 ring-emerald-200 dark:ring-emerald-800">
-                <flux:icon name="chart-bar" class="w-3.5 h-3.5" />
-                <span>Executive Intelligence · Insights Hub</span>
+                <flux:icon name="home" class="w-3.5 h-3.5" />
+                <span>Dashboard</span>
             </div>
             <flux:heading size="xl" level="1" class="text-emerald-950 dark:text-emerald-50">Business Overview</flux:heading>
             <flux:text size="sm" class="text-zinc-500 dark:text-zinc-400">
@@ -39,22 +39,21 @@
         <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
             {{-- Total Products --}}
             <div class="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
-                <div class="absolute -right-2 -top-2 h-16 w-16 rounded-full bg-gradient-to-br from-blue-500/10 to-indigo-500/10 blur-2xl"></div>
+                <div class="absolute -right-2 -top-2 h-16 w-16 rounded-full bg-gradient-to-br from-emerald-500/10 to-teal-500/10 blur-2xl"></div>
                 <div class="relative flex items-center justify-between">
                     <div class="flex flex-col gap-1">
-                        <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Inventory Items</p>
+                        <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Products</p>
                         <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($this->stats['total_products']) }}</p>
                     </div>
-                    <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 ring-4 ring-blue-50/50 dark:ring-blue-900/10 transition-transform group-hover:scale-110">
+                    <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400 ring-4 ring-emerald-50/50 dark:ring-emerald-900/10 transition-transform group-hover:scale-110">
                         <flux:icon name="shopping-bag" class="h-6 w-6" />
                     </div>
                 </div>
-                <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-blue-50 dark:border-blue-900/10">
-                    <span class="flex items-center gap-1 font-medium text-blue-600 dark:text-blue-400 shrink-0 whitespace-nowrap text-[10px] font-black uppercase tracking-widest">
+                <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-emerald-50 dark:border-emerald-900/10">
+                    <span class="flex items-center gap-1 font-medium text-emerald-600 dark:text-emerald-400 shrink-0 whitespace-nowrap">
                         <flux:icon name="check" class="h-3.5 w-3.5" />
-                        In-Stock
+                        In Stock
                     </span>
-                    <span class="text-zinc-400 truncate text-[10px] uppercase font-bold tracking-widest leading-none">Global catalog</span>
                 </div>
             </div>
 
@@ -74,32 +73,30 @@
                     </div>
                 </div>
                 <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-emerald-50 dark:border-emerald-900/10">
-                    <span class="flex items-center gap-1 font-medium text-amber-600 shrink-0 whitespace-nowrap text-[10px] font-black uppercase tracking-widest">
+                    <span class="flex items-center gap-1 font-medium text-amber-600 shrink-0 whitespace-nowrap">
                         <flux:icon name="clock" class="h-3.5 w-3.5" />
                         {{ $this->stats['pending_orders'] }} Pending
                     </span>
-                    <span class="text-zinc-400 truncate text-[10px] uppercase font-bold tracking-widest leading-none">Current backlog</span>
                 </div>
             </div>
 
             {{-- Total Contacts --}}
             <div class="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
-                <div class="absolute -right-2 -top-2 h-16 w-16 rounded-full bg-gradient-to-br from-purple-500/10 to-pink-500/10 blur-2xl"></div>
+                <div class="absolute -right-2 -top-2 h-16 w-16 rounded-full bg-gradient-to-br from-teal-500/10 to-emerald-500/10 blur-2xl"></div>
                 <div class="relative flex items-center justify-between">
                     <div class="flex flex-col gap-1">
-                        <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Network & Contacts</p>
+                        <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Contacts</p>
                         <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($this->stats['total_contacts']) }}</p>
                     </div>
-                    <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-purple-50 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400 ring-4 ring-purple-50/50 dark:ring-purple-900/10 transition-transform group-hover:scale-110">
+                    <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-600 dark:bg-teal-900/20 dark:text-teal-400 ring-4 ring-teal-50/50 dark:ring-teal-900/10 transition-transform group-hover:scale-110">
                         <flux:icon name="users" class="h-6 w-6" />
                     </div>
                 </div>
-                <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-purple-50 dark:border-purple-900/10">
-                    <span class="flex items-center gap-1 font-medium text-purple-600 dark:text-purple-400 shrink-0 whitespace-nowrap text-[10px] font-black uppercase tracking-widest">
+                <div class="mt-4 flex items-center gap-2 text-sm pt-4 border-t border-teal-50 dark:border-teal-900/10">
+                    <span class="flex items-center gap-1 font-medium text-teal-600 dark:text-teal-400 shrink-0 whitespace-nowrap">
                         <flux:icon name="activity" class="h-3.5 w-3.5" />
                         Active
                     </span>
-                    <span class="text-zinc-400 truncate text-[10px] uppercase font-bold tracking-widest leading-none">Customers/Suppliers</span>
                 </div>
             </div>
 
@@ -115,9 +112,9 @@
                             <flux:icon name="banknotes" class="h-7 w-7" />
                         </div>
                     </div>
-                    <div class="flex items-center gap-2 text-white/70 pt-4 border-t border-white/10 mt-3 text-[10px] font-black uppercase tracking-widest leading-none">
+                    <div class="flex items-center gap-2 text-white/70 pt-4 border-t border-white/10 mt-3">
                          <flux:icon name="check-circle" class="h-4 w-4" />
-                         Verified Sales
+                         Completed sales
                     </div>
                 </div>
             </div>
@@ -134,21 +131,21 @@
                                 <flux:icon name="shopping-cart" class="size-5" />
                             </div>
                             <div class="flex flex-col">
-                                <h2 class="text-lg font-bold text-zinc-900 dark:text-white leading-none">Transaction Log</h2>
-                                <flux:text size="xs" class="mt-1">Overview of latest platform activity</flux:text>
+                                <h2 class="text-lg font-bold text-zinc-900 dark:text-white leading-none">Recent Orders</h2>
+                                <flux:text size="xs" class="mt-1">Your latest orders</flux:text>
                             </div>
                         </div>
-                        <flux:button href="{{ route('orders') }}" variant="subtle" size="sm" class="font-bold uppercase tracking-widest text-[10px]">View Analytics →</flux:button>
+                        <flux:button href="{{ route('orders') }}" variant="subtle" size="sm">View All →</flux:button>
                     </div>
 
                     <div class="overflow-x-auto">
                         <table class="w-full text-left">
                             <thead class="bg-zinc-50 border-b border-zinc-100 dark:bg-zinc-800/50 dark:border-zinc-800">
                                 <tr>
-                                    <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 whitespace-nowrap">ID Ref</th>
-                                    <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Entity</th>
-                                    <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-center">Status</th>
-                                    <th class="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-right">Value</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 whitespace-nowrap">Order #</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Customer</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-center">Status</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-right">Amount</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
@@ -156,10 +153,9 @@
                                     <tr class="group transition-all hover:bg-emerald-50/30 dark:hover:bg-emerald-900/10 cursor-pointer">
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="font-bold text-emerald-600 dark:text-emerald-400">#{{ $order->order_number }}</span>
-                                            <div class="text-[9px] text-zinc-400 mt-1 uppercase font-black tracking-tighter">Recorded Activity</div>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <span class="font-bold text-zinc-700 dark:text-zinc-300">{{ $order->contact->name ?? 'Unknown Entity' }}</span>
+                                            <span class="font-bold text-zinc-700 dark:text-zinc-300">{{ $order->contact->name ?? 'Guest Customer' }}</span>
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             @php
@@ -195,12 +191,12 @@
             <div class="flex flex-col gap-5">
                 <div class="flex flex-col h-full overflow-hidden rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 transition-all">
                     <div class="flex items-center gap-4 mb-8">
-                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400">
                             <flux:icon name="squares-2x2" class="size-5" />
                         </div>
                         <div class="flex flex-col">
-                            <h2 class="text-base font-bold text-zinc-900 dark:text-white leading-none">Catalog Density</h2>
-                            <flux:text size="xs" class="mt-1">Distribution across sectors</flux:text>
+                            <h2 class="text-base font-bold text-zinc-900 dark:text-white leading-none">Products by Category</h2>
+                            <flux:text size="xs" class="mt-1">Category breakdown</flux:text>
                         </div>
                     </div>
 
@@ -220,7 +216,7 @@
                                 </div>
                             </div>
                         @empty
-                            <flux:text class="text-center py-10 opacity-50">Discovery phase needed.</flux:text>
+                            <flux:text class="text-center py-10 opacity-50">No categories yet</flux:text>
                         @endforelse
                     </div>
                 </div>
@@ -369,11 +365,11 @@
                         </div>
                     </div>
                     {{-- Row 3 --}}
-                    <div class="p-6 transition-all hover:bg-purple-50/10 dark:hover:bg-purple-900/5 group">
+                    <div class="p-6 transition-all hover:bg-teal-50/10 dark:hover:bg-teal-900/5 group">
                         <div class="flex items-start justify-between">
                             <div class="flex flex-col">
-                                <span class="text-xs font-black uppercase tracking-widest text-purple-600 dark:text-purple-400 mb-2">Strategic Insight</span>
-                                <h3 class="text-base font-bold text-zinc-900 dark:text-white group-hover:text-purple-600 transition-colors">Customer Lifetime Expanding</h3>
+                                <span class="text-xs font-black uppercase tracking-widest text-teal-600 dark:text-teal-400 mb-2">Strategic Insight</span>
+                                <h3 class="text-base font-bold text-zinc-900 dark:text-white group-hover:text-teal-600 transition-colors">Customer Lifetime Expanding</h3>
                                 <p class="text-sm text-zinc-500 mt-2">New subscription-based revenue stream is projected to generate 30% of total revenue by Q3.</p>
                             </div>
                         </div>
@@ -384,7 +380,7 @@
             {{-- Operational Health Grid --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                  <div class="flex flex-col gap-6 rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-600 dark:bg-sky-900/40 dark:text-sky-400">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400">
                         <flux:icon name="clock" class="size-6" />
                     </div>
                     <div class="flex flex-col">
@@ -426,7 +422,7 @@
                  </div>
 
                  <div class="flex flex-col gap-6 rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-100 text-teal-600 dark:bg-teal-900/40 dark:text-teal-400">
                         <flux:icon name="briefcase" class="size-6" />
                     </div>
                     <div class="flex flex-col">

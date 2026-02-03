@@ -21,7 +21,7 @@
     <div class="mb-8 mt-4">
         <flux:heading size="xl" level="1" class="text-emerald-950 dark:text-emerald-50 mb-2">Create New Order</flux:heading>
         <div class="flex items-center justify-between">
-            <flux:text class="text-zinc-500">Follow the steps below to generate a new customer order.</flux:text>
+            <flux:text class="text-zinc-500">Complete the steps to create your order.</flux:text>
             <flux:button variant="subtle" icon="x-mark" href="{{ route('orders') }}" wire:navigate class="md:hidden">Close</flux:button>
         </div>
 
@@ -106,7 +106,7 @@
                     ])
                 >
                     <div class="flex items-center gap-4">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400">
                             <flux:icon.user-plus class="h-6 w-6" />
                         </div>
                         <div>

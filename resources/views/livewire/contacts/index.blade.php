@@ -135,7 +135,7 @@
                                 <div class="flex flex-wrap gap-2">
                                     @if ($contact->type)
                                         <span
-                                            class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                                            class="inline-flex items-center rounded-full bg-teal-100 px-2.5 py-0.5 text-xs font-medium text-teal-700 dark:bg-teal-900/30 dark:text-teal-400">
                                             {{ ucfirst($contact->type->value) }}
                                         </span>
                                     @endif
