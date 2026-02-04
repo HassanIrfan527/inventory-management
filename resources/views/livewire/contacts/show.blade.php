@@ -1,6 +1,23 @@
 <div class="w-full">
+
+    @php
+        $breadcrumbItem = [
+            [
+                'name' => 'Contacts',
+                'href' => route('contacts.all'),
+                'icon' => 'users',
+            ],
+            [
+                'name' => $contact->name,
+                'href' => route('contact.show', $contact),
+                'icon' => 'user',
+            ],
+        ];
+    @endphp
+    <!-- Breadcrumbs -->
+    <x-custom-breadcrumb :items="$breadcrumbItem"></x-custom-breadcrumb>
     {{-- Top Navigation --}}
-    <div class="mb-6 flex items-center justify-between">
+    <div class="mb-6 mt-4 flex items-center justify-between">
         <flux:button variant="ghost" wire:navigate href="{{ route('contacts.all') }}" icon="arrow-left"
             class="!pl-0 md:!pl-3">
             Back to contacts
