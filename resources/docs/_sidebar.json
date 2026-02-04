@@ -1,0 +1,59 @@
+{
+    "title": "Folio Documentation",
+    "version": "1.0",
+    "sections": [
+        {
+            "title": "Getting Started",
+            "icon": "rocket-launch",
+            "items": [
+                { "title": "Introduction", "slug": "introduction" },
+                { "title": "Quick Start", "slug": "getting-started/quick-start" },
+                { "title": "Your First Product", "slug": "getting-started/first-product" }
+            ]
+        },
+        {
+            "title": "Inventory",
+            "icon": "cube",
+            "items": [
+                { "title": "Managing Products", "slug": "inventory/products" },
+                { "title": "Categories", "slug": "inventory/categories" },
+                { "title": "Stock Tracking", "slug": "inventory/stock-tracking" }
+            ]
+        },
+        {
+            "title": "Contacts",
+            "icon": "users",
+            "items": [
+                { "title": "Managing Contacts", "slug": "contacts/managing-contacts" },
+                { "title": "Customer Types", "slug": "contacts/customer-types" }
+            ]
+        },
+        {
+            "title": "Orders",
+            "icon": "shopping-cart",
+            "items": [
+                { "title": "Creating Orders", "slug": "orders/creating-orders" },
+                { "title": "Order Status", "slug": "orders/order-status" },
+                { "title": "Fulfillment", "slug": "orders/fulfillment" }
+            ]
+        },
+        {
+            "title": "Invoices",
+            "icon": "document-text",
+            "items": [
+                { "title": "Creating Invoices", "slug": "invoices/creating-invoices" },
+                { "title": "PDF Templates", "slug": "invoices/pdf-templates" },
+                { "title": "Payment Tracking", "slug": "invoices/payment-tracking" }
+            ]
+        },
+        {
+            "title": "Settings",
+            "icon": "cog-6-tooth",
+            "items": [
+                { "title": "Company Info", "slug": "settings/company-info" },
+                { "title": "Categories", "slug": "settings/categories" },
+                { "title": "Two-Factor Auth", "slug": "settings/two-factor-auth" }
+            ]
+        }
+    ]
+}

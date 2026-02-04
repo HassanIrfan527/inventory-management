@@ -7,7 +7,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('layouts.public')]
-#[Title('User Documentation - Kinetic Hub')]
+#[Title('User Documentation')]
 class Docs extends Component
 {
     public function render()
