@@ -7,7 +7,7 @@
                 'icon' => 'box',
             ],
             [
-                'name' => 'Product Details',
+                'name' => $product->name,
                 'href' => route('products.show', $product->id),
                 'icon' => 'eye',
             ],

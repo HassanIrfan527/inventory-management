@@ -26,8 +26,8 @@
     <rect x="6" y="22" width="16" height="2" rx="1" class="fill-white/60"/>
     <rect x="6" y="28" width="10" height="2" rx="1" class="fill-white/40"/>
 </svg>
-@endif
 
+@endif
 {{--
 Logo Option 2: Stylized F with Page Fold (Alternative)
 Uncomment this and modify the @else block to use this logo instead
@@ -45,4 +45,4 @@ Uncomment this and modify the @else block to use this logo instead
     <rect x="9" y="24" width="14" height="3" rx="1" class="fill-white/60"/>
     <rect x="9" y="30" width="8" height="3" rx="1" class="fill-white/40"/>
 </svg>
---}}
+ --}}

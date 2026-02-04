@@ -1,10 +1,27 @@
 <?php
 
+use App\Models\Plan;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 new #[Layout('layouts.public')] class extends Component
 {
+    public Collection $plans;
+
+    public function mount(): void
+    {
+        $this->plans = Plan::where('is_active', 1)
+            ->orderBy('sort_order')
+            ->get();
+    }
+
+    public function selectPlan(string $slug): void
+    {
+        session(['selected_plan' => $slug]);
+        $this->redirect(route('register'), navigate: true);
+    }
+
     public function title(): string
     {
         return 'Pricing | ' . config('app.name');
@@ -12,7 +29,7 @@ new #[Layout('layouts.public')] class extends Component
 };
 ?>
 
-<div class="relative isolate overflow-hidden" x-data="{ yearly: false, openFaq: null }">
+<div class="relative isolate overflow-hidden" x-data="{ openFaq: null }">
     {{-- Decorative Background --}}
     <div class="absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl" aria-hidden="true">
         <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-emerald-600 to-teal-800 opacity-10 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
@@ -33,28 +50,6 @@ new #[Layout('layouts.public')] class extends Component
             </p>
         </div>
 
-        {{-- Billing Toggle --}}
-        <div class="flex justify-center items-center gap-4 mb-12">
-            <span class="text-sm font-medium" :class="yearly ? 'text-zinc-400 dark:text-zinc-500' : 'text-zinc-900 dark:text-white'">Monthly</span>
-            <button
-                type="button"
-                @click="yearly = !yearly"
-                :class="yearly ? 'bg-emerald-600' : 'bg-zinc-200 dark:bg-zinc-700'"
-                class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-offset-2 dark:focus:ring-offset-zinc-900"
-            >
-                <span
-                    :class="yearly ? 'translate-x-5' : 'translate-x-0'"
-                    class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                ></span>
-            </button>
-            <span class="text-sm font-medium flex items-center gap-2" :class="yearly ? 'text-zinc-900 dark:text-white' : 'text-zinc-400 dark:text-zinc-500'">
-                Yearly
-                <span class="inline-flex items-center rounded-full bg-emerald-100 dark:bg-emerald-900/50 px-2 py-0.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                    Save 2 months
-                </span>
-            </span>
-        </div>
-
         {{-- Pricing Cards --}}
         <div class="mx-auto max-w-7xl">
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
@@ -70,7 +65,7 @@ new #[Layout('layouts.public')] class extends Component
                         <span class="text-zinc-500 dark:text-zinc-400 text-sm">/month</span>
                     </div>
 
-                    <flux:button href="{{ route('register') }}" wire:navigate variant="ghost" class="w-full mb-8 border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800">
+                    <flux:button wire:click="selectPlan('free')" variant="ghost" class="w-full mb-8 border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800">
                         Get Started Free
                     </flux:button>
 
@@ -114,18 +109,18 @@ new #[Layout('layouts.public')] class extends Component
                             </span>
                         </div>
 
+                        @php($proPlan = $plans->firstWhere('slug', 'pro'))
                         <div class="mb-6">
-                            <h3 class="text-lg font-semibold text-zinc-900 dark:text-white">Pro</h3>
-                            <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">For established businesses</p>
+                            <h3 class="text-lg font-semibold text-zinc-900 dark:text-white">{{ $proPlan->name }}</h3>
+                            <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{{ $proPlan->description }}</p>
                         </div>
 
                         <div class="flex items-baseline gap-1 mb-6">
-                            <span class="text-4xl font-bold tracking-tight text-zinc-900 dark:text-white" x-text="yearly ? '$10' : '$12'"></span>
+                            <span class="text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">${{ number_format($proPlan->monthly_price / 100, 0) }}</span>
                             <span class="text-zinc-500 dark:text-zinc-400 text-sm">/month</span>
-                            <span x-show="yearly" x-cloak class="ml-2 text-xs text-emerald-600 dark:text-emerald-400 font-medium">billed yearly</span>
                         </div>
 
-                        <flux:button href="{{ route('register') }}" wire:navigate variant="primary" class="w-full mb-8 shadow-lg shadow-emerald-500/20 !bg-emerald-600 hover:!bg-emerald-500">
+                        <flux:button wire:click="selectPlan('pro')" variant="primary" class="w-full mb-8 shadow-lg shadow-emerald-500/20 !bg-emerald-600 hover:!bg-emerald-500">
                             Start Free Trial
                         </flux:button>
 
@@ -163,19 +158,19 @@ new #[Layout('layouts.public')] class extends Component
                 </div>
 
                 {{-- Business Plan --}}
+                @php($businessPlan = $plans->firstWhere('slug', 'business'))
                 <div class="relative rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-8 shadow-sm">
                     <div class="mb-6">
-                        <h3 class="text-lg font-semibold text-zinc-900 dark:text-white">Business</h3>
-                        <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">For growing teams</p>
+                        <h3 class="text-lg font-semibold text-zinc-900 dark:text-white">{{ $businessPlan->name }}</h3>
+                        <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{{ $businessPlan->description }}</p>
                     </div>
 
                     <div class="flex items-baseline gap-1 mb-6">
-                        <span class="text-4xl font-bold tracking-tight text-zinc-900 dark:text-white" x-text="yearly ? '$24' : '$29'"></span>
+                        <span class="text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">${{ number_format($businessPlan->monthly_price / 100, 0) }}</span>
                         <span class="text-zinc-500 dark:text-zinc-400 text-sm">/month</span>
-                        <span x-show="yearly" x-cloak class="ml-2 text-xs text-emerald-600 dark:text-emerald-400 font-medium">billed yearly</span>
                     </div>
 
-                    <flux:button href="{{ route('register') }}" wire:navigate variant="ghost" class="w-full mb-8 border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800">
+                    <flux:button wire:click="selectPlan('business')" variant="ghost" class="w-full mb-8 border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800">
                         Start Free Trial
                     </flux:button>
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\ContactController;
 use App\Http\Controllers\Api\V1\InvoiceController;
 use App\Http\Controllers\Api\V1\ItemController;
 use App\Http\Controllers\Api\V1\OrderController;
+use App\Livewire\Auth\Register;
 use App\Livewire\Contacts\Show as ContactShow;
 use App\Livewire\Dashboard;
 use App\Livewire\Invoices\Index as InvoicesIndex;
@@ -14,6 +15,11 @@ use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\TwoFactor;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
+
+// Custom registration route (overrides Fortify's)
+Route::get('/register', Register::class)
+    ->middleware(['guest'])
+    ->name('register');
 
 Route::livewire('/', 'welcome')->name('home');
 Route::get('/blog', \App\Livewire\Blog\Index::class)->name('blog.index');

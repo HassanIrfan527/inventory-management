@@ -62,6 +62,7 @@ new #[Layout('layouts.public')] class extends Component
                 {{-- Left: Description --}}
                 <div>
                     <div class="inline-flex items-center gap-2 rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400 mb-6">
+                        <flux:icon.sparkles class="size-4" />
                         Your AI Partner
                     </div>
 

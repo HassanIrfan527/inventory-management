@@ -51,7 +51,7 @@ class Show extends Component
         $this->product->refresh();
         $this->isEditing = false;
 
-        $this->dispatch('toast', type: 'success', message: 'Asset specifications synchronized successfully.');
+        $this->dispatch('toast', type: 'success', message: 'Product updated successfully.');
     }
 
     public function deleteProduct()
