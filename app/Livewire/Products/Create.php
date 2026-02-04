@@ -30,7 +30,7 @@ class Create extends Component
             $this->form->product_images
         );
 
-        $this->dispatch('toast', type: 'success', message: 'Asset successfully initialized in catalog.');
+        $this->dispatch('toast', type: 'success', message: 'Product created successfully.');
 
         return redirect()->route('inventory');
     }

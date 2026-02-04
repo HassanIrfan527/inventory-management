@@ -31,8 +31,9 @@
                     <x-nav-link href="{{ route('solutions') }}" :active="request()->routeIs('solutions')">Solutions</x-nav-link>
                     <x-nav-link href="{{ route('pricing') }}" :active="request()->routeIs('pricing')">Pricing</x-nav-link>
                     <x-nav-link href="{{ route('ai.features') }}" :active="request()->routeIs('ai.features')">AI</x-nav-link>
-                    <x-nav-link href="{{ route('docs') }}" :active="request()->routeIs('docs')">Docs</x-nav-link>
-                    <x-nav-link href="{{ route('contact.us') }}" :active="request()->routeIs('contact.us')">Contact</x-nav-link>
+                    <x-nav-link href="{{ route('docs') }}" :active="request()->routeIs('docs.*')">Docs</x-nav-link>
+                    <x-nav-link href="{{ route('blog.index') }}" :active="request()->routeIs('blog.*')">Blog</x-nav-link>
+                    <x-nav-link href="{{ route('help') }}" :active="request()->routeIs('help')">Help</x-nav-link>
                 </nav>
 
                 <div class="flex items-center gap-4">
@@ -82,6 +83,8 @@
                             <flux:menu.item href="{{ route('pricing') }}" icon="credit-card">Pricing</flux:menu.item>
                             <flux:menu.item href="{{ route('ai.features') }}" icon="sparkles">AI</flux:menu.item>
                             <flux:menu.item href="{{ route('docs') }}" icon="document-text">Docs</flux:menu.item>
+                            <flux:menu.item href="{{ route('blog.index') }}" icon="newspaper">Blog</flux:menu.item>
+                            <flux:menu.item href="{{ route('help') }}" icon="question-mark-circle">Help</flux:menu.item>
                             <flux:menu.item href="{{ route('contact.us') }}" icon="envelope">Contact</flux:menu.item>
                             <flux:menu.separator />
                             <flux:menu.submenu icon="paint-brush" label="Appearance">
@@ -121,19 +124,27 @@
                     </p>
                 </div>
 
-                <div class="col-span-1 md:col-span-2 md:col-start-8">
+                <div class="col-span-1 md:col-span-2 md:col-start-7">
                     <h3 class="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-widest mb-6">Product</h3>
                     <ul class="space-y-4">
-                        <li><a href="#features" class="text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 text-sm font-medium transition-colors">Features</a></li>
+                        <li><a href="{{ route('solutions') }}" class="text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 text-sm font-medium transition-colors">Features</a></li>
                         <li><a href="{{ route('pricing') }}" class="text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 text-sm font-medium transition-colors">Pricing</a></li>
-                        <li><a href="#" class="text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 text-sm font-medium transition-colors">Changelog</a></li>
+                        <li><a href="{{ route('ai.features') }}" class="text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 text-sm font-medium transition-colors">AI Features</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-span-1 md:col-span-2">
+                    <h3 class="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-widest mb-6">Resources</h3>
+                    <ul class="space-y-4">
+                        <li><a href="{{ route('docs') }}" class="text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 text-sm font-medium transition-colors">Documentation</a></li>
+                        <li><a href="{{ route('blog.index') }}" class="text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 text-sm font-medium transition-colors">Blog</a></li>
+                        <li><a href="{{ route('help') }}" class="text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 text-sm font-medium transition-colors">Help Center</a></li>
                     </ul>
                 </div>
 
                 <div class="col-span-1 md:col-span-2">
                      <h3 class="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-widest mb-6">Company</h3>
                     <ul class="space-y-4">
-                        <li><a href="#" class="text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 text-sm font-medium transition-colors">About</a></li>
                         <li><a href="{{ route('contact.us') }}" class="text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 text-sm font-medium transition-colors">Contact</a></li>
                         <li><a href="{{ route('privacy') }}" class="text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 text-sm font-medium transition-colors">Privacy Policy</a></li>
                         <li><a href="{{ route('terms') }}" class="text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 text-sm font-medium transition-colors">Terms of Service</a></li>

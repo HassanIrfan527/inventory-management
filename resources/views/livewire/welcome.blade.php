@@ -218,78 +218,85 @@ new #[Layout('layouts.public')] class extends Component {
             <div class="mx-auto max-w-2xl text-center mb-16">
                 <h2 class="text-base font-semibold leading-7 text-emerald-600 uppercase tracking-wide">Works With Your Tools</h2>
                 <p class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
-                    Sync with your favorite apps.
+                    Connect with apps you already use.
                 </p>
                 <p class="mt-6 text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-                    {{ $this->app_name() }} integrates with the tools small businesses rely on - sync products, accept payments, and stay organized.
+                    {{ $this->app_name() }} integrates with popular business tools to help you sync contacts, products, and accounting data.
                 </p>
             </div>
 
-            <div class="grid grid-cols-2 gap-4 sm:gap-8 md:grid-cols-3 lg:grid-cols-5 items-center">
-                {{-- Shopify --}}
+            <div class="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-4 max-w-4xl mx-auto">
+                {{-- Google Contacts (Available) --}}
                 <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-2">
-                    <div
-                        class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/10 transition-all border border-zinc-100 dark:border-zinc-800">
-                        <flux:icon.shopify class="size-10 grayscale group-hover:grayscale-0 transition-all" />
+                    <div class="relative">
+                        <div
+                            class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:bg-blue-50 dark:group-hover:bg-blue-900/10 transition-all border border-zinc-100 dark:border-zinc-800">
+                            <img src="https://www.gstatic.com/images/branding/product/1x/contacts_2022_48dp.png"
+                                alt="Google Contacts" class="size-10 group-hover:scale-110 transition-all">
+                        </div>
+                        <div class="absolute -top-1 -right-1 size-5 rounded-full bg-emerald-500 flex items-center justify-center">
+                            <flux:icon.check class="size-3 text-white" />
+                        </div>
                     </div>
-                    <span
-                        class="text-xs sm:text-sm font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors text-center">Shopify</span>
+                    <div class="text-center">
+                        <span class="text-xs sm:text-sm font-bold text-zinc-700 dark:text-zinc-200 block">Google Contacts</span>
+                        <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">Available</span>
+                    </div>
                 </div>
 
-                {{-- WooCommerce --}}
-                <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-2">
-                    <div
-                        class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:bg-teal-50 dark:group-hover:bg-teal-900/10 transition-all border border-zinc-100 dark:border-zinc-800">
-                        <flux:icon.woocommerce class="size-12 grayscale group-hover:grayscale-0 transition-all" />
+                {{-- HubSpot (Coming Soon) --}}
+                <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-1 opacity-75">
+                    <div class="relative">
+                        <div
+                            class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md transition-all border border-zinc-100 dark:border-zinc-800">
+                            <svg class="size-10 text-[#ff7a59]" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.164 7.93V5.084a2.198 2.198 0 0 0 1.267-1.984v-.066A2.198 2.198 0 0 0 17.238.841h-.066a2.198 2.198 0 0 0-2.193 2.193v.066c0 .87.506 1.62 1.24 1.974v2.86a5.194 5.194 0 0 0-2.418 1.178L6.076 3.408a2.768 2.768 0 0 0 .066-.535 2.78 2.78 0 1 0-2.78 2.78c.377 0 .733-.08 1.06-.217l7.64 5.576a5.2 5.2 0 0 0-.507 2.235 5.234 5.234 0 0 0 5.228 5.228 5.18 5.18 0 0 0 2.12-.458l2.493 2.493a1.86 1.86 0 1 0 1.14-1.122l-2.47-2.47a5.2 5.2 0 0 0 1.098-3.199 5.234 5.234 0 0 0-5.228-5.228c-.653 0-1.273.134-1.842.355zm-1.38 7.747a2.598 2.598 0 0 1-2.596-2.596 2.598 2.598 0 0 1 2.596-2.596 2.598 2.598 0 0 1 2.596 2.596 2.598 2.598 0 0 1-2.596 2.596z"/>
+                            </svg>
+                        </div>
                     </div>
-                    <span
-                        class="text-xs sm:text-sm font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors text-center">WooCommerce</span>
+                    <div class="text-center">
+                        <span class="text-xs sm:text-sm font-bold text-zinc-500 dark:text-zinc-400 block">HubSpot</span>
+                        <span class="text-[10px] text-zinc-400 dark:text-zinc-500 font-medium">Coming Soon</span>
+                    </div>
                 </div>
 
-                {{-- Stripe --}}
-                <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-2">
-                    <div
-                        class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:bg-indigo-50 dark:group-hover:bg-indigo-900/10 transition-all border border-zinc-100 dark:border-zinc-800">
-                        <flux:icon.stripe class="size-10 grayscale group-hover:grayscale-0 transition-all" />
+                {{-- QuickBooks (Coming Soon) --}}
+                <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-1 opacity-75">
+                    <div class="relative">
+                        <div
+                            class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md transition-all border border-zinc-100 dark:border-zinc-800">
+                            <svg class="size-10 text-[#2CA01C]" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.768 17.095h-1.72V14.39H8.69c-1.404 0-2.542-1.164-2.542-2.6 0-1.436 1.138-2.6 2.542-2.6h.716v1.72h-.716c-.475 0-.86.394-.86.88s.385.88.86.88h2.358V8.537c0-1.404 1.163-2.542 2.6-2.542 1.435 0 2.6 1.138 2.6 2.542v.716h-1.72v-.716c0-.475-.395-.86-.88-.86-.486 0-.88.385-.88.86v6.916h2.357c.475 0 .86-.394.86-.88s-.385-.88-.86-.88h-.716v-1.72h.716c1.404 0 2.542 1.164 2.542 2.6 0 1.436-1.138 2.6-2.542 2.6h-2.357v2.642z"/>
+                            </svg>
+                        </div>
                     </div>
-                    <span
-                        class="text-xs sm:text-sm font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors text-center">Stripe</span>
+                    <div class="text-center">
+                        <span class="text-xs sm:text-sm font-bold text-zinc-500 dark:text-zinc-400 block">QuickBooks</span>
+                        <span class="text-[10px] text-zinc-400 dark:text-zinc-500 font-medium">Coming Soon</span>
+                    </div>
                 </div>
 
-                {{-- Google Contacts --}}
-                <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-2">
-                    <div
-                        class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/10 transition-all border border-zinc-100 dark:border-zinc-800">
-                        <img src="https://www.gstatic.com/images/branding/product/1x/contacts_2022_48dp.png"
-                            alt="Google Contacts" class="size-10 grayscale group-hover:grayscale-0 transition-all">
+                {{-- Shopify (Coming Soon) --}}
+                <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-1 opacity-75">
+                    <div class="relative">
+                        <div
+                            class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md transition-all border border-zinc-100 dark:border-zinc-800">
+                            <svg class="size-10 text-[#96bf48]" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.73c-.018-.116-.114-.192-.211-.192s-1.929-.136-1.929-.136-1.275-1.274-1.439-1.411c-.045-.037-.075-.057-.121-.074l-.914 21.104h.023zm-1.278-17.079l-.674 2.063s-.749-.353-1.657-.353c-1.338 0-1.405.839-1.405 1.05 0 1.153 3.008 1.596 3.008 4.301 0 2.127-1.349 3.497-3.165 3.497-2.181 0-3.297-1.357-3.297-1.357l.584-1.924s1.148.986 2.118.986c.633 0 .893-.499.893-.864 0-1.508-2.467-1.574-2.467-4.048 0-2.082 1.494-4.098 4.513-4.098 1.164 0 1.749.338 1.749.338v.409zm-3.08-5.893c.162.088.303.18.303.18s-1.479.427-2.93.427v-.148c0-.606.258-1.543 1.015-1.543.48 0 .799.223 1.082.632l.53.452zM9.598.315L9.504 0l-.19.033-.12.033c-.02 0-.036.012-.055.02-.022.008-.043.02-.063.028l-.003.001c-.085.045-.158.103-.22.168-.196.21-.334.502-.408.846l-.001.006-.081.377v.024l1.234-.317V.315h.001z"/>
+                            </svg>
+                        </div>
                     </div>
-                    <span
-                        class="text-xs sm:text-sm font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors text-center">Google Contacts</span>
-                </div>
-
-                {{-- Gmail --}}
-                <div class="group flex flex-col items-center gap-4 transition-all hover:-translate-y-2">
-                    <div
-                        class="size-20 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:bg-red-50 dark:group-hover:bg-red-900/10 transition-all border border-zinc-100 dark:border-zinc-800">
-                        <flux:icon.gmail class="size-10 grayscale group-hover:grayscale-0 transition-all" />
+                    <div class="text-center">
+                        <span class="text-xs sm:text-sm font-bold text-zinc-500 dark:text-zinc-400 block">Shopify</span>
+                        <span class="text-[10px] text-zinc-400 dark:text-zinc-500 font-medium">Coming Soon</span>
                     </div>
-                    <span
-                        class="text-xs sm:text-sm font-bold text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors text-center">Gmail</span>
                 </div>
             </div>
 
-            <div class="mt-20 flex justify-center">
-                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-all group cursor-default">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                    </span>
-                    <p class="text-sm font-semibold tracking-wide text-zinc-600 dark:text-zinc-400">
-                        <span class="bg-gradient-to-r from-zinc-600 via-emerald-500 to-zinc-600 dark:from-zinc-400 dark:via-emerald-400 dark:to-zinc-400 bg-[length:200%_auto] bg-clip-text text-transparent group-hover:animate-shimmer transition-all">
-                            More integrations coming soon
-                        </span>
-                    </p>
-                </div>
+            <div class="mt-12 text-center">
+                <p class="text-sm text-zinc-500 dark:text-zinc-400">
+                    More integrations are on the way. <a href="{{ route('contact.us') }}" wire:navigate class="text-emerald-600 hover:text-emerald-500 font-medium">Request an integration</a>
+                </p>
             </div>
         </div>
     </div>

@@ -148,6 +148,97 @@ select:focus[data-flux-control] {
     display: none !important;
 }
 
+/* ========================================
+   DOCUMENTATION STYLES
+   ======================================== */
+
+/* Code blocks with Shiki syntax highlighting */
+.prose pre {
+    @apply rounded-xl border border-zinc-800 !bg-zinc-900;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+}
+
+.prose pre code {
+    @apply bg-transparent p-0 text-sm leading-relaxed;
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+}
+
+/* Inline code */
+.prose :not(pre) > code {
+    @apply rounded px-1.5 py-0.5 text-sm font-medium;
+    @apply bg-zinc-100 text-zinc-800;
+    @apply dark:bg-zinc-800 dark:text-zinc-200;
+}
+
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+    content: none;
+}
+
+/* Tables */
+.prose table {
+    @apply w-full border-collapse text-sm;
+}
+
+.prose thead {
+    @apply border-b-2 border-zinc-200 dark:border-zinc-700;
+}
+
+.prose th {
+    @apply px-4 py-3 text-left font-semibold text-zinc-900 dark:text-zinc-100;
+}
+
+.prose td {
+    @apply px-4 py-3 border-b border-zinc-100 dark:border-zinc-800;
+}
+
+.prose tbody tr:hover {
+    @apply bg-zinc-50 dark:bg-zinc-900/50;
+}
+
+/* Heading anchor links */
+.prose h2 a,
+.prose h3 a,
+.prose h4 a {
+    @apply no-underline text-inherit;
+}
+
+.prose h2:hover a::before,
+.prose h3:hover a::before,
+.prose h4:hover a::before {
+    content: '#';
+    @apply absolute -ml-6 text-zinc-400 dark:text-zinc-600 font-normal;
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+    @apply relative;
+}
+
+/* Blockquotes / Callouts */
+.prose blockquote {
+    @apply border-l-4 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 py-4 px-6 rounded-r-lg not-italic;
+}
+
+.prose blockquote p {
+    @apply text-zinc-700 dark:text-zinc-300 m-0;
+}
+
+/* Task lists */
+.prose ul.contains-task-list {
+    @apply list-none pl-0;
+}
+
+.prose li.task-list-item {
+    @apply flex items-start gap-2 pl-0;
+}
+
+.prose li.task-list-item input[type="checkbox"] {
+    @apply mt-1.5 rounded border-zinc-300 dark:border-zinc-600;
+}
+
 @keyframes shimmer {
     to {
         background-position: 200% center;

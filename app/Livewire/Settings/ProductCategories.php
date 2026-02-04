@@ -3,9 +3,11 @@
 namespace App\Livewire\Settings;
 
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('layouts.app')]
+#[Title('Product Categories')]
 class ProductCategories extends Component
 {
     public $categories = [];

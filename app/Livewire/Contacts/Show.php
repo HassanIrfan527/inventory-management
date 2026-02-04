@@ -17,6 +17,7 @@ use Livewire\Component;
 class Show extends Component
 {
     public Contact $contact;
+
     public ContactForm $form;
 
     // Section visibility states
@@ -30,11 +31,15 @@ class Show extends Component
 
     public bool $sectionCrm = false;
 
-
     public function mount(Contact $contact): void
     {
         $this->contact = $contact;
         $this->form->setContact($this->contact);
+    }
+
+    public function title(): string
+    {
+        return $this->contact->name;
     }
 
     // Auto-save handlers for each field group
@@ -77,7 +82,7 @@ class Show extends Component
             default => [],
         };
 
-        if (!empty($data)) {
+        if (! empty($data)) {
             $contactService->updateContact($this->contact, $data);
             $this->contact->refresh();
 
@@ -194,25 +199,25 @@ class Show extends Component
     #[Computed]
     public function typeOptions(): array
     {
-        return collect(Type::cases())->mapWithKeys(fn($case) => [$case->value => ucfirst($case->value)])->toArray();
+        return collect(Type::cases())->mapWithKeys(fn ($case) => [$case->value => ucfirst($case->value)])->toArray();
     }
 
     #[Computed]
     public function statusOptions(): array
     {
-        return collect(Status::cases())->mapWithKeys(fn($case) => [$case->value => ucfirst($case->value)])->toArray();
+        return collect(Status::cases())->mapWithKeys(fn ($case) => [$case->value => ucfirst($case->value)])->toArray();
     }
 
     #[Computed]
     public function sourceOptions(): array
     {
-        return collect(Source::cases())->mapWithKeys(fn($case) => [$case->value => $case->value])->toArray();
+        return collect(Source::cases())->mapWithKeys(fn ($case) => [$case->value => $case->value])->toArray();
     }
 
     #[Computed]
     public function preferredContactMethodOptions(): array
     {
-        return collect(PreferredContactMethod::cases())->mapWithKeys(fn($case) => [$case->value => $case->value])->toArray();
+        return collect(PreferredContactMethod::cases())->mapWithKeys(fn ($case) => [$case->value => $case->value])->toArray();
     }
 
     public function render()

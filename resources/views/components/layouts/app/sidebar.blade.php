@@ -7,87 +7,131 @@
 
 <body class="min-h-screen bg-zinc-50 dark:bg-zinc-900">
     <flux:sidebar sticky stashable x-data="{ collapsed: false }"
-        class="border-e border-zinc-200/80 bg-zinc-50/90 backdrop-blur-sm dark:border-zinc-800/80 dark:bg-zinc-900/95 transition-all duration-300 ease-in-out"
-        x-bind:class="collapsed ? 'w-20' : 'w-64'">
+        class="border-e border-zinc-200/80 bg-zinc-50/90 backdrop-blur-sm dark:border-zinc-800/80 dark:bg-zinc-900/95 transition-[width] duration-300 ease-in-out overflow-hidden"
+        x-bind:style="collapsed ? 'width: 5rem' : 'width: 16rem'">
 
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
         <!-- Header: Logo & Toggle -->
-        <div class="flex items-center gap-2 px-2 py-1" :class="collapsed ? 'justify-center' : 'justify-between'">
-            <flux:brand :href="route('dashboard')" :name="config('app.name')" wire:navigate x-show="!collapsed" class="transition-opacity duration-300">
-                <x-slot name="logo" class="flex items-center justify-center">
-                    <x-app-logo-icon class="size-7 fill-emerald-600 dark:fill-emerald-500" />
-                </x-slot>
-            </flux:brand>
+        <div class="flex items-center gap-2 px-3 py-2" x-bind:class="collapsed ? 'justify-center' : 'justify-between'">
+            <!-- Full Logo (expanded) -->
+            <a href="{{ route('dashboard') }}" wire:navigate
+               class="flex items-center gap-2 overflow-hidden transition-all duration-300"
+               x-bind:class="collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'">
+                <x-app-logo-icon class="size-8 shrink-0" />
+                <span class="text-xl font-bold text-zinc-900 dark:text-white whitespace-nowrap">{{ config('app.name') }}</span>
+            </a>
 
-            <!-- Logo Icon Only when collapsed -->
-            <div x-show="collapsed" class="flex items-center justify-center">
-                <x-app-logo-icon class="size-8 fill-emerald-600 dark:fill-emerald-500" />
-            </div>
+            <!-- Icon Only (collapsed) -->
+            <a href="{{ route('dashboard') }}" wire:navigate
+               class="flex items-center justify-center transition-all duration-300"
+               x-bind:class="collapsed ? 'opacity-100' : 'opacity-0 w-0 absolute'">
+                <x-app-logo-icon class="size-9" />
+            </a>
 
             <!-- Collapse toggle (desktop) -->
-            <flux:button variant="subtle" square size="sm" class="hidden lg:flex" x-on:click="collapsed = !collapsed" x-tooltip="collapsed ? 'Expand' : 'Collapse'">
-                <flux:icon.chevrons-left class="size-4" x-show="!collapsed" />
-                <flux:icon.chevrons-right class="size-4" x-show="collapsed" />
-            </flux:button>
+            <button
+                @click="collapsed = !collapsed"
+                class="hidden lg:flex items-center justify-center size-8 rounded-lg hover:bg-zinc-200/70 dark:hover:bg-zinc-800 transition-colors shrink-0"
+                x-bind:class="collapsed && 'mx-auto'"
+                x-bind:title="collapsed ? 'Expand sidebar' : 'Collapse sidebar'"
+            >
+                <flux:icon.panel-right class="size-4 text-zinc-400 dark:text-zinc-500" />
+            </button>
         </div>
 
         <!-- Main Navigation -->
-        <flux:navlist variant="outline" class="mt-8 space-y-1 [&_svg]:transition-all [&_svg]:duration-300" x-bind:class="collapsed ? '[&_svg]:!size-6' : ''">
-            <flux:navlist.item icon="box" :href="route('inventory')" :current="request()->routeIs('inventory')" wire:navigate>
-                <span x-show="!collapsed" x-transition.opacity.duration.200ms class="truncate font-semibold text-emerald-600 dark:text-emerald-400">Inventory</span>
-                <span x-show="collapsed" class="sr-only">Inventory</span>
+        <flux:navlist variant="outline" class="mt-6 space-y-0.5">
+            <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+                <span class="overflow-hidden whitespace-nowrap transition-all duration-300"
+                      x-bind:class="collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'">Dashboard</span>
             </flux:navlist.item>
 
-            <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
-                <span x-show="!collapsed" x-transition.opacity.duration.200ms class="truncate">Dashboard</span>
+            <flux:navlist.item icon="box" :href="route('inventory')" :current="request()->routeIs('inventory')" wire:navigate>
+                <span class="overflow-hidden whitespace-nowrap transition-all duration-300"
+                      x-bind:class="collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'">Inventory</span>
             </flux:navlist.item>
 
             <flux:navlist.item icon="banknote" :href="route('orders')" :current="request()->routeIs('orders*')" wire:navigate>
-                 <span x-show="!collapsed" x-transition.opacity.duration.200ms class="truncate">Orders</span>
+                <span class="overflow-hidden whitespace-nowrap transition-all duration-300"
+                      x-bind:class="collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'">Orders</span>
             </flux:navlist.item>
 
             <flux:navlist.item icon="users" :href="route('contacts.all')" :current="request()->routeIs('contacts.all')" wire:navigate>
-                 <span x-show="!collapsed" x-transition.opacity.duration.200ms class="truncate">Contacts</span>
+                <span class="overflow-hidden whitespace-nowrap transition-all duration-300"
+                      x-bind:class="collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'">Contacts</span>
             </flux:navlist.item>
 
             <flux:navlist.item icon="notepad-text" :href="route('invoices')" :current="request()->routeIs('invoices')" wire:navigate>
-                 <span x-show="!collapsed" x-transition.opacity.duration.200ms class="truncate">Invoices</span>
+                <span class="overflow-hidden whitespace-nowrap transition-all duration-300"
+                      x-bind:class="collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'">Invoices</span>
             </flux:navlist.item>
         </flux:navlist>
 
-        <!-- Tools / Apps Section -->
-        <flux:separator class="my-2" />
+        <!-- AI Section -->
+        <div class="mt-4 px-3">
+            <div class="h-px bg-zinc-200 dark:bg-zinc-800"></div>
+        </div>
 
-        <flux:navlist variant="outline" class="[&_svg]:transition-all [&_svg]:duration-300" x-bind:class="collapsed ? '[&_svg]:!size-6' : ''">
+        <flux:navlist variant="outline" class="mt-4">
             <flux:navlist.item icon="sparkles" :href="route('scribe')" :current="request()->routeIs('scribe')" wire:navigate>
-                <span x-show="!collapsed" x-transition.opacity.duration.200ms class="truncate">Omnis AI</span>
+                <span class="overflow-hidden whitespace-nowrap transition-all duration-300"
+                      x-bind:class="collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'">Scribe AI</span>
             </flux:navlist.item>
         </flux:navlist>
 
         <flux:spacer />
 
-        <!-- Bottom Actions -->
-        <flux:navlist variant="outline" class="mb-2 [&_svg]:transition-all [&_svg]:duration-300" x-bind:class="collapsed ? '[&_svg]:!size-6' : ''">
-            <flux:navlist.item icon="lifebuoy" :href="route('help')" :current="request()->routeIs('help')" wire:navigate>
-                <span x-show="!collapsed" x-transition.opacity.duration.200ms class="truncate">Get Help</span>
-            </flux:navlist.item>
+        <!-- Resources Section (Help & Docs) -->
+        <div class="mb-4">
+            <!-- Section Label (only when expanded) -->
+            <div class="px-4 mb-2 overflow-hidden transition-all duration-300"
+                 x-bind:class="collapsed ? 'h-0 opacity-0' : 'h-auto opacity-100'">
+                <span class="text-[10px] uppercase tracking-wider text-zinc-400 dark:text-zinc-500 font-semibold">Resources</span>
+            </div>
 
-            <flux:navlist.item icon="book-open-text" :href="route('docs')" :current="request()->routeIs('docs')" wire:navigate>
-                <span x-show="!collapsed" x-transition.opacity.duration.200ms class="truncate">User Docs</span>
-            </flux:navlist.item>
-        </flux:navlist>
+            <div class="flex flex-col gap-0.5 px-2">
+                <a href="{{ route('help') }}" wire:navigate
+                   @class([
+                       'flex items-center gap-2.5 px-2 py-2 text-sm rounded-lg transition-colors',
+                       'text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-800',
+                       'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-200' => request()->routeIs('help'),
+                   ])
+                   x-bind:class="collapsed && 'justify-center px-0'"
+                >
+                    <flux:icon name="lifebuoy" class="size-4 shrink-0" />
+                    <span class="overflow-hidden whitespace-nowrap transition-all duration-300"
+                          x-bind:class="collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'">Help Center</span>
+                </a>
 
-        <flux:separator class="mb-4" />
+                <a href="{{ route('docs') }}" wire:navigate
+                   @class([
+                       'flex items-center gap-2.5 px-2 py-2 text-sm rounded-lg transition-colors',
+                       'text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-800',
+                       'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-200' => request()->routeIs('docs'),
+                   ])
+                   x-bind:class="collapsed && 'justify-center px-0'"
+                >
+                    <flux:icon name="book-open-text" class="size-4 shrink-0" />
+                    <span class="overflow-hidden whitespace-nowrap transition-all duration-300"
+                          x-bind:class="collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'">Documentation</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="px-3 mb-4">
+            <div class="h-px bg-zinc-200 dark:bg-zinc-800"></div>
+        </div>
 
         <!-- Footer: Theme & Profile -->
-        <div class="flex flex-col gap-4">
-             <!-- Theme Switcher -->
-            <div class="flex items-center" :class="collapsed ? 'justify-center' : 'justify-between px-2'">
-                <span x-show="!collapsed" x-transition.opacity.duration.200ms class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Appearance</span>
+        <div class="flex flex-col gap-3 pb-2">
+            <!-- Theme Switcher -->
+            <div class="flex items-center px-2" x-bind:class="collapsed ? 'justify-center' : 'justify-between'">
+                <span class="text-xs font-medium text-zinc-500 dark:text-zinc-400 overflow-hidden whitespace-nowrap transition-all duration-300"
+                      x-bind:class="collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'">Appearance</span>
 
                 <flux:dropdown x-data align="end">
-                    <flux:button variant="subtle" square size="sm" class="h-8 w-8" aria-label="Preferred color scheme">
+                    <flux:button variant="subtle" square size="sm" class="size-8" aria-label="Preferred color scheme">
                         <flux:icon.sun x-show="$flux.appearance === 'light'" variant="mini" class="text-zinc-500 dark:text-white" />
                         <flux:icon.moon x-show="$flux.appearance === 'dark'" variant="mini" class="text-zinc-500 dark:text-white" />
                         <flux:icon.moon x-show="$flux.appearance === 'system' && $flux.dark" variant="mini" />
@@ -104,17 +148,17 @@
 
             <!-- User Menu -->
             <flux:dropdown position="top" align="start">
-                <flux:profile
-                    :name="auth()->user()->name"
-                    :initials="auth()->user()->initials()"
-                    icon-trailing="chevrons-up-down"
-                    x-show="!collapsed"
-                />
+                <div x-show="!collapsed" class="transition-all duration-300">
+                    <flux:profile
+                        :name="auth()->user()->name"
+                        :initials="auth()->user()->initials()"
+                        icon-trailing="chevrons-up-down"
+                    />
+                </div>
 
-                <flux:profile
-                   :initials="auth()->user()->initials()"
-                   x-show="collapsed"
-                />
+                <div x-show="collapsed" class="flex justify-center transition-all duration-300">
+                    <flux:profile :initials="auth()->user()->initials()" />
+                </div>
 
                 <flux:menu class="w-[220px]">
                     <flux:menu.radio.group>
@@ -140,11 +184,10 @@
 
         <flux:spacer />
 
-        <div class="flex items-center gap-2">
-             <flux:brand :href="route('dashboard')" wire:navigate>
-                 <x-app-logo-icon class="size-6 fill-emerald-600 dark:fill-emerald-500" />
-            </flux:brand>
-        </div>
+        <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-2">
+            <x-app-logo-icon class="size-7" />
+            <span class="font-bold text-zinc-900 dark:text-white">{{ config('app.name') }}</span>
+        </a>
 
         <flux:spacer />
 

@@ -6,9 +6,11 @@ use App\Models\Contact;
 use App\Models\Product;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('layouts.app')]
+#[Title('Create Order')]
 class Create extends Component
 {
     // Step State

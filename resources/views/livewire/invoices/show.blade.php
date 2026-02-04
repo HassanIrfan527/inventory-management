@@ -2,16 +2,20 @@
 
 use App\Models\Invoice;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-new #[Layout('layouts.app')] #[Title('Invoice Details')] class extends Component {
+new #[Layout('layouts.app')] class extends Component {
     public Invoice $invoice;
 
     public function mount(Invoice $invoice)
     {
         $this->invoice = $invoice->load(['order.contact', 'order.products']);
+    }
+
+    public function title(): string
+    {
+        return "Invoice {$this->invoice->invoice_number}";
     }
 
     public function download()
@@ -64,7 +68,7 @@ new #[Layout('layouts.app')] #[Title('Invoice Details')] class extends Component
                     <div class="relative flex items-center justify-between">
                         <div class="flex items-center gap-4">
                             <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
-                                <x-app-logo-icon class="size-8 fill-white" />
+                                <x-app-logo-icon class="size-8" variant="white" />
                             </div>
                             <div class="text-white">
                                 <h1 class="text-2xl font-black italic tracking-tight">{{ config('app.name') }}</h1>

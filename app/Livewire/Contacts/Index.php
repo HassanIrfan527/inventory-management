@@ -4,8 +4,12 @@ namespace App\Livewire\Contacts;
 
 use App\Models\Contact;
 use App\Services\ContactService;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Layout('layouts.app')]
+#[Title('Contacts')]
 class Index extends Component
 {
     public string $search = '';

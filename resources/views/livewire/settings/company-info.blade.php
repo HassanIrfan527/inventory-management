@@ -1,13 +1,15 @@
 <section class="w-full">
-    @include('partials.settings-heading')
-
-    <x-settings.layout :heading="__('Company Information')" :subheading="__('Update your company information')">
+    <x-settings.layout
+        :heading="__('Company Information')"
+        :subheading="__('Update your company information')"
+        icon="building-2"
+    >
         <form wire:submit="updateCompanyInformation" class="my-6 w-full space-y-6">
 
             {{-- Company Logo --}}
             <div class="group relative mt-6 w-full max-w-xs">
                 <div
-                    class="relative aspect-square overflow-hidden rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-900">
+                    class="relative aspect-square overflow-hidden rounded-lg border-2 border-dashed border-zinc-300 bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-800">
                     @if ($temporaryUploadedFile)
                         <img src="{{ $temporaryUploadedFile->temporaryUrl() }}" alt="{{ __('Company Logo') }}"
                             class="h-full w-full object-cover">
@@ -16,7 +18,7 @@
                             class="h-full w-full object-cover">
                     @endif
                     <div class="flex h-full items-center justify-center">
-                        <flux:icon name="image" class="h-12 w-12 text-gray-400 dark:text-gray-500" />
+                        <flux:icon name="image" class="h-12 w-12 text-zinc-400 dark:text-zinc-500" />
                     </div>
 
                     <div

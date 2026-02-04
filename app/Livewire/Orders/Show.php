@@ -23,6 +23,11 @@ class Show extends Component
         $this->order = $order;
     }
 
+    public function title(): string
+    {
+        return "Order #{$this->order->order_number}";
+    }
+
     public function updateStatus($status)
     {
         // Prevent updates if status is same
