@@ -132,12 +132,19 @@
                     </div>
                 </div>
 
-                <input type="text" wire:model.defer="userInput"
+                <input type="text" wire:model="userInput"
                     placeholder="Ask Scribe to manage clients, create invoices, or find products..."
                     class="w-full h-14 bg-transparent border-0 focus:ring-0 text-lg px-4 text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500"
                     autofocus required>
 
                 <div class="flex items-center gap-2 pr-2">
+                    @if(!empty($history))
+                        <button type="button" wire:click="newConversation"
+                            class="h-12 w-12 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 flex items-center justify-center hover:bg-zinc-200 dark:hover:bg-zinc-700 hover:scale-105 transition-all duration-200"
+                            title="New conversation">
+                            <flux:icon.plus class="w-5 h-5" />
+                        </button>
+                    @endif
                     <button type="submit" wire:loading.attr="disabled"
                         class="h-12 w-12 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 flex items-center justify-center hover:scale-105 transition-all duration-200 disabled:opacity-50 shadow-lg ring-1 ring-white/10"
                         title="Send message">

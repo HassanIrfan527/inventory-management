@@ -2,7 +2,8 @@
 
 namespace App\Livewire;
 
-use App\AiAgents\Scribe as ScribeAIAgent;
+use App\Ai\Agents\Scribe as ScribeAgent;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -11,57 +12,69 @@ use Livewire\Component;
 #[Title('Scribe - Your AI Business Assistant')]
 class Scribe extends Component
 {
-    public $input = '';
+    public string $userInput = '';
 
-    public $userInput = '';
+    public ?string $conversationId = null;
 
-    public $chatId;
-
-    public function mount()
+    public function mount(): void
     {
-        // Use a unique but persistent ID for this user's session
-        $this->chatId = 'scribe_chat_'.auth()->id();
+        $latest = DB::table('agent_conversations')
+            ->where('user_id', auth()->id())
+            ->latest('updated_at')
+            ->first();
+
+        $this->conversationId = $latest?->id;
     }
 
-    public function sendMessage()
+    public function sendMessage(): void
     {
         if (empty(trim($this->userInput))) {
             return;
         }
 
-        // Use the standardized LarAgent 'for' method to maintain session
-        ScribeAIAgent::for($this->chatId)->respond($this->userInput);
-
-        // Clear input
+        $input = $this->userInput;
         $this->userInput = '';
+
+        $agent = new ScribeAgent;
+
+        if ($this->conversationId) {
+            $response = $agent
+                ->continue($this->conversationId, as: auth()->user())
+                ->prompt($input);
+        } else {
+            $response = $agent
+                ->forUser(auth()->user())
+                ->prompt($input);
+
+            $this->conversationId = $response->conversationId;
+        }
+    }
+
+    public function newConversation(): void
+    {
+        $this->conversationId = null;
     }
 
     public function render()
     {
-        // Fetch history using the agent's history driver (session by default)
-        $rawHistory = ScribeAIAgent::for($this->chatId)->chatHistory()->toArray();
+        $history = [];
 
-        // Normalize history to ensure 'content' is always a string for the blade view
-        $history = array_map(function ($chat) {
-            if (is_array($chat['content'])) {
-                // If it's a single part with a 'text' key
-                if (isset($chat['content']['text'])) {
-                    $chat['content'] = $chat['content']['text'];
-                } else {
-                    // If it's an array of parts, join all 'text' parts
-                    $parts = array_filter($chat['content'], fn ($part) => isset($part['text']));
-                    $chat['content'] = implode("\n", array_column($parts, 'text'));
-                }
-            }
-
-            // Ensure content is always a string (convert null/empty to empty string)
-            $chat['content'] = (string) ($chat['content'] ?? '');
-
-            return $chat;
-        }, $rawHistory);
+        if ($this->conversationId) {
+            $history = DB::table('agent_conversation_messages')
+                ->where('conversation_id', $this->conversationId)
+                ->orderBy('created_at')
+                ->get()
+                ->filter(fn ($msg) => in_array($msg->role, ['user', 'assistant']))
+                ->map(fn ($msg) => [
+                    'role' => $msg->role,
+                    'content' => $msg->content ?? '',
+                ])
+                ->values()
+                ->toArray();
+        }
 
         return view('livewire.scribe', [
-            'history' => $history ?: [],
+            'history' => $history,
         ]);
     }
 }
