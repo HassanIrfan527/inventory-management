@@ -222,11 +222,12 @@
                                         </p>
                                     </div>
 
-                                    <flux:button variant="primary" icon="plus" size="sm"
-                                        class="mt-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0">
-                                        Add Your First Contact
-                                    </flux:button>
-
+                                    <a href="{{ route('contact.create') }}" wire:navigate>
+                                        <flux:button variant="primary" icon="plus" size="sm"
+                                            class="mt-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white border-0">
+                                            Add Your First Contact
+                                        </flux:button>
+                                    </a>
                                 </div>
                             </td>
                         </tr>

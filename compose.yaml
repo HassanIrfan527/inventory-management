@@ -21,6 +21,17 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+    redis:
+        image: 'redis:8'
+        ports:
+            - '6379:6379'
+        healthcheck:
+            test:
+                - CMD
+                - redis-cli
+                - ping
+            retries: 3
+            timeout: 5s
 volumes:
     mysql-data:
         driver: local

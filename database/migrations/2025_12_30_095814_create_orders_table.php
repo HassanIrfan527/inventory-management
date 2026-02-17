@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use App\Enums\Order\Status;
 return new class extends Migration
 {
     /**
@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade');
             $table->string('order_number')->unique();
             $table->foreignId('contact_id')->constrained(); // Who bought it?
-            $table->string('status');
+            $table->string('status')->default(Status::PENDING->value); // pending, completed, cancelled
             $table->decimal('total_amount', 10, 0);
             $table->timestamps();
         });
