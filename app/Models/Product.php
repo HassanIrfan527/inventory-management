@@ -75,7 +75,7 @@ class Product extends Model
                 do {
                     // random 5 digit number
                     $randomNumber = random_int(10000, 99999);
-                    $newId = 'PROD-'.$randomNumber;
+                    $newId = 'PROD-' . $randomNumber;
                 } while (
                     self::where('product_id', $newId)->exists()
                 );
@@ -83,5 +83,30 @@ class Product extends Model
                 $product->product_id = $newId;
             }
         });
+    }
+
+    // ========= Scope helper functions =========
+    public function scopeSearch($query, ?string $search)
+    {
+        return $query->when($search, function ($q) use ($search) {
+            $q->where(function ($inner) use ($search) {
+                $inner->where('name', 'like', "%{$search}%")
+                    ->orWhere('product_id', 'like', "%{$search}%")
+                    ->orWhere('sku', 'like', "%{$search}%");
+            });
+        });
+    }
+    public function scopeInCategory($query, ?int $categoryId)
+    {
+        return $query->when($categoryId, function ($q) use ($categoryId) {
+            $q->whereHas('categories', fn($cat) => $cat->where('categories.id', $categoryId));
+        });
+    }
+
+    public function scopeSorted($query, string $sortBy, string $direction)
+    {
+        // Validate direction to prevent SQL injection or errors
+        $direction = in_array(strtolower($direction), ['asc', 'desc']) ? $direction : 'desc';
+        return $query->orderBy($sortBy, $direction);
     }
 }

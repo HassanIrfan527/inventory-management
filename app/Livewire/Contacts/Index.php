@@ -23,7 +23,7 @@ class Index extends Component
         'sortBy' => ['except' => 'name'],
     ];
 
-    public function deleteContact(int $id): void
+    public function deleteContact(int $id, ContactService $contactService): void
     {
         $contact = Contact::find($id);
 
@@ -31,7 +31,6 @@ class Index extends Component
             return;
         }
 
-        $contactService = app(ContactService::class);
         $contactService->deleteContact($contact);
 
         \Flux\Flux::modal("delete-contact-{$id}")->close();
@@ -40,9 +39,9 @@ class Index extends Component
     }
 
     #[\Livewire\Attributes\Computed]
-    public function contacts()
+    public function contacts(ContactService $contactService)
     {
-        return app(ContactService::class)->listContacts(
+        return $contactService->listContacts(
             search: $this->search,
             sortBy: $this->sortBy,
             perPage: 100 // Using a large number to match previous get() behavior or I can update to pagination later

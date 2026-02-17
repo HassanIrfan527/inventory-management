@@ -31,6 +31,12 @@ class Show extends Component
 
     public bool $sectionCrm = false;
 
+    #[Computed]
+    public function contactService()
+    {
+        return app(ContactService::class);
+    }
+
     public function mount(Contact $contact): void
     {
         $this->contact = $contact;
@@ -52,8 +58,6 @@ class Show extends Component
 
     protected function saveField(string $field): void
     {
-        $contactService = app(ContactService::class);
-
         // Store old value before update
         $oldValue = $this->contact->{$field};
 
@@ -82,8 +86,8 @@ class Show extends Component
             default => [],
         };
 
-        if (! empty($data)) {
-            $contactService->updateContact($this->contact, $data);
+        if (!empty($data)) {
+            $this->contactService->updateContact($this->contact, $data);
             $this->contact->refresh();
 
             // Log detailed activity with field changes
@@ -183,13 +187,12 @@ class Show extends Component
     #[Computed]
     public function activities()
     {
-        return $this->contact->activities()->with('subject')->latest()->get();
+        return $this->contactService->getContactActivity($this->contact);
     }
 
     public function deleteContact($id = null): void
     {
-        $contactService = app(ContactService::class);
-        $contactService->deleteContact($this->contact);
+        $this->contactService->deleteContact($this->contact);
 
         \Flux\Flux::modal('delete-modal')->close();
         $this->dispatch('toast', message: 'Contact deleted successfully', type: 'success');
@@ -199,25 +202,25 @@ class Show extends Component
     #[Computed]
     public function typeOptions(): array
     {
-        return collect(Type::cases())->mapWithKeys(fn ($case) => [$case->value => ucfirst($case->value)])->toArray();
+        return collect(Type::cases())->mapWithKeys(fn($case) => [$case->value => ucfirst($case->value)])->toArray();
     }
 
     #[Computed]
     public function statusOptions(): array
     {
-        return collect(Status::cases())->mapWithKeys(fn ($case) => [$case->value => ucfirst($case->value)])->toArray();
+        return collect(Status::cases())->mapWithKeys(fn($case) => [$case->value => ucfirst($case->value)])->toArray();
     }
 
     #[Computed]
     public function sourceOptions(): array
     {
-        return collect(Source::cases())->mapWithKeys(fn ($case) => [$case->value => $case->value])->toArray();
+        return collect(Source::cases())->mapWithKeys(fn($case) => [$case->value => $case->value])->toArray();
     }
 
     #[Computed]
     public function preferredContactMethodOptions(): array
     {
-        return collect(PreferredContactMethod::cases())->mapWithKeys(fn ($case) => [$case->value => $case->value])->toArray();
+        return collect(PreferredContactMethod::cases())->mapWithKeys(fn($case) => [$case->value => $case->value])->toArray();
     }
 
     public function render()

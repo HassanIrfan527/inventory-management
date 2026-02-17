@@ -11,16 +11,8 @@ class ContactService
     public function listContacts(?string $search = null, string $sortBy = 'name', int $perPage = 15): LengthAwarePaginator
     {
         return Contact::query()
-            ->when($search, function ($query) use ($search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('first_name', 'like', '%'.$search.'%')
-                        ->orWhere('last_name', 'like', '%'.$search.'%')
-                        ->orWhere('email', 'like', '%'.$search.'%');
-                });
-            })
-            ->when($sortBy === 'name', fn ($query) => $query->orderBy('first_name')->orderBy('last_name'))
-            ->when($sortBy === 'created_at', fn ($query) => $query->latest())
-            ->when($sortBy === 'updated_at', fn ($query) => $query->latest('updated_at'))
+            ->search($search)
+            ->sortBy($sortBy)
             ->paginate($perPage);
     }
 
@@ -49,5 +41,10 @@ class ContactService
     public function deleteContact(Contact $contact): void
     {
         $contact->delete();
+    }
+
+    public function getContactActivity(Contact $contact)
+    {
+        return $contact->activities()->with('subject')->latest()->get();
     }
 }

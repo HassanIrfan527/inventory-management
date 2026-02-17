@@ -12,23 +12,12 @@ class ProductService
 {
     public function listProducts(?string $search = null, ?int $categoryId = null, int $perPage = 15, string $sortBy = 'created_at', string $direction = 'desc'): LengthAwarePaginator
     {
-        $query = Product::query()
-            ->with(['categories', 'images'])
-            ->when($search, function ($query) use ($search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('name', 'like', '%'.$search.'%')
-                        ->orWhere('product_id', 'like', '%'.$search.'%')
-                        ->orWhere('sku', 'like', '%'.$search.'%');
-                });
-            })
-            ->when($categoryId, function ($query, $categoryId) {
-                $query->whereHas('categories', function ($q) use ($categoryId) {
-                    $q->where('categories.id', $categoryId);
-                });
-            })
-            ->orderBy($sortBy, $direction);
-
-        return $query->paginate($perPage);
+        return Product::query()
+        ->with(['categories', 'images']) // Load relationships
+        ->search($search)                // Apply fuzzy search
+        ->inCategory($categoryId)        // Filter by category
+        ->sorted($sortBy, $direction)    // Apply sorting
+        ->paginate($perPage);
     }
 
     /**

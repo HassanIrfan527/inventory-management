@@ -61,15 +61,15 @@ class Contact extends Model
     protected function name(): Attribute
     {
         return Attribute::make(
-            get: fn () => trim($this->first_name.' '.$this->last_name),
+            get: fn() => trim($this->first_name . ' ' . $this->last_name),
         );
     }
 
     protected function phone(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => $value ? preg_replace('/[^0-9+]/', '', $value) : null,
-            get: fn ($value) => $value,
+            set: fn($value) => $value ? preg_replace('/[^0-9+]/', '', $value) : null,
+            get: fn($value) => $value,
         );
     }
 
@@ -107,6 +107,35 @@ class Contact extends Model
             'properties' => $properties,
         ]);
     }
+
+    // ======== Local Scope helper functions ========
+
+    // Local Scope for searching contacts
+    public function scopeSearch($query, ?string $search)
+    {
+        when($search, function ($query) use ($search) {
+
+            $query->where(function ($q) use ($search) {
+                $q->where('first_name', 'like', '%' . $search . '%')
+                    ->orWhere('last_name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhere('phone', 'like', '%' . $search . '%')
+                    ->orWhere('contact_id', 'like', '%' . $search . '%');
+            });
+        });
+        return $query;
+    }
+
+    // Local Scope for sorting contacts
+    public function scopeSortBy($query, string $sortBy = 'name')
+    {
+        return match ($sortBy) {
+            'name' => $query->orderBy('first_name')->orderBy('last_name'),
+            'updated_at' => $query->latest('updated_at'),
+            default => $query->latest(), // Handles 'created_at' and fallbacks
+        };
+    }
+
 
     public function activities()
     {
