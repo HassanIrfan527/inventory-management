@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Plan;
+use App\Services\PlanService;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -9,11 +9,9 @@ new #[Layout('layouts.public')] class extends Component
 {
     public Collection $plans;
 
-    public function mount(): void
+    public function mount(PlanService $planService): void
     {
-        $this->plans = Plan::where('is_active', 1)
-            ->orderBy('sort_order')
-            ->get();
+        $this->plans = $planService->getActivePlans();
     }
 
     public function selectPlan(string $slug): void
