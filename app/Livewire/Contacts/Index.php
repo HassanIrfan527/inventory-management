@@ -4,6 +4,7 @@ namespace App\Livewire\Contacts;
 
 use App\Models\Contact;
 use App\Services\ContactService;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -23,7 +24,13 @@ class Index extends Component
         'sortBy' => ['except' => 'name'],
     ];
 
-    public function deleteContact(int $id, ContactService $contactService): void
+    #[Computed]
+    public function contactService(): ContactService
+    {
+        return app(ContactService::class);
+    }
+
+    public function deleteContact(int $id): void
     {
         $contact = Contact::find($id);
 
@@ -31,17 +38,17 @@ class Index extends Component
             return;
         }
 
-        $contactService->deleteContact($contact);
+        $this->contactService->deleteContact($contact);
 
         \Flux\Flux::modal("delete-contact-{$id}")->close();
         $this->reset();
         $this->dispatch('toast', message: 'Contact deleted successfully', type: 'success');
     }
 
-    #[\Livewire\Attributes\Computed]
-    public function contacts(ContactService $contactService)
+    #[Computed]
+    public function contacts()
     {
-        return $contactService->listContacts(
+        return $this->contactService->listContacts(
             search: $this->search,
             sortBy: $this->sortBy,
             perPage: 100 // Using a large number to match previous get() behavior or I can update to pagination later

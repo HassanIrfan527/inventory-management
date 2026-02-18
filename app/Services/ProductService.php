@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class ProductService
@@ -13,11 +15,11 @@ class ProductService
     public function listProducts(?string $search = null, ?int $categoryId = null, int $perPage = 15, string $sortBy = 'created_at', string $direction = 'desc'): LengthAwarePaginator
     {
         return Product::query()
-        ->with(['categories', 'images']) // Load relationships
-        ->search($search)                // Apply fuzzy search
-        ->inCategory($categoryId)        // Filter by category
-        ->sorted($sortBy, $direction)    // Apply sorting
-        ->paginate($perPage);
+            ->with(['categories', 'images']) // Load relationships
+            ->search($search)                // Apply fuzzy search
+            ->inCategory($categoryId)        // Filter by category
+            ->sorted($sortBy, $direction)    // Apply sorting
+            ->paginate($perPage);
     }
 
     /**
@@ -45,6 +47,8 @@ class ProductService
             }
 
             $this->storeImages($product, $images);
+
+            $this->clearStatsCache();
 
             return $product->load(['categories', 'images']);
         });
@@ -78,6 +82,8 @@ class ProductService
                 $this->storeImages($product, $newImages);
             }
 
+            $this->clearStatsCache();
+
             return $product->load(['categories', 'images']);
         });
     }
@@ -95,12 +101,15 @@ class ProductService
             $product->categories()->sync([$category->id]);
         }
 
+        $this->clearCategoriesCache();
+
         return $products->count();
     }
 
     public function deleteProduct(Product $product): void
     {
         $product->delete();
+        $this->clearStatsCache();
     }
 
     /**
@@ -119,5 +128,41 @@ class ProductService
                 'image_path' => $path,
             ]);
         }
+    }
+
+    public function calculateStats(): array
+    {
+        $key = 'product:stats:'.Auth::id();
+
+        return Cache::remember($key, now()->addMinutes(30), function () {
+            $totalRetail = Product::sum('retail_price');
+            $totalPurchase = Product::sum('purchase_price');
+            $avg_margin = $totalRetail > 0 ? (($totalRetail - $totalPurchase) / $totalRetail) * 100 : 0;
+
+            return [
+                'totalProducts' => Product::count(),
+                'totalInventoryValue' => Product::totalInventoryValue(),
+                'avg_margin' => $avg_margin,
+            ];
+        });
+    }
+
+    public function getCategories()
+    {
+        $key = 'product:categories:'.Auth::id();
+
+        return Cache::remember($key, now()->addMinutes(30), function () {
+            return Category::all();
+        });
+    }
+
+    public function clearStatsCache(): void
+    {
+        Cache::forget('product:stats:'.Auth::id());
+    }
+
+    public function clearCategoriesCache(): void
+    {
+        Cache::forget('product:categories:'.Auth::id());
     }
 }

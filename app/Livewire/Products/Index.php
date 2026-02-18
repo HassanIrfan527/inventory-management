@@ -5,13 +5,13 @@ namespace App\Livewire\Products;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\ProductService;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
-
 
 #[Title('Inventory')]
 #[Layout('layouts.app')]
@@ -22,8 +22,8 @@ class Index extends Component
     #[On('product-updated')]
     public function refresh()
     {
-        $this->calculateStats();
-        $this->render();
+        $this->productService->clearStatsCache();
+        $this->stats = $this->productService->calculateStats();
     }
 
     #[Reactive]
@@ -41,23 +41,17 @@ class Index extends Component
 
     public $targetCategory = '';
 
-    public $totalProducts = 0;
-    public $totalInventoryValue = 0;
-    public $avg_margin = 0;
+    public $stats = [];
+
+    #[Computed]
+    public function productService(): ProductService
+    {
+        return app(ProductService::class);
+    }
 
     public function mount()
     {
-        $this->calculateStats();
-    }
-
-    public function calculateStats()
-    {
-        $this->totalProducts = Product::count();
-        $this->totalInventoryValue = Product::totalInventoryValue();
-
-        $totalRetail = Product::sum('retail_price');
-        $totalPurchase = Product::sum('purchase_price');
-        $this->avg_margin = $totalRetail > 0 ? (($totalRetail - $totalPurchase) / $totalRetail) * 100 : 0;
+        $this->stats = $this->productService->calculateStats();
     }
 
     public function updatingSearch()
@@ -81,7 +75,7 @@ class Index extends Component
 
     public function deleteProduct($productId)
     {
-        $product = Product::find($productId);
+        $product = Product::findOrFail($productId);
 
         if (! $product) {
             return;
@@ -89,8 +83,7 @@ class Index extends Component
 
         $productName = $product->name;
 
-        $productService = app(ProductService::class);
-        $productService->deleteProduct($product);
+        $this->productService->deleteProduct($product);
 
         $this->dispatch('toast', type: 'success', message: "Product '{$productName}' has been removed from inventory.");
 
@@ -104,9 +97,7 @@ class Index extends Component
             'selectedProducts' => 'required|array|min:1',
         ]);
 
-        $productService = app(ProductService::class);
-
-        $count = $productService->assignCategoryToProducts($this->selectedProducts, (int) $this->targetCategory);
+        $count = $this->productService->assignCategoryToProducts($this->selectedProducts, (int) $this->targetCategory);
 
         $category = Category::find($this->targetCategory);
 
@@ -124,48 +115,15 @@ class Index extends Component
         $this->selectedProducts = [];
     }
 
-    public function toggleAll()
-    {
-        $productsOnPage = Product::query()
-            ->when($this->search, function ($query) {
-                return $query->where('name', 'like', "%{$this->search}%")
-                    ->orWhere('product_id', 'like', "%{$this->search}%");
-            })
-            ->when($this->selectedCategory, function ($query) {
-                return $query->whereHas('categories', function ($q) {
-                    $q->where('categories.id', $this->selectedCategory);
-                });
-            })
-            ->paginate($this->perPage)
-            ->pluck('id')
-            ->map(fn ($id) => (string) $id)
-            ->toArray();
-
-        $allSelected = count(array_intersect($productsOnPage, $this->selectedProducts)) === count($productsOnPage);
-
-        if ($allSelected) {
-            $this->selectedProducts = array_diff($this->selectedProducts, $productsOnPage);
-        } else {
-            $this->selectedProducts = array_unique(array_merge($this->selectedProducts, $productsOnPage));
-        }
-    }
-
     public function render()
     {
-        $products = Product::query()
-            ->when($this->search, function ($query) {
-                return $query->where('name', 'like', "%{$this->search}%")
-                    ->orWhere('product_id', 'like', "%{$this->search}%");
-            })
-            ->when($this->selectedCategory, function ($query) {
-                return $query->whereHas('categories', function ($q) {
-                    $q->where('categories.id', $this->selectedCategory);
-                });
-            })
-            ->orderBy($this->sortBy, 'desc')
-            ->paginate($this->perPage);
-
-        $categories = Category::orderBy('name')->get();
+        $products = $this->productService->listProducts(
+            search: $this->search,
+            categoryId: $this->selectedCategory,
+            sortBy: $this->sortBy,
+            perPage: $this->perPage
+        );
+        $categories = $this->productService->getCategories();
 
         return view('livewire.products.index', [
             'products' => $products,

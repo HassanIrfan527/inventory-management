@@ -34,7 +34,7 @@
                 <div class="flex flex-col gap-1">
                     <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Total
                         Products</p>
-                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($totalProducts) }}
+                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($stats['totalProducts']) }}
                     </p>
                 </div>
                 <div
@@ -61,7 +61,7 @@
                 <div class="flex flex-col gap-1">
                     <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Avg.
                         Margin</p>
-                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ round($avg_margin, 1) }}%</p>
+                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ round($stats['avg_margin'], 1) }}%</p>
                 </div>
                 <div
                     class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400 ring-4 ring-amber-50/50 dark:ring-amber-900/10 transition-transform group-hover:scale-110">
@@ -84,7 +84,7 @@
                 <div class="flex items-center justify-between mb-3 text-white">
                     <div class="flex flex-col gap-1">
                         <p class="text-xs font-bold uppercase tracking-wider opacity-80">Inventory Value</p>
-                        <p class="text-2xl font-black tracking-tight mt-1">Rs. {{ number_format($totalInventoryValue) }}
+                        <p class="text-2xl font-black tracking-tight mt-1">Rs. {{ number_format($stats['totalInventoryValue']) }}
                         </p>
                     </div>
                     <div
@@ -194,14 +194,27 @@
             @case(App\Enums\ProductView::List)
                 <!-- List View (Professional ERP Style) -->
                 <div
-                    class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+                    class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+                    x-data="{
+                        pageIds: @js($products->pluck('id')->map(fn ($id) => (string) $id)->values()->toArray()),
+                        get allSelected() {
+                            return this.pageIds.length > 0 && this.pageIds.every(id => $wire.selectedProducts.includes(id));
+                        },
+                        toggleAll() {
+                            if (this.allSelected) {
+                                $wire.selectedProducts = $wire.selectedProducts.filter(id => !this.pageIds.includes(id));
+                            } else {
+                                $wire.selectedProducts = [...new Set([...$wire.selectedProducts, ...this.pageIds])];
+                            }
+                        }
+                    }">
                     <div class="overflow-x-auto no-scrollbar">
                         <table class="w-full text-left text-sm text-zinc-600 dark:text-zinc-400 border-collapse">
                             <thead
                                 class="bg-zinc-50/50 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:bg-zinc-950/50 dark:text-zinc-400">
                                 <tr>
                                     <th class="px-6 py-4">
-                                        <input type="checkbox" wire:click="toggleAll"
+                                        <input type="checkbox" @click="toggleAll()" :checked="allSelected"
                                             class="size-4 rounded border-zinc-300 text-emerald-600 focus:ring-emerald-500/50 dark:border-zinc-700 dark:bg-zinc-800">
                                     </th>
                                     <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider">Product</th>
