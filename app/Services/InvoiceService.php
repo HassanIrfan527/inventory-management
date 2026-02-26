@@ -7,6 +7,10 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class InvoiceService
 {
+    public function __construct(
+        protected DashboardService $dashboardService
+    ) {}
+
     public function listInvoices(?string $status = null, ?string $type = null, int $perPage = 15): LengthAwarePaginator
     {
         return Invoice::query()
@@ -24,6 +28,10 @@ class InvoiceService
             'due_date' => $data['due_date'] ?? $invoice->due_date,
         ]);
 
-        return $invoice->refresh()->load(['order.contact']);
+        $invoice->refresh()->load(['order.contact']);
+
+        $this->dashboardService->clearCache($invoice->user_id);
+
+        return $invoice;
     }
 }

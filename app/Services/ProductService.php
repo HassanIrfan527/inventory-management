@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\DB;
 
 class ProductService
 {
+    public function __construct(
+        protected DashboardService $dashboardService
+    ) {}
+
     public function listProducts(?string $search = null, ?int $categoryId = null, int $perPage = 15, string $sortBy = 'created_at', string $direction = 'desc'): LengthAwarePaginator
     {
         return Product::query()
@@ -49,6 +53,7 @@ class ProductService
             $this->storeImages($product, $images);
 
             $this->clearStatsCache();
+            $this->clearProductsAllCache();
 
             return $product->load(['categories', 'images']);
         });
@@ -83,6 +88,7 @@ class ProductService
             }
 
             $this->clearStatsCache();
+            $this->clearProductsAllCache();
 
             return $product->load(['categories', 'images']);
         });
@@ -110,6 +116,7 @@ class ProductService
     {
         $product->delete();
         $this->clearStatsCache();
+        $this->clearProductsAllCache();
     }
 
     /**
@@ -159,10 +166,17 @@ class ProductService
     public function clearStatsCache(): void
     {
         Cache::forget('product:stats:'.Auth::id());
+        $this->dashboardService->clearCache(Auth::id());
     }
 
     public function clearCategoriesCache(): void
     {
         Cache::forget('product:categories:'.Auth::id());
+        $this->dashboardService->clearCache(Auth::id());
+    }
+
+    public function clearProductsAllCache(): void
+    {
+        Cache::forget('products:all:'.Auth::id());
     }
 }

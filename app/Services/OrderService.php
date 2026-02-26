@@ -6,16 +6,51 @@ use App\Events\OrderCreated;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class OrderService
 {
-    public function listOrders(?string $status = null, ?int $contactId = null, int $perPage = 15): LengthAwarePaginator
+    public function __construct(
+        protected DashboardService $dashboardService
+    ) {}
+
+    public function getStats($userId): array
+    {
+        $key = "orders:stats:{$userId}";
+
+        return Cache::remember($key, now()->addMinutes(30), function () use ($userId) {
+            $stats = Order::where('user_id', $userId)
+                ->selectRaw('
+                    COUNT(*) as total_orders,
+                    SUM(CASE WHEN status = "Completed" THEN total_amount ELSE 0 END) as total_revenue,
+                    COUNT(CASE WHEN status = "Pending" THEN 1 END) as pending_orders,
+                    COUNT(CASE WHEN status = "Completed" THEN 1 END) as completed_orders
+                ')
+                ->first();
+
+            return [
+                'total_orders' => (int) ($stats->total_orders ?? 0),
+                'total_revenue' => (float) ($stats->total_revenue ?? 0),
+                'pending_orders' => (int) ($stats->pending_orders ?? 0),
+                'completed_orders' => (int) ($stats->completed_orders ?? 0),
+            ];
+        });
+    }
+
+    public function listOrders(?string $status = null, ?int $contactId = null, int $perPage = 15, ?string $search = null): LengthAwarePaginator
     {
         return Order::query()
             ->with(['contact', 'products'])
             ->when($status, fn ($query, $status) => $query->where('status', $status))
             ->when($contactId, fn ($query, $contactId) => $query->where('contact_id', $contactId))
+            ->when($search, function ($query) use ($search) {
+                $query->where('order_number', 'like', '%'.$search.'%')
+                    ->orWhereHas('contact', function ($q) use ($search) {
+                        $q->where('first_name', 'like', '%'.$search.'%')
+                            ->orWhere('last_name', 'like', '%'.$search.'%');
+                    });
+            })
             ->latest()
             ->paginate($perPage);
     }
@@ -48,7 +83,7 @@ class OrderService
             foreach ($items as $item) {
                 $product = Product::find($item['product_id']);
                 $lineSubtotal = (float) $item['quantity'] * (float) $item['price'];
-                
+
                 $order->products()->attach($item['product_id'], [
                     'quantity' => $item['quantity'],
                     'unit_cost' => $product?->purchase_price ?? 0,
@@ -61,7 +96,11 @@ class OrderService
 
             OrderCreated::dispatch($order, $generateInvoice);
 
-            return $order->load(['contact', 'products']);
+            $order->load(['contact', 'products']);
+
+            $this->clearStatsCache($order->user_id);
+
+            return $order;
         });
     }
 
@@ -73,6 +112,16 @@ class OrderService
             'address' => $data['address'] ?? $order->address,
         ]);
 
-        return $order->refresh()->load(['contact', 'products']);
+        $order->refresh()->load(['contact', 'products']);
+
+        $this->clearStatsCache($order->user_id);
+
+        return $order;
+    }
+
+    public function clearStatsCache(int $userId): void
+    {
+        Cache::forget("orders:stats:{$userId}");
+        $this->dashboardService->clearCache($userId);
     }
 }

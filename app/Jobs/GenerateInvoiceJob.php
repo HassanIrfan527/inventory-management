@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Invoice;
+use App\Services\DashboardService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -50,6 +51,8 @@ class GenerateInvoiceJob implements ShouldQueue
         ]);
 
         $this->finalizeInvoice($invoice->id);
+
+        app(DashboardService::class)->clearCache($invoice->user_id);
     }
 
     private function finalizeInvoice($invoiceId)

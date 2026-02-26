@@ -4,10 +4,15 @@ namespace App\Services;
 
 use App\Models\Contact;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class ContactService
 {
+    public function __construct(
+        protected DashboardService $dashboardService
+    ) {}
+
     public function listContacts(?string $search = null, string $sortBy = 'name', int $perPage = 15): LengthAwarePaginator
     {
         return Contact::query()
@@ -23,6 +28,8 @@ class ContactService
 
             $contact->logActivity('Contact created');
 
+            $this->clearAllCache();
+
             return $contact;
         });
     }
@@ -34,6 +41,8 @@ class ContactService
 
             $contact->logActivity('Contact updated');
 
+            $this->clearAllCache();
+
             return $contact;
         });
     }
@@ -41,6 +50,13 @@ class ContactService
     public function deleteContact(Contact $contact): void
     {
         $contact->delete();
+        $this->clearAllCache();
+    }
+
+    public function clearAllCache(): void
+    {
+        Cache::forget('contacts:all:'.auth()->id());
+        $this->dashboardService->clearCache(auth()->id());
     }
 
     public function getContactActivity(Contact $contact)

@@ -2,7 +2,8 @@
 
 namespace App\Livewire\Orders;
 
-use App\Models\Order;
+use App\Services\OrderService;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
@@ -15,21 +16,13 @@ class Index extends Component
 {
     use WithPagination;
 
-    public ?int $totalOrders = null;
-
-    public ?int $completedOrders = null;
-
-    public ?int $pendingOrders = null;
-
-    public ?int $totalRevenue = null;
-
     public string $search = '';
 
     public string $statusFilter = '';
 
-    public function mount(): void
+    protected function service(): OrderService
     {
-        $this->hydrateMetrics();
+        return app(OrderService::class);
     }
 
     public function updatedSearch(): void
@@ -42,39 +35,31 @@ class Index extends Component
         $this->resetPage();
     }
 
-    protected function hydrateMetrics(): void
-    {
-        $this->totalOrders = Order::count();
-        $this->completedOrders = Order::where('status', 'completed')->count();
-        $this->pendingOrders = Order::where('status', 'pending')->count();
-        $this->totalRevenue = Order::sum('total_amount');
-    }
-
     #[On('order-created')]
     public function refreshOrders(): void
     {
         $this->resetPage();
-        $this->hydrateMetrics();
+        $this->service()->clearStatsCache(auth()->id());
+    }
+
+    #[Computed]
+    public function stats()
+    {
+        return $this->service()->getStats(auth()->id());
+    }
+
+    #[Computed]
+    public function orders()
+    {
+        return $this->service()->listOrders(
+            status: $this->statusFilter ?: null,
+            perPage: 10,
+            search: $this->search
+        );
     }
 
     public function render()
     {
-        $orders = Order::query()
-            ->with(['contact', 'products'])
-            ->when($this->search, function ($query) {
-                $query->where('order_number', 'like', '%'.$this->search.'%')
-                    ->orWhereHas('contact', function ($q) {
-                        $q->where('name', 'like', '%'.$this->search.'%');
-                    });
-            })
-            ->when($this->statusFilter, function ($query) {
-                $query->where('status', $this->statusFilter);
-            })
-            ->latest()
-            ->paginate(10);
-
-        return view('livewire.orders.index', [
-            'orders' => $orders,
-        ]);
+        return view('livewire.orders.index');
     }
 }

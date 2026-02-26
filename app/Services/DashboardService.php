@@ -3,12 +3,15 @@
 namespace App\Services;
 
 use App\Enums\Order\Status;
-use App\Models\{Category, Contact, Invoice, Order, Product};
+use App\Models\Category;
+use App\Models\Contact;
+use App\Models\Invoice;
+use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Support\Facades\Cache;
 
 class DashboardService
 {
-
     public function getStats($userId)
     {
         $key = "dashboard:stats:{$userId}";
@@ -70,5 +73,14 @@ class DashboardService
                 ->take(5)
                 ->get();
         });
+    }
+
+    public function clearCache($userId): void
+    {
+        Cache::forget("dashboard:stats:{$userId}");
+        Cache::forget("dashboard:recent_orders:{$userId}");
+        Cache::forget("dashboard:products_by_category:{$userId}");
+        Cache::forget("dashboard:top_selling_products:{$userId}");
+        Cache::forget("dashboard:least_selling_products:{$userId}");
     }
 }

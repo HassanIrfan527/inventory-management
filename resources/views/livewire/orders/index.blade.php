@@ -36,7 +36,7 @@
             <div class="relative flex items-center justify-between">
                 <div class="flex flex-col gap-1">
                     <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Total Orders</p>
-                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($totalOrders) }}</p>
+                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($this->stats['total_orders']) }}</p>
                 </div>
                 <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400 ring-4 ring-emerald-50/50 dark:ring-emerald-900/10 transition-transform group-hover:scale-110">
                     <flux:icon.handbag class="h-6 w-6" />
@@ -56,7 +56,7 @@
                 <div class="flex items-center justify-between mb-3 text-white">
                     <div class="flex flex-col gap-1">
                         <p class="text-xs font-bold uppercase tracking-wider opacity-80">Total Revenue</p>
-                        <p class="text-3xl font-black tracking-tight mt-1">Rs. {{ number_format($totalRevenue) }}</p>
+                        <p class="text-3xl font-black tracking-tight mt-1">Rs. {{ number_format($this->stats['total_revenue']) }}</p>
                     </div>
                     <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/20 text-white backdrop-blur-md ring-4 ring-white/10 transition-transform group-hover:rotate-12 group-hover:scale-110">
                         <flux:icon.circle-dollar-sign class="h-7 w-7" />
@@ -74,7 +74,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex flex-col gap-1">
                     <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Pending</p>
-                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($pendingOrders) }}</p>
+                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($this->stats['pending_orders']) }}</p>
                 </div>
                 <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400 ring-4 ring-amber-50/50 dark:ring-amber-900/10 transition-transform group-hover:scale-110">
                     <flux:icon.clock class="h-6 w-6" />
@@ -93,7 +93,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex flex-col gap-1">
                     <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Completed</p>
-                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($completedOrders) }}</p>
+                    <p class="text-3xl font-bold text-zinc-900 dark:text-white mt-1">{{ number_format($this->stats['completed_orders']) }}</p>
                 </div>
                 <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-600 dark:bg-teal-900/20 dark:text-teal-400 ring-4 ring-teal-50/50 dark:ring-teal-900/10 transition-transform group-hover:scale-110">
                     <flux:icon.check-circle class="h-6 w-6" />
@@ -116,7 +116,7 @@
             class="flex flex-col items-center justify-between gap-4 border-b border-zinc-100 p-6 md:flex-row dark:border-zinc-800">
             <div class="flex items-center gap-4">
                 <h2 class="text-lg font-bold text-zinc-900 dark:text-white">Recent Orders</h2>
-                <flux:badge color="emerald" size="sm" inset="top bottom">{{ $orders->total() }} Total</flux:badge>
+                <flux:badge color="emerald" size="sm" inset="top bottom">{{ $this->orders->total() }} Total</flux:badge>
             </div>
 
             <div class="flex w-full flex-col gap-3 sm:flex-row sm:w-auto">
@@ -168,7 +168,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
-                    @forelse ($orders as $order)
+                    @forelse ($this->orders as $order)
                         <tr class="group transition-all hover:bg-emerald-50/30 dark:hover:bg-emerald-900/10 cursor-pointer"
                             @click="expandedRow = expandedRow === {{ $order->id }} ? null : {{ $order->id }}"
                             :class="{ 'bg-emerald-50/50 dark:bg-emerald-900/20': expandedRow === {{ $order->id }} }">
@@ -427,7 +427,7 @@
 
         <!-- Professional Pagination -->
         <div class="border-t border-zinc-100 bg-zinc-50/30 px-6 py-4 dark:border-zinc-800 dark:bg-zinc-800/10">
-            {{ $orders->links() }}
+            {{ $this->orders->links() }}
         </div>
     </div>
 

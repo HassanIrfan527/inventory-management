@@ -4,6 +4,7 @@ namespace App\Livewire\Orders;
 
 use App\Models\Contact;
 use App\Models\Product;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -66,13 +67,17 @@ class Create extends Component
     #[Computed]
     public function contacts()
     {
-        return Contact::orderBy('first_name')->get();
+        return Cache::remember('contacts:all:'.auth()->id(), now()->addMinutes(30), function () {
+            return Contact::orderBy('first_name')->get();
+        });
     }
 
     #[Computed]
     public function products()
     {
-        return Product::orderBy('name')->get();
+        return Cache::remember('products:all:'.auth()->id(), now()->addMinutes(30), function () {
+            return Product::orderBy('name')->get();
+        });
     }
 
     #[Computed]
@@ -166,9 +171,33 @@ class Create extends Component
         }
     }
 
-    public function save()
+    public function save(\App\Services\OrderService $orderService, \App\Services\ContactService $contactService)
     {
-        // Logic will be implemented later as requested
+        $this->validateStep(); // Final step validation
+
+        $contactId = $this->contact_id;
+
+        if ($this->customer_type === 'new') {
+            $contact = $contactService->createContact([
+                'first_name' => $this->new_customer_name,
+                'email' => $this->new_customer_email,
+                'phone' => $this->new_customer_phone,
+                'address' => $this->new_customer_address,
+            ]);
+            $contactId = $contact->id;
+        }
+
+        $order = $orderService->createOrder(
+            contactId: (int) $contactId,
+            status: strtoupper($this->status),
+            items: $this->items,
+            deliveryCharge: (int) $this->delivery_charge,
+            address: $this->address
+        );
+
+        session()->flash('success', 'Order created successfully.');
+
+        return redirect()->route('orders');
     }
 
     public function render()
