@@ -33,7 +33,7 @@ new #[Layout('layouts.public')] class extends Component {
                     <div class="mb-8">
                         <div class="inline-flex items-center gap-2 rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
                             <flux:icon.sparkles class="size-4" />
-                            All-in-one business platform
+                            AI-Powered Business OS for Small Product Sellers
                         </div>
                     </div>
 

@@ -24,7 +24,7 @@ services:
     redis:
         image: 'redis:8'
         ports:
-            - '6379:6379'
+            - '${FORWARD_REDIS_PORT:-6380}:6379'
         healthcheck:
             test:
                 - CMD
